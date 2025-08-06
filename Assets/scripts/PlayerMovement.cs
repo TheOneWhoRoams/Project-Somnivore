@@ -112,9 +112,6 @@ public class PlayerMovement : MonoBehaviour
             PlayerAnimator.SetBool("IsSprinting", true);
         else 
             PlayerAnimator.SetBool("IsSprinting", false);
-        //jump handling
-        if (CurrentState == PlayerState.Jumping&&IsGrounded) 
-            PlayerAnimator.SetTrigger("Jump");
         //Vertical Velocity calculations and passing
         
 
@@ -171,6 +168,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * JumpForce);
             CurrentState = PlayerState.Jumping;
+            PlayerAnimator.SetTrigger("Jump");
 
             HasJumped = true;
             IsGrounded = false;
