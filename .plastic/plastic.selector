@@ -1,0 +1,4 @@
+repository "SoulsTest2TheElectricBoogaloo/SoulsTest2TheElectricBoogaloo@7971666174181@cloud"
+  path "/"
+    br "/main"
+    co "/main"
