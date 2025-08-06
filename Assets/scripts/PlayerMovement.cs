@@ -14,12 +14,12 @@ public class PlayerMovement : MonoBehaviour
     public float RollSpeed;
     public float RollAnimationSpeed;
     float CurrSpeed;
-    bool IsSprinting = false;
     bool IsGrounded = true;
-    bool IsRolling = false;
+    
     bool RollDirSet = false;
     bool IsFloating = false;
     bool HasJumped = false;
+    bool ShowDebug = false;
     Vector2 Move;
     Vector3 MoveForce;
     Vector3 MoveDir;
@@ -31,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private Camera MainCamera;
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
+    enum PlayerState {Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
+    PlayerState CurrentState = PlayerState.Idling;
     bool IsLandingRoll = false;
     
 
@@ -49,40 +51,81 @@ public class PlayerMovement : MonoBehaviour
         PlayerAnimator.SetTrigger("roll");
         */
     }
-    void OnMove(InputValue value)
+    void OnGUI()
     {
-        
-        Move = value.Get<Vector2>();
-        
-    }
-    void OnJump()
-    {
-        if (IsRolling||!IsGrounded)
+        if (!ShowDebug)
             return;
+        float y = 10f;
+        float LineHeight = 20f;
 
-        if (IsGrounded)
-        {
-            rb.AddForce(Vector3.up * JumpForce);
+        //display animator bools
+        GUI.Label(new Rect(10, y, 300, LineHeight), "IsGrounded: " + PlayerAnimator.GetBool("IsGrounded"));
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "IsWalking: " + PlayerAnimator.GetBool("IsWalking"));
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "IsSprinting: " + PlayerAnimator.GetBool("IsSprinting"));
+        y += LineHeight;
+
+        //display animator floats
+        GUI.Label(new Rect(10, y, 300, LineHeight), "VelocityY: " + PlayerAnimator.GetFloat("VelocityY"));
+        y += LineHeight;
+        //other
+        GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + CurrentState);
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + CurrentState);
+    }
+    void OnDebugger()
+    {
+        
+        ShowDebug = !ShowDebug;
+        
+    }
+    void IdleCheck()
+    {
+        //is the player idle?
+        if (IsGrounded && Move.sqrMagnitude < 0.1f && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.Jumping && CurrentState != PlayerState.LandingRoll)
+            CurrentState = PlayerState.Idling;
+
+    }
+    float VerticalVelocityCalc()
+    {
+        float VerticalVelocity = rb.linearVelocity.y;
+        if (Mathf.Abs(VerticalVelocity) < 0.05f)
+            VerticalVelocity = 0f;
+        return VerticalVelocity;
+    }
+    void AnimationHandler()
+    {
+        
+        //is the player in air?
+        if (IsGrounded) 
+            PlayerAnimator.SetBool("IsGrounded", true);
+        else 
+            PlayerAnimator.SetBool("IsGrounded", false);
+        //walk and sprint handling
+        if (CurrentState == PlayerState.Walking ) 
+            PlayerAnimator.SetBool("IsWalking", true);
+        else 
+            PlayerAnimator.SetBool("IsWalking", false);
+
+        if (CurrentState  == PlayerState.Sprinting)  
+            PlayerAnimator.SetBool("IsSprinting", true);
+        else 
+            PlayerAnimator.SetBool("IsSprinting", false);
+        //jump handling
+        if (CurrentState == PlayerState.Jumping&&IsGrounded) 
             PlayerAnimator.SetTrigger("Jump");
+        //Vertical Velocity calculations and passing
+        
 
-            HasJumped = true;
-            IsGrounded = false;
+        PlayerAnimator.SetFloat("VelocityY", VerticalVelocityCalc());
+
+        //roll fire handling
+        if(CurrentState == PlayerState.Rolling)
+        {
+            PlayerAnimator.SetTrigger("Roll");
         }
-        return;
-    }
-    public void StartLandingRoll()
-    {
-        IsLandingRoll = true;
-        RollDirection = PreLandDirection;
-        OnRoll();
-    }
-    void OnRoll()
-    {
-
-        if (IsRolling || !IsGrounded) return;
-
-
-        // Set roll speed multiplier
+        //roll parameter handling
         if (!IsLandingRoll)
         {
             switch (CurrentRollType)
@@ -107,42 +150,61 @@ public class PlayerMovement : MonoBehaviour
                         RollSpeed = 2f;
                         RollAnimationSpeed = 0.4f; break;
                     }
-
-
-
             }
         }
         else RollSpeed = 4f;
-        if (IsLandingRoll) RollDirection = transform.forward.normalized;
-        else
-        {
-            if (MoveDir.sqrMagnitude > 0.1f)
-            {
-                RollDirection = MoveDir.normalized;
-            }
-            else
-            {
-                RollDirection = transform.forward.normalized;
-            }
-        }
-       
-        IsRolling = true;
-        RollDirSet = false;
-
-        // Set direction ONCE!
-
-        if (!IsLandingRoll)
-        {
-            PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
-            PlayerAnimator.SetTrigger("Roll");
-        }
+        PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
+    }
+    void OnMove(InputValue value)
+    {
         
+        Move = value.Get<Vector2>();
+        if (CurrentState != PlayerState.Rolling && IsGrounded && CurrentState != PlayerState.Sprinting && CurrentState != PlayerState.Jumping && Move.sqrMagnitude > 0.01f)
+            CurrentState = PlayerState.Walking;
+    }
+    void OnJump()
+    {
+        if (CurrentState == PlayerState.Rolling || !IsGrounded)
+            return;
+
+        if (IsGrounded)
+        {
+            rb.AddForce(Vector3.up * JumpForce);
+            CurrentState = PlayerState.Jumping;
+
+            HasJumped = true;
+            IsGrounded = false;
+        }
+        return;
+    }
+    public void StartLandingRoll()
+    {
+        IsLandingRoll = true;
+        RollDirection = PreLandDirection;
+        OnRoll();
+    }
+    void OnRoll()
+    {
+
+        if (CurrentState == PlayerState.Rolling || !IsGrounded) return;
+
+            if (MoveDir.sqrMagnitude > 0.1f)
+                 RollDirection = MoveDir.normalized;
+            else
+                 RollDirection = transform.forward.normalized;
+           
+        
+        RollDirSet = false;
+        if (!IsLandingRoll)
+            CurrentState = PlayerState.Rolling;          
     }
 
     public void EndRoll()
     {
         IsLandingRoll = false;
-        IsRolling = false;
+
+        CurrentState = PlayerState.Idling;
+        
         RollDirSet = false;
         
     }
@@ -179,41 +241,31 @@ public class PlayerMovement : MonoBehaviour
     void OnSprint(InputValue value) 
     {
         bool IsPressed = value.isPressed;
-        if (IsPressed&&!IsRolling && IsGrounded) IsSprinting = true;
-        else if (!IsPressed) IsSprinting = false;
+        if (IsPressed && CurrentState != PlayerState.Rolling && IsGrounded && Move.sqrMagnitude > 0.01f)
+            CurrentState = PlayerState.Sprinting;
+        else
+            CurrentState = PlayerState.Idling;
+        
     }
     
 
     private void Update()
     {
+        IdleCheck();
+        AnimationHandler();
         
     }
     private void FixedUpdate()
     {
         IsGrounded = Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, 0.45f);
-        if(IsGrounded ) PlayerAnimator.SetBool("IsGrounded",true);
-        else PlayerAnimator.SetBool("IsGrounded", false);
-        //animation handling and all that bollocks
-        if (!IsSprinting && IsGrounded && !IsRolling && Move.sqrMagnitude > 0.01f) PlayerAnimator.SetBool("IsWalking", true);
-        else PlayerAnimator.SetBool("IsWalking", false);
-        if (IsSprinting && IsGrounded && !IsRolling && Move.sqrMagnitude > 0.01f) PlayerAnimator.SetBool("IsSprinting", true);
-        else PlayerAnimator.SetBool("IsSprinting", false);
-        float VerticalVelocity = rb.linearVelocity.y;
-        if (Mathf.Abs(VerticalVelocity) < 0.05f) VerticalVelocity = 0f;
-        PlayerAnimator.SetFloat("VelocityY", VerticalVelocity);
-
-        if (IsSprinting && (IsRolling || !IsGrounded||Move.sqrMagnitude < 0.01f)) IsSprinting = false;
-        if (IsSprinting) CurrSpeed = MoveSpeed + SprintSpeedAddition;
-        else CurrSpeed = MoveSpeed;
-        float debug = rb.linearVelocity.y;
+        
        
-        Debug.Log("Vertical Velocity: "+VerticalVelocity);
         
         
 
         
-        
-
+        if (CurrentState ==PlayerState.Sprinting) CurrSpeed = MoveSpeed + SprintSpeedAddition;
+        else CurrSpeed = MoveSpeed;
         Vector3 CameraForward = MainCamera.transform.forward;
         Vector3 CameraRight = MainCamera.transform.right;
         CameraForward.y = 0;
@@ -224,7 +276,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Snap player to stop if no input is pressed and not rolling
     
-        if (Move.sqrMagnitude < 0.01f && IsGrounded && !IsRolling)
+        if (Move.sqrMagnitude < 0.01f && IsGrounded && CurrentState != PlayerState.Rolling)
         {
             rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
             return;
@@ -234,7 +286,7 @@ public class PlayerMovement : MonoBehaviour
             PreLandDirection = MoveDir.sqrMagnitude > 0.1f
                 ? MoveDir.normalized : transform.forward;
         }
-        if (IsRolling)
+        if (CurrentState == PlayerState.Rolling)
         {
 
             if (!RollDirSet)

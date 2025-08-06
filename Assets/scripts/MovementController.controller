@@ -86,25 +86,25 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 180390082153058004}
-    m_Position: {x: -570, y: 180, z: 0}
+    m_Position: {x: -610, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7381750690302495118}
     m_Position: {x: -170, y: -30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4348533621913741784}
-    m_Position: {x: -170, y: 300, z: 0}
+    m_Position: {x: -170, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2891132119010373976}
-    m_Position: {x: 220, y: 90, z: 0}
+    m_Position: {x: 280, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5837543149046765972}
-    m_Position: {x: 350, y: 190, z: 0}
+    m_Position: {x: 430, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2547196187540073296}
     m_Position: {x: 140, y: 710, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5591094800250245780}
-    m_Position: {x: -410, y: 670, z: 0}
+    m_Position: {x: -480, y: 720, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -589,6 +589,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Jump
     m_EventTreshold: 0
+  - m_ConditionMode: 3
+    m_ConditionEvent: VelocityY
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2891132119010373976}
   m_Solo: 0
@@ -638,7 +641,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: VelocityY
-    m_EventTreshold: -0.01
+    m_EventTreshold: -0.5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5837543149046765972}
   m_Solo: 0
