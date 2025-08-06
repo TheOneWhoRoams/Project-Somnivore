@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public RollType CurrentRollType;
     enum PlayerState {Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
     PlayerState CurrentState = PlayerState.Idling;
-    bool IsLandingRoll = false;
+    
     
 
 
@@ -72,7 +72,11 @@ public class PlayerMovement : MonoBehaviour
         //other
         GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + CurrentState);
         y += LineHeight;
-        GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + CurrentState);
+        
+        //display speed variables
+        GUI.Label(new Rect(10, y, 300, LineHeight), "RollSpeed: " + RollSpeed);
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "Current Speed: " + CurrSpeed);
     }
     void OnDebugger()
     {
@@ -117,13 +121,8 @@ public class PlayerMovement : MonoBehaviour
 
         PlayerAnimator.SetFloat("VelocityY", VerticalVelocityCalc());
 
-        //roll fire handling
-        if(CurrentState == PlayerState.Rolling)
-        {
-            PlayerAnimator.SetTrigger("Roll");
-        }
         //roll parameter handling
-        if (!IsLandingRoll)
+        if (CurrentState!=PlayerState.LandingRoll)
         {
             switch (CurrentRollType)
             {
@@ -177,29 +176,36 @@ public class PlayerMovement : MonoBehaviour
     }
     public void StartLandingRoll()
     {
-        IsLandingRoll = true;
-        RollDirection = PreLandDirection;
-        OnRoll();
+        CurrentState = PlayerState.LandingRoll;
+        RollDirection = PreLandDirection.normalized;
+        RollDirSet = true;
+        
     }
     void OnRoll()
     {
 
-        if (CurrentState == PlayerState.Rolling || !IsGrounded) return;
+        
+        if (CurrentState == PlayerState.Rolling || !IsGrounded || CurrentState == PlayerState.LandingRoll) return;
+        CurrentState = PlayerState.Rolling;
+        PlayerAnimator.SetTrigger("Roll");
 
-            if (MoveDir.sqrMagnitude > 0.1f)
+        if (MoveDir.sqrMagnitude > 0.1f)
                  RollDirection = MoveDir.normalized;
             else
                  RollDirection = transform.forward.normalized;
            
         
         RollDirSet = false;
-        if (!IsLandingRoll)
-            CurrentState = PlayerState.Rolling;          
+        
+        
+           
+        
+                    
     }
 
     public void EndRoll()
     {
-        IsLandingRoll = false;
+        
 
         CurrentState = PlayerState.Idling;
         
@@ -274,7 +280,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Snap player to stop if no input is pressed and not rolling
     
-        if (Move.sqrMagnitude < 0.01f && IsGrounded && CurrentState != PlayerState.Rolling)
+        if (Move.sqrMagnitude < 0.01f && IsGrounded && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.LandingRoll)
         {
             rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
             return;
@@ -284,7 +290,7 @@ public class PlayerMovement : MonoBehaviour
             PreLandDirection = MoveDir.sqrMagnitude > 0.1f
                 ? MoveDir.normalized : transform.forward;
         }
-        if (CurrentState == PlayerState.Rolling)
+        if (CurrentState == PlayerState.Rolling || CurrentState == PlayerState.LandingRoll)
         {
 
             if (!RollDirSet)
@@ -296,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (MoveDir.sqrMagnitude > 0.00001f && IsGrounded&&!IsLandingRoll)
+        if (MoveDir.sqrMagnitude > 0.00001f && IsGrounded&& CurrentState != PlayerState.LandingRoll)
         {
             // Only rotate if we have significant input
             if (MoveDir.magnitude > 0.1f)
