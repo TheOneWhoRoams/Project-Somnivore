@@ -15,13 +15,11 @@ public class PlayerMovement : MonoBehaviour
     public float RollAnimationSpeed;
     float CurrSpeed;
     bool RollDirSet = false;
-    bool IsFloating = false;
     bool HasJumped = false;
     bool ShowDebug = false;
     Vector2 Move;
     Vector3 MoveForce;
     Vector3 MoveDir;
-    Vector3 TargetDir;
     private Vector3 RollDirection;
     private Vector3 PreLandDirection;
     Animator PlayerAnimator;
@@ -30,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public RollType CurrentRollType;
     enum PlayerState {Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
     PlayerState CurrentState = PlayerState.Idling;
+    bool IsGroundedThisFrame;
     
     
 
@@ -84,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
     void IdleCheck()
     {
         //is the player idle?
-        if (GroundedCheck() && Move.sqrMagnitude < 0.1f && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.Jumping && CurrentState != PlayerState.LandingRoll)
+        if (IsGroundedThisFrame && Move.sqrMagnitude < 0.1f && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.Jumping && CurrentState != PlayerState.LandingRoll)
             CurrentState = PlayerState.Idling;
 
     }
@@ -131,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         //is the player in air?
-        if (GroundedCheck()) 
+        if (IsGroundedThisFrame) 
             PlayerAnimator.SetBool("IsGrounded", true);
         else 
             PlayerAnimator.SetBool("IsGrounded", false);
@@ -157,15 +156,15 @@ public class PlayerMovement : MonoBehaviour
     {
         
         Move = value.Get<Vector2>();
-        if (CurrentState != PlayerState.Rolling && GroundedCheck() && CurrentState != PlayerState.Sprinting && CurrentState != PlayerState.Jumping && Move.sqrMagnitude > 0.01f)
+        if (CurrentState != PlayerState.Rolling && IsGroundedThisFrame && CurrentState != PlayerState.Sprinting && CurrentState != PlayerState.Jumping && Move.sqrMagnitude > 0.01f)
             CurrentState = PlayerState.Walking;
     }
     void OnJump()
     {
-        if (CurrentState == PlayerState.Rolling || !GroundedCheck())
+        if (CurrentState == PlayerState.Rolling || !IsGroundedThisFrame)
             return;
 
-        if (GroundedCheck())
+        if (IsGroundedThisFrame)
         {
             rb.AddForce(Vector3.up * JumpForce);
             CurrentState = PlayerState.Jumping;
@@ -184,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnRoll()
     { 
-        if (CurrentState == PlayerState.Rolling || !GroundedCheck() || CurrentState == PlayerState.LandingRoll) return;
+        if (CurrentState == PlayerState.Rolling || !IsGroundedThisFrame || CurrentState == PlayerState.LandingRoll) return;
         CurrentState = PlayerState.Rolling;
         PlayerAnimator.SetTrigger("Roll");
 
@@ -234,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
     void OnSprint(InputValue value) 
     {
         bool IsPressed = value.isPressed;
-        if (IsPressed && CurrentState != PlayerState.Rolling && GroundedCheck() && Move.sqrMagnitude > 0.01f)
+        if (IsPressed && CurrentState != PlayerState.Rolling && IsGroundedThisFrame && Move.sqrMagnitude > 0.01f)
             CurrentState = PlayerState.Sprinting;
         else
             CurrentState = PlayerState.Idling;
@@ -258,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
     void SpeedKillerOnNoInput()
     {
         // Snap player to stop if no input is pressed and not rolling
-        if (Move.sqrMagnitude < 0.01f && GroundedCheck() && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.LandingRoll)
+        if (Move.sqrMagnitude < 0.01f && IsGroundedThisFrame && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.LandingRoll)
         {
             //maintain y velocity to not mess with gravity
             rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
@@ -277,7 +276,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void RollDirectionHandler()
     {
-        if (!GroundedCheck())
+        if (!IsGroundedThisFrame)
         {
             PreLandDirection = MoveDir.sqrMagnitude > 0.1f
                 ? MoveDir.normalized : transform.forward;
@@ -299,7 +298,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void MovementHandler()
     {
-        if (MoveDir.sqrMagnitude > 0.00001f && GroundedCheck() && CurrentState != PlayerState.LandingRoll)
+        if (CurrentState == PlayerState.Rolling || CurrentState == PlayerState.LandingRoll) return;
+        if (MoveDir.sqrMagnitude > 0.00001f && IsGroundedThisFrame   && CurrentState != PlayerState.LandingRoll)
         {
             // Only rotate if we have significant input
             if (MoveDir.magnitude > 0.1f)
@@ -320,13 +320,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        IsGroundedThisFrame = GroundedCheck(); 
         IdleCheck();
         AnimationHandler();
         
     }
     private void FixedUpdate()
     {
-        GroundedCheck();
+        
         SprintAndWalkSpeedSwitcher();
         CameraHandler();
         SpeedKillerOnNoInput();
