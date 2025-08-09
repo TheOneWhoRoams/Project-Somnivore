@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] private PhysicsHandler PhysicsHandling;
+
+    //[SerializeField] private PhysicsHandler PhysicsHandling;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -15,7 +15,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
     float CurrSpeed;
     bool StartRollVelocity = false;
     bool RollDirSet = false;
-    bool WantsToRoll = false;
     bool IsGroundedThisFrame;
 
     Vector2 Move;
@@ -30,11 +29,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
     
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
-   
+    
+    
     enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
     PlayerState CurrentState = PlayerState.Idling;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void StateCheck()
+    {
+      
+    }
     void RollParams()
     {
         if (CurrentState != PlayerState.LandingRoll)
@@ -195,6 +199,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        
+        IsGroundedThisFrame = GroundedCheck();
+        SprintAndWalkSpeedSwitcher();
+        RollParams();
+        SpeedKillerOnNoInput();
+        RollDirectionHandler();
+        RollHandler();
+        MovementHandler();
+        CameraHandler();
     }
 }
