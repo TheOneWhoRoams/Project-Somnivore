@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
 
-
+    public float VerticalVelocity;
     Rigidbody rb;
     public float MoveSpeed;
     public float JumpForce;
@@ -16,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     float CurrSpeed;
     bool StartRollVelocity = false;
     bool RollDirSet = false;
-    
+
     bool ShowDebug = false;
     bool WantsToRoll = false;
     Vector2 Move;
@@ -28,11 +29,11 @@ public class PlayerMovement : MonoBehaviour
     private Camera MainCamera;
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
-    enum PlayerState {Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
-    PlayerState CurrentState = PlayerState.Idling;
-    bool IsGroundedThisFrame;
-    
-    
+    public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
+    public PlayerState CurrentState = PlayerState.Idling;
+    public bool IsGroundedThisFrame;
+
+
 
 
     private void Start()
@@ -70,17 +71,21 @@ public class PlayerMovement : MonoBehaviour
         //other
         GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + CurrentState);
         y += LineHeight;
-        
+
         //display speed variables
         GUI.Label(new Rect(10, y, 300, LineHeight), "RollSpeed: " + RollSpeed);
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "Current Speed: " + CurrSpeed);
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "Current Linear Velocity: " + rb.linearVelocity);
+        y += LineHeight;
+
     }
     void OnDebugger()
     {
-        
+
         ShowDebug = !ShowDebug;
-        
+
     }
     void IdleCheck()
     {
@@ -128,39 +133,13 @@ public class PlayerMovement : MonoBehaviour
             VerticalVelocity = 0f;
         return VerticalVelocity;
     }
-    void AnimationHandler()
-    {
-        
-        //is the player in air?
-        if (IsGroundedThisFrame) 
-            PlayerAnimator.SetBool("IsGrounded", true);
-        else 
-            PlayerAnimator.SetBool("IsGrounded", false);
-        //walk and sprint handling
-        if (CurrentState == PlayerState.Walking ) 
-            PlayerAnimator.SetBool("IsWalking", true);
-        else 
-            PlayerAnimator.SetBool("IsWalking", false);
-
-        if (CurrentState  == PlayerState.Sprinting)  
-            PlayerAnimator.SetBool("IsSprinting", true);
-        else 
-            PlayerAnimator.SetBool("IsSprinting", false);
-        //Vertical Velocity calculations and passing
-        
-
-        PlayerAnimator.SetFloat("VelocityY", VerticalVelocityCalc());
-
-        //roll parameter handling
-        RollParams();
-    }
     void InitiateRollVelocity()
     {
         StartRollVelocity = true;
     }
     void OnMove(InputValue value)
     {
-        
+
         Move = value.Get<Vector2>();
         if (CurrentState != PlayerState.Rolling && IsGroundedThisFrame && CurrentState != PlayerState.Sprinting && CurrentState != PlayerState.Jumping && Move.sqrMagnitude > 0.01f)
             CurrentState = PlayerState.Walking;
@@ -174,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * JumpForce);
             CurrentState = PlayerState.Jumping;
-            PlayerAnimator.SetTrigger("Jump");         
+            PlayerAnimator.SetTrigger("Jump");
         }
         return;
     }
@@ -183,12 +162,13 @@ public class PlayerMovement : MonoBehaviour
         CurrentState = PlayerState.LandingRoll;
         RollDirection = PreLandDirection.normalized;
         RollDirSet = true;
-        
+        InitiateRollVelocity();
+
     }
     void OnRoll()
-    { 
+    {
         if (CurrentState == PlayerState.Rolling || !IsGroundedThisFrame || CurrentState == PlayerState.LandingRoll) return;
-        WantsToRoll = true;      
+        WantsToRoll = true;
     }
     void RollIntentHandler()
     {
@@ -240,31 +220,31 @@ public class PlayerMovement : MonoBehaviour
                 }
         }
         */
-        RollSpeed = 1f;        
+        RollSpeed = 1f;
     }
-  
-    void OnSprint(InputValue value) 
+
+    void OnSprint(InputValue value)
     {
         bool IsPressed = value.isPressed;
         if (IsPressed && CurrentState != PlayerState.Rolling && IsGroundedThisFrame && Move.sqrMagnitude > 0.01f)
             CurrentState = PlayerState.Sprinting;
         else
             CurrentState = PlayerState.Idling;
-        
+
     }
     bool GroundedCheck()
     {
         bool IsGrounded;
         Vector3 StartPosition = transform.position + Vector3.up * 0.1f;
         float RayCastLength = 0.45f;
-        IsGrounded= Physics.Raycast(StartPosition, Vector3.down, RayCastLength);
+        IsGrounded = Physics.Raycast(StartPosition, Vector3.down, RayCastLength);
         return IsGrounded;
-    }   
+    }
     void SprintAndWalkSpeedSwitcher()
     {
-        if (CurrentState == PlayerState.Sprinting) 
+        if (CurrentState == PlayerState.Sprinting)
             CurrSpeed = MoveSpeed + SprintSpeedAddition;
-        else 
+        else
             CurrSpeed = MoveSpeed;
     }
     void SpeedKiller()
@@ -272,12 +252,18 @@ public class PlayerMovement : MonoBehaviour
         //maintain y velocity to not mess with gravity
         rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
     }
+    bool ShouldMainTainMomentum()
+    {
+        return !(Move.sqrMagnitude < 0.01f && IsGroundedThisFrame && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.LandingRoll && CurrentState != PlayerState.Jumping);
+    }
     void SpeedKillerOnNoInput()
     {
+        if (CurrentState == PlayerState.Jumping)
+            Task.Delay(500);
         // Snap player to stop if no input is pressed and not rolling
-        if (Move.sqrMagnitude < 0.01f && IsGroundedThisFrame && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.LandingRoll)
+        if (!ShouldMainTainMomentum())
         {
-            
+
             SpeedKiller();
         }
     }
@@ -303,7 +289,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (CurrentState == PlayerState.Rolling || CurrentState == PlayerState.LandingRoll)
         {
-            
+
             if (!RollDirSet)
             {
 
@@ -314,14 +300,14 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearVelocity = new Vector3(RollDirection.x * RollSpeed, rb.linearVelocity.y, RollDirection.z * RollSpeed);
                 StartRollVelocity = false;
             }
-            
+
             return;
         }
     }
     void MovementHandler()
     {
         if (CurrentState == PlayerState.Rolling || CurrentState == PlayerState.LandingRoll) return;
-        if (MoveDir.sqrMagnitude > 0.00001f && IsGroundedThisFrame   && CurrentState != PlayerState.LandingRoll)
+        if (MoveDir.sqrMagnitude > 0.00001f && IsGroundedThisFrame && CurrentState != PlayerState.LandingRoll)
         {
             // Only rotate if we have significant input
             if (MoveDir.magnitude > 0.1f)
@@ -342,24 +328,26 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        VerticalVelocity = VerticalVelocityCalc();
         IsGroundedThisFrame = GroundedCheck();
         RollIntentHandler();
         IdleCheck();
-        AnimationHandler();
-        
+        RollParams();
+
     }
     private void FixedUpdate()
     {
-        
+
         RollDirectionHandler();
         RollHandler();
-        SpeedKillerOnNoInput();
+        CameraHandler();
         SprintAndWalkSpeedSwitcher();
         MovementHandler();
-        CameraHandler();
-        
-        
-             
+        SpeedKillerOnNoInput();
+
+
+
+
     }
-    
+
 }

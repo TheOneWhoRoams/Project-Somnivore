@@ -1,0 +1,59 @@
+[33mcommit aa5687bf2fdbcf6f8b9f2b12a8e522307064aeaf[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Sat Aug 9 13:45:38 2025 +0200
+
+    .
+
+[33mcommit 6c0a73ce12aef14c3dfa730b629960fc5059c5ac[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Sat Aug 9 13:45:19 2025 +0200
+
+    further cleanup and capitulation
+
+[33mcommit c6bb8bfdf1d15d4d39a43b6189a1ec1b4d76d0b2[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Fri Aug 8 22:01:17 2025 +0200
+
+    started the process of de GODCLASSyfing the script
+
+[33mcommit cb8ac073e218ce6b069b5417419b196efb46523e[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Thu Aug 7 17:06:16 2025 +0200
+
+    further cleanup, scuffed the roll further
+
+[33mcommit 78bb5591bd860d0380f8b217ad006db826a6e505[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Thu Aug 7 16:31:44 2025 +0200
+
+    further cleanup, addressed the incorrect roll behavior
+
+[33mcommit fd113ac286995a075c6a1182669739b411f845bd[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Thu Aug 7 16:14:58 2025 +0200
+
+    de-spaghettified the code, reduced magic numbers, increased readability, introduced a rolling bug
+
+[33mcommit 9580f3753df45328eb0a5c4c965d610e8b42ed3c[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Thu Aug 7 00:33:04 2025 +0200
+
+    fixed animation inconsistencies resulting from the decoupling
+
+[33mcommit 9e4d2f2513b74594c16252feb8298fd918ce5973[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Wed Aug 6 19:12:33 2025 +0200
+
+    partially fixed incorrect jump behavior
+
+[33mcommit 911c9c678ad2ab16715c5791a645766dfd2558c4[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Wed Aug 6 18:58:40 2025 +0200
+
+    Ignore VS cache files, decoupled animation code, introduced a bug, end me.
+
+[33mcommit bba3d70f2a72c5b4e9852a48f9f2db7331980cfe[m
+Author: Szef <EliaszWarzochaNetAcad@gmail.com>
+Date:   Wed Aug 6 11:55:35 2025 +0200
+
+    Initial commit
