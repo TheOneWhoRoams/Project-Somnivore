@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     [HideInInspector] public bool ShowDebug = false;
     [HideInInspector] public bool WantsToRoll = false;
-    Vector2 Move;
+    [HideInInspector] public Vector2 Move;
     Vector3 MoveForce;
     Vector3 MoveDir;
     private Vector3 RollDirection;
@@ -54,12 +54,7 @@ public class PlayerMovement : MonoBehaviour
     { 
         return Move.sqrMagnitude > 0.01f;
     }
-    /*void OnDebugger()
-    {
-
-        ShowDebug = !ShowDebug;
-
-    }*/
+   
     void IdleCheck()
     {
         //is the player idle?
@@ -110,26 +105,7 @@ public class PlayerMovement : MonoBehaviour
     {
         StartRollVelocity = true;
     }
-   /* void OnMove(InputValue value)
-    {
-
-        Move = value.Get<Vector2>();
-        if (CurrentState != PlayerState.Rolling && IsGroundedThisFrame && CurrentState != PlayerState.Sprinting && CurrentState != PlayerState.Jumping && MinMovMagnitude())
-            CurrentState = PlayerState.Walking;
-    }
-   /* void OnJump()
-    {
-        if (CurrentState == PlayerState.Rolling || !IsGroundedThisFrame)
-            return;
-
-        if (IsGroundedThisFrame)
-        {
-            rb.AddForce(Vector3.up * JumpForce);
-            CurrentState = PlayerState.Jumping;
-            PlayerAnimator.SetTrigger("Jump");
-        }
-        return;
-    }*/
+   
     public void StartLandingRoll()
     {
         CurrentState = PlayerState.LandingRoll;
@@ -138,11 +114,7 @@ public class PlayerMovement : MonoBehaviour
         InitiateRollVelocity();
 
     }
-   /* void OnRoll()
-    {
-        if (CurrentState == PlayerState.Rolling || !IsGroundedThisFrame || CurrentState == PlayerState.LandingRoll) return;
-        WantsToRoll = true;
-    }*/
+  
     void RollIntentHandler()
     {
         if (WantsToRoll)
@@ -196,15 +168,7 @@ public class PlayerMovement : MonoBehaviour
         RollSpeed = 1f;
     }
 
-  /*  void OnSprint(InputValue value)
-    {
-        bool IsPressed = value.isPressed;
-        if (IsPressed && CurrentState != PlayerState.Rolling && IsGroundedThisFrame && Move.sqrMagnitude > 0.01f)
-            CurrentState = PlayerState.Sprinting;
-        else
-            CurrentState = PlayerState.Idling;
-
-    }*/
+  
     bool GroundedCheck()
     {
         bool IsGrounded;

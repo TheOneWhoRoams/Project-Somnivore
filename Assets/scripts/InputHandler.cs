@@ -8,7 +8,7 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField] private PlayerMovement PlayerMovement;
     Rigidbody rb;
-    Vector2 Move;
+    
     [HideInInspector] public bool WantsToJump;
     [HideInInspector] public bool WantsToRoll;
     [HideInInspector] public bool WantsToWalk;
@@ -56,7 +56,7 @@ public class InputHandler : MonoBehaviour
     void OnMove(InputValue value)
     {
 
-        Move = value.Get<Vector2>();
+        PlayerMovement.Move = value.Get<Vector2>();
         if (CanMove())
             PlayerMovement.CurrentState = PlayerState.Walking;
     }
