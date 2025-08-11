@@ -772,6 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InputHandling: {fileID: 638622976}
+  PlayerStateHandling: {fileID: 638622979}
   VerticalVelocity: 0
   MoveSpeed: 5
   JumpForce: 200
@@ -780,9 +781,8 @@ MonoBehaviour:
   RollAnimationSpeed: 0
   CurrSpeed: 0
   ShowDebug: 0
-  WantsToRoll: 0
+  Move: {x: 0, y: 0}
   CurrentRollType: 0
-  CurrentState: 0
   IsGroundedThisFrame: 0
 --- !u!54 &638622970
 Rigidbody:
@@ -852,6 +852,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMovement: {fileID: 638622969}
+  InputHandling: {fileID: 0}
+  PlayerStateHandling: {fileID: 0}
 --- !u!114 &638622975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,6 +867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMovement: {fileID: 638622969}
+  PlayerStateHandling: {fileID: 638622979}
 --- !u!114 &638622976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,28 +881,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMovement: {fileID: 638622969}
+  PlayerStateHandling: {fileID: 638622979}
   WantsToJump: 0
   WantsToRoll: 0
   WantsToWalk: 0
   WantsToSprint: 0
---- !u!114 &638622977
+--- !u!114 &638622979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638622964}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f6733da0d589694f97927d0d1e68829, type: 3}
+  m_Script: {fileID: 11500000, guid: 95b96301bd01ab34a90b95070fe6c2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 0
-  JumpForce: 0
-  SprintSpeedAddition: 0
-  RollSpeed: 0
-  RollAnimationSpeed: 0
-  CurrentRollType: 0
+  PlayerMovement: {fileID: 638622969}
+  InputHandling: {fileID: 638622976}
+  CurrentState: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,13 +1746,13 @@ PrefabInstance:
       addedObject: {fileID: 638622971}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f1e8e1bfafe7fa241ba6b4181f3eba85, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 638622977}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f1e8e1bfafe7fa241ba6b4181f3eba85, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 638622976}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f1e8e1bfafe7fa241ba6b4181f3eba85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 638622975}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f1e8e1bfafe7fa241ba6b4181f3eba85, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 638622979}
   m_SourcePrefab: {fileID: 100100000, guid: f1e8e1bfafe7fa241ba6b4181f3eba85, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

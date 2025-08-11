@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private InputHandler InputHandling;
+    [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [HideInInspector] public float VerticalVelocity;
     Rigidbody rb;
     public float MoveSpeed;
@@ -19,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     bool RollDirSet = false;
 
     [HideInInspector] public bool ShowDebug = false;
-    [HideInInspector] public bool WantsToRoll = false;
     [HideInInspector] public Vector2 Move;
     Vector3 MoveForce;
     Vector3 MoveDir;
@@ -29,8 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private Camera MainCamera;
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
-    [HideInInspector]public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
-    [HideInInspector]public PlayerState CurrentState = PlayerState.Idling;
+    
     public bool IsGroundedThisFrame;
 
 
@@ -55,16 +54,10 @@ public class PlayerMovement : MonoBehaviour
         return Move.sqrMagnitude > 0.01f;
     }
    
-    void IdleCheck()
-    {
-        //is the player idle?
-        if (IsGroundedThisFrame && Move.sqrMagnitude < 0.1f && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.Jumping && CurrentState != PlayerState.LandingRoll)
-            CurrentState = PlayerState.Idling;
-
-    }
+    
     void RollParams()
     {
-        if (CurrentState != PlayerState.LandingRoll)
+        if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
         {
             switch (CurrentRollType)
             {
@@ -108,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
    
     public void StartLandingRoll()
     {
-        CurrentState = PlayerState.LandingRoll;
+        PlayerStateHandling.CurrentState = PlayerStateHandler.PlayerState.LandingRoll;
         RollDirection = PreLandDirection.normalized;
         RollDirSet = true;
         InitiateRollVelocity();
@@ -117,14 +110,14 @@ public class PlayerMovement : MonoBehaviour
   
     void RollIntentHandler()
     {
-        if (WantsToRoll)
+        if (InputHandling.WantsToRoll)
         {
-            WantsToRoll = false;
+            
 
-            CurrentState = PlayerState.Rolling;
+            
             PlayerAnimator.SetTrigger("Roll");
 
-            if (MoveDir.sqrMagnitude > 0.1f)
+            if (MinMovMagnitude())
                 RollDirection = MoveDir.normalized;
             else
                 RollDirection = transform.forward.normalized;
@@ -135,7 +128,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void EndRoll()
     {
-        CurrentState = PlayerState.Idling;
+        InputHandling.WantsToRoll = false;
+        PlayerStateHandling.CurrentState = PlayerStateHandler.PlayerState.Idling;
         RollDirSet = false;
     }
     public void MidRollSpeedVariance()
@@ -179,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void SprintAndWalkSpeedSwitcher()
     {
-        if (CurrentState == PlayerState.Sprinting)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Sprinting)
             CurrSpeed = MoveSpeed + SprintSpeedAddition;
         else
             CurrSpeed = MoveSpeed;
@@ -191,11 +185,14 @@ public class PlayerMovement : MonoBehaviour
     }
     bool ShouldMainTainMomentum()
     {
-        return !(Move.sqrMagnitude < 0.01f && IsGroundedThisFrame && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.LandingRoll && CurrentState != PlayerState.Jumping);
+        return !(Move.sqrMagnitude < 0.01f && IsGroundedThisFrame && 
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && 
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll && 
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping);
     }
-    void SpeedKillerOnNoInput()
+    void SpeedKillerOnNoInput() 
     {
-        if (CurrentState == PlayerState.Jumping)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Jumping)
             Task.Delay(500);
         // Snap player to stop if no input is pressed and not rolling
         if (!ShouldMainTainMomentum())
@@ -224,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void RollHandler()
     {
-        if (CurrentState == PlayerState.Rolling || CurrentState == PlayerState.LandingRoll)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll)
         {
 
             if (!RollDirSet)
@@ -243,8 +240,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void MovementHandler()
     {
-        if (CurrentState == PlayerState.Rolling || CurrentState == PlayerState.LandingRoll) return;
-        if (MinMovMagnitude() && IsGroundedThisFrame && CurrentState != PlayerState.LandingRoll)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll) return;
+        if (MinMovMagnitude() && IsGroundedThisFrame && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
         {
             // Only rotate if we have significant input
             if (MinMovMagnitude())
@@ -268,7 +265,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGroundedThisFrame&&InputHandling.WantsToJump)
         {
             rb.AddForce(Vector3.up * JumpForce);
-            CurrentState = PlayerState.Jumping;
+            PlayerStateHandling.CurrentState = PlayerStateHandler.PlayerState.Jumping;
             PlayerAnimator.SetTrigger("Jump");
             InputHandling.WantsToJump = false;
         }
@@ -279,7 +276,6 @@ public class PlayerMovement : MonoBehaviour
         VerticalVelocity = VerticalVelocityCalc();
         IsGroundedThisFrame = GroundedCheck();
         RollIntentHandler();
-        IdleCheck();
         RollParams();
 
     }

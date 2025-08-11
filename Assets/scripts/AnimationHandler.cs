@@ -4,9 +4,18 @@ using UnityEngine.Playables;
 public class AnimationHandler : MonoBehaviour
 {
     [SerializeField] private PlayerMovement PlayerMovement;
+    [SerializeField] private InputHandler InputHandling;
+    [SerializeField] private PlayerStateHandler PlayerStateHandling;
     Animator PlayerAnimator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
+    void TriggerHandler()
+    {
+        if (PlayerMovement.IsGroundedThisFrame && InputHandling.WantsToJump)
+            PlayerAnimator.SetTrigger("Jump");            
+        
+        return;
+    }
     void AnimationHandling()
     {
         
@@ -16,12 +25,12 @@ public class AnimationHandler : MonoBehaviour
         else
             PlayerAnimator.SetBool("IsGrounded", false);
         //walk and sprint handling
-        if (PlayerMovement.CurrentState == PlayerMovement.PlayerState.Walking)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Walking)
             PlayerAnimator.SetBool("IsWalking", true);
         else
             PlayerAnimator.SetBool("IsWalking", false);
 
-        if (PlayerMovement.CurrentState == PlayerMovement.PlayerState.Sprinting)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Sprinting)
             PlayerAnimator.SetBool("IsSprinting", true);
         else
             PlayerAnimator.SetBool("IsSprinting", false);

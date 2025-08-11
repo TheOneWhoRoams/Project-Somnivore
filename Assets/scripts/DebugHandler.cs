@@ -4,6 +4,7 @@ public class DebugHandler : MonoBehaviour
 {
 
     [SerializeField] private PlayerMovement PlayerMovement;
+    [SerializeField] private PlayerStateHandler PlayerStateHandling;
     Animator PlayerAnimator;
     Rigidbody rb;
     void OnGUI()
@@ -25,7 +26,7 @@ public class DebugHandler : MonoBehaviour
         GUI.Label(new Rect(10, y, 300, LineHeight), "VelocityY: " + PlayerAnimator.GetFloat("VelocityY"));
         y += LineHeight;
         //other
-        GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + PlayerMovement.CurrentState);
+        GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + PlayerStateHandling.CurrentState);
         y += LineHeight;
 
         //display speed variables

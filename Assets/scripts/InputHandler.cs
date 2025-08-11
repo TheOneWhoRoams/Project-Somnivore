@@ -7,6 +7,7 @@ using static PlayerMovement;
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] private PlayerMovement PlayerMovement;
+    [SerializeField] private PlayerStateHandler PlayerStateHandling;
     Rigidbody rb;
     
     [HideInInspector] public bool WantsToJump;
@@ -14,33 +15,25 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToWalk;
     [HideInInspector] public bool WantsToSprint;
 
+
     void OnJump()
     {
-        if (PlayerMovement.CurrentState == PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame)
             return;
-
         WantsToJump = true;
-
-        /*if (PlayerMovement.IsGroundedThisFrame)
-        {
-            rb.AddForce(Vector3.up * JumpForce);
-            PlayerMovement.CurrentState = PlayerState.Jumping;
-            PlayerAnimator.SetTrigger("Jump");
-        }
-        return;*/
     }
     void OnRoll()
     {
-        if (PlayerMovement.CurrentState == PlayerMovement.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame || PlayerMovement.CurrentState == PlayerMovement.PlayerState.LandingRoll) return;
-        PlayerMovement.WantsToRoll = true;
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll) 
+            return;
+        WantsToRoll = true;
     }
     void OnSprint(InputValue value)
     {
         bool IsPressed = value.isPressed;
-        if (IsPressed && PlayerMovement.CurrentState != PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame && PlayerMovement.MinMovMagnitude())
-            PlayerMovement.CurrentState = PlayerState.Sprinting;
-        else
-            PlayerMovement.CurrentState = PlayerState.Idling;
+        if (IsPressed &&PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame && PlayerMovement.MinMovMagnitude())
+            WantsToSprint = true;
+        
 
     }
     void OnDebugger()
@@ -51,14 +44,16 @@ public class InputHandler : MonoBehaviour
     }
     bool CanMove()
     {
-        return PlayerMovement.CurrentState != PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame && PlayerMovement.CurrentState != PlayerState.Sprinting && PlayerMovement.CurrentState != PlayerState.Jumping && PlayerMovement.MinMovMagnitude();
+        return PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame &&
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Sprinting && 
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping && PlayerMovement.MinMovMagnitude();
     }
     void OnMove(InputValue value)
     {
 
         PlayerMovement.Move = value.Get<Vector2>();
         if (CanMove())
-            PlayerMovement.CurrentState = PlayerState.Walking;
+            WantsToWalk = true;
     }
     //[SerializeField] private PhysicsHandler PhysicsHandling;
 
