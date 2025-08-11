@@ -771,12 +771,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22832c6051d64848a73441c83726183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InputHandling: {fileID: 638622976}
   VerticalVelocity: 0
   MoveSpeed: 5
   JumpForce: 200
   SprintSpeedAddition: 3
   RollSpeed: 5
   RollAnimationSpeed: 0
+  CurrSpeed: 0
+  ShowDebug: 0
+  WantsToRoll: 0
   CurrentRollType: 0
   CurrentState: 0
   IsGroundedThisFrame: 0
@@ -855,11 +859,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638622964}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2724d6e31a3a59e43b13207584170d38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerMovement: {fileID: 638622969}
 --- !u!114 &638622976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,11 +872,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638622964}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce5cfeae79f1d28458add34783be0675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerMovement: {fileID: 638622969}
+  WantsToJump: 0
+  WantsToRoll: 0
+  WantsToWalk: 0
+  WantsToSprint: 0
 --- !u!114 &638622977
 MonoBehaviour:
   m_ObjectHideFlags: 0
