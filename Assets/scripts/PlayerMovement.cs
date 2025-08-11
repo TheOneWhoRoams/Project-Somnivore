@@ -7,18 +7,18 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float VerticalVelocity;
+    [HideInInspector] public float VerticalVelocity;
     Rigidbody rb;
     public float MoveSpeed;
     public float JumpForce;
     public float SprintSpeedAddition;
-    public float RollSpeed;
+   [HideInInspector] public float RollSpeed;
     public float RollAnimationSpeed;
-    float CurrSpeed;
+    [HideInInspector] public float CurrSpeed;
     bool StartRollVelocity = false;
     bool RollDirSet = false;
 
-    bool ShowDebug = false;
+    [HideInInspector] public bool ShowDebug = false;
     bool WantsToRoll = false;
     Vector2 Move;
     Vector3 MoveForce;
@@ -50,37 +50,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerAnimator.SetTrigger("roll");
         */
     }
-    void OnGUI()
-    {
-        if (!ShowDebug)
-            return;
-        float y = 10f;
-        float LineHeight = 20f;
-
-        //display animator bools
-        GUI.Label(new Rect(10, y, 300, LineHeight), "IsGrounded: " + PlayerAnimator.GetBool("IsGrounded"));
-        y += LineHeight;
-        GUI.Label(new Rect(10, y, 300, LineHeight), "IsWalking: " + PlayerAnimator.GetBool("IsWalking"));
-        y += LineHeight;
-        GUI.Label(new Rect(10, y, 300, LineHeight), "IsSprinting: " + PlayerAnimator.GetBool("IsSprinting"));
-        y += LineHeight;
-
-        //display animator floats
-        GUI.Label(new Rect(10, y, 300, LineHeight), "VelocityY: " + PlayerAnimator.GetFloat("VelocityY"));
-        y += LineHeight;
-        //other
-        GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + CurrentState);
-        y += LineHeight;
-
-        //display speed variables
-        GUI.Label(new Rect(10, y, 300, LineHeight), "RollSpeed: " + RollSpeed);
-        y += LineHeight;
-        GUI.Label(new Rect(10, y, 300, LineHeight), "Current Speed: " + CurrSpeed);
-        y += LineHeight;
-        GUI.Label(new Rect(10, y, 300, LineHeight), "Current Linear Velocity: " + rb.linearVelocity);
-        y += LineHeight;
-
-    }
+    
     void OnDebugger()
     {
 
