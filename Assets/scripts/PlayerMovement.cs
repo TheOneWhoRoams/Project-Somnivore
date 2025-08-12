@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float JumpForce;
     public float SprintSpeedAddition;
     [HideInInspector] public float RollSpeed;
-    public float RollAnimationSpeed;
+    
     [HideInInspector] public float CurrSpeed;
     bool StartRollVelocity = false;
     bool RollDirSet = false;
@@ -27,8 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 PreLandDirection;
     Animator PlayerAnimator;
     private Camera MainCamera;
-    public enum RollType { Light, Medium, Heavy, Over };
-    public RollType CurrentRollType;
+    
     
     public bool IsGroundedThisFrame;
 
@@ -39,15 +38,10 @@ public class PlayerMovement : MonoBehaviour
     {
         MainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
-        //animator setup
+       
         PlayerAnimator = GetComponent<Animator>();
         PlayerAnimator.applyRootMotion = false;
-        /*
-        PlayerAnimator.SetBool("IsRunning", false);
-        PlayerAnimator.SetBool("IsFloating", !IsGrounded);
-        PlayerAnimator.SetTrigger("Jump");
-        PlayerAnimator.SetTrigger("roll");
-        */
+        
     }
     public bool MinMovMagnitude()
     { 
@@ -55,37 +49,7 @@ public class PlayerMovement : MonoBehaviour
     }
    
     
-    void RollParams()
-    {
-        if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
-        {
-            switch (CurrentRollType)
-            {
-                case RollType.Light:
-                    {
-                        RollSpeed = 10f;
-                        RollAnimationSpeed = 1.3f; break;
-                    }
-                case RollType.Medium:
-                    {
-                        RollSpeed = 8f;
-                        RollAnimationSpeed = 1f; break;
-                    }
-                case RollType.Heavy:
-                    {
-                        RollSpeed = 6f;
-                        RollAnimationSpeed = 0.7f; break;
-                    }
-                case RollType.Over:
-                    {
-                        RollSpeed = 100f;
-                        RollAnimationSpeed = 1f; break;
-                    }
-            }
-        }
-        else RollSpeed = 4f;
-        PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
-    }
+    
     float VerticalVelocityCalc()
     {
         float VerticalVelocity = rb.linearVelocity.y;
@@ -112,11 +76,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (InputHandling.WantsToRoll)
         {
-            
-
-            
-            PlayerAnimator.SetTrigger("Roll");
-
             if (MinMovMagnitude())
                 RollDirection = MoveDir.normalized;
             else
@@ -193,8 +152,8 @@ public class PlayerMovement : MonoBehaviour
     void SpeedKillerOnNoInput() 
     {
         if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Jumping)
-            Task.Delay(500);
-        // Snap player to stop if no input is pressed and not rolling
+            return;    
+        
         if (!ShouldMainTainMomentum())
         {
 
@@ -265,8 +224,8 @@ public class PlayerMovement : MonoBehaviour
         if (IsGroundedThisFrame&&InputHandling.WantsToJump)
         {
             rb.AddForce(Vector3.up * JumpForce);
-            PlayerStateHandling.CurrentState = PlayerStateHandler.PlayerState.Jumping;
-            PlayerAnimator.SetTrigger("Jump");
+           // PlayerStateHandling.CurrentState = PlayerStateHandler.PlayerState.Jumping;
+            //PlayerAnimator.SetTrigger("Jump");
             InputHandling.WantsToJump = false;
         }
         return;
@@ -276,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
         VerticalVelocity = VerticalVelocityCalc();
         IsGroundedThisFrame = GroundedCheck();
         RollIntentHandler();
-        RollParams();
+        
 
     }
     private void FixedUpdate()

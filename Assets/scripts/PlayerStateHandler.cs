@@ -10,12 +10,12 @@ public class PlayerStateHandler : MonoBehaviour
 
     void SprintState()
     {
-        if(InputHandling.WantsToSprint)
+        if(InputHandling.WantsToSprint&&InputHandling.WantsToWalk)
             CurrentState = PlayerState.Sprinting;
     }
     void WalkState()
     {
-        if(InputHandling.WantsToWalk)
+        if(InputHandling.WantsToWalk&&!InputHandling.WantsToSprint)
             CurrentState = PlayerState.Walking;
     }
     void RollState()

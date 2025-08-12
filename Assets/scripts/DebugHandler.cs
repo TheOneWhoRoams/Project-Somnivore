@@ -5,6 +5,7 @@ public class DebugHandler : MonoBehaviour
 
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
+    [SerializeField] private InputHandler InputHandling;
     Animator PlayerAnimator;
     Rigidbody rb;
     void OnGUI()
@@ -35,6 +36,16 @@ public class DebugHandler : MonoBehaviour
         GUI.Label(new Rect(10, y, 300, LineHeight), "Current Speed: " + PlayerMovement.CurrSpeed);
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "Current Linear Velocity: " + rb.linearVelocity);
+        y += LineHeight;
+        //display input variables
+
+        GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToWalk: " + InputHandling.WantsToWalk);
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToSprint: " + InputHandling.WantsToSprint);
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToJump: " + InputHandling.WantsToJump);
+        y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToRoll: " + InputHandling.WantsToRoll);
         y += LineHeight;
 
     }

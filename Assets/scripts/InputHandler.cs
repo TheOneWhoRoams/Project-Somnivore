@@ -8,6 +8,7 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
+    [SerializeField] private AnimationHandler AnimationHandling;
     Rigidbody rb;
     
     [HideInInspector] public bool WantsToJump;
@@ -21,20 +22,30 @@ public class InputHandler : MonoBehaviour
         if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame)
             return;
         WantsToJump = true;
+        AnimationHandling.PlayJump();
     }
     void OnRoll()
     {
         if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll) 
             return;
         WantsToRoll = true;
+        AnimationHandling.PlayRoll();
     }
     void OnSprint(InputValue value)
     {
         bool IsPressed = value.isPressed;
-        if (IsPressed &&PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame && PlayerMovement.MinMovMagnitude())
+        if (IsPressed&&PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame && PlayerMovement.MinMovMagnitude())
             WantsToSprint = true;
-        
-
+        else
+            WantsToSprint = false;
+        Debug.Log("sprint pressed? " + WantsToSprint);
+    }
+    void SprintStopOnReleasingKey()
+    {
+        if (!PlayerMovement.IsGroundedThisFrame || !PlayerMovement.MinMovMagnitude())
+        {
+            WantsToSprint = false;
+        }
     }
     void OnDebugger()
     {
@@ -50,10 +61,10 @@ public class InputHandler : MonoBehaviour
     }
     void OnMove(InputValue value)
     {
-
+        
         PlayerMovement.Move = value.Get<Vector2>();
-        if (CanMove())
-            WantsToWalk = true;
+
+        WantsToWalk = PlayerMovement.MinMovMagnitude();
     }
     //[SerializeField] private PhysicsHandler PhysicsHandling;
 
@@ -67,6 +78,6 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        SprintStopOnReleasingKey();
     }
 }

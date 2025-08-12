@@ -778,11 +778,9 @@ MonoBehaviour:
   JumpForce: 200
   SprintSpeedAddition: 3
   RollSpeed: 5
-  RollAnimationSpeed: 0
   CurrSpeed: 0
   ShowDebug: 0
   Move: {x: 0, y: 0}
-  CurrentRollType: 0
   IsGroundedThisFrame: 0
 --- !u!54 &638622970
 Rigidbody:
@@ -852,8 +850,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerMovement: {fileID: 638622969}
-  InputHandling: {fileID: 0}
-  PlayerStateHandling: {fileID: 0}
+  InputHandling: {fileID: 638622976}
+  PlayerStateHandling: {fileID: 638622979}
+  CurrentRollType: 0
+  RollAnimationSpeed: 0
 --- !u!114 &638622975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,6 +868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMovement: {fileID: 638622969}
   PlayerStateHandling: {fileID: 638622979}
+  InputHandling: {fileID: 638622976}
 --- !u!114 &638622976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,6 +883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerMovement: {fileID: 638622969}
   PlayerStateHandling: {fileID: 638622979}
+  AnimationHandling: {fileID: 638622974}
   WantsToJump: 0
   WantsToRoll: 0
   WantsToWalk: 0

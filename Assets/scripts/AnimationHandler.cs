@@ -7,38 +7,84 @@ public class AnimationHandler : MonoBehaviour
     [SerializeField] private InputHandler InputHandling;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     Animator PlayerAnimator;
+    public enum RollType { Light, Medium, Heavy, Over };
+    public RollType CurrentRollType;
+    public float RollAnimationSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
-    void TriggerHandler()
+    void RollParams()
     {
-        if (PlayerMovement.IsGroundedThisFrame && InputHandling.WantsToJump)
-            PlayerAnimator.SetTrigger("Jump");            
-        
-        return;
+        if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
+        {
+            switch (CurrentRollType)
+            {
+                case RollType.Light:
+                    {
+                        PlayerMovement.RollSpeed = 10f;
+                        RollAnimationSpeed = 1.3f; break;
+                    }
+                case RollType.Medium:
+                    {
+                        PlayerMovement.RollSpeed = 8f;
+                        RollAnimationSpeed = 1f; break;
+                    }
+                case RollType.Heavy:
+                    {
+                        PlayerMovement.RollSpeed = 6f;
+                        RollAnimationSpeed = 0.7f; break;
+                    }
+                case RollType.Over:
+                    {
+                        PlayerMovement.RollSpeed = 100f;
+                        RollAnimationSpeed = 1f; break;
+                    }
+            }
+        }
+        else PlayerMovement.RollSpeed = 4f;
+        PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
     }
+    public void PlayRoll()
+    {
+        PlayerAnimator.SetTrigger("Roll");
+    }
+    public void PlayJump()
+    {
+        PlayerAnimator.SetTrigger("Jump");
+    }
+    
     void AnimationHandling()
     {
-        
-        //is the player in air?
         if (PlayerMovement.IsGroundedThisFrame)
             PlayerAnimator.SetBool("IsGrounded", true);
         else
             PlayerAnimator.SetBool("IsGrounded", false);
-        //walk and sprint handling
-        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Walking)
-            PlayerAnimator.SetBool("IsWalking", true);
-        else
-            PlayerAnimator.SetBool("IsWalking", false);
 
-        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Sprinting)
-            PlayerAnimator.SetBool("IsSprinting", true);
-        else
-            PlayerAnimator.SetBool("IsSprinting", false);
-        //Vertical Velocity calculations and passing
+        switch (PlayerStateHandling.CurrentState)
+        {
+            case PlayerStateHandler.PlayerState.Walking:
+                {
+                    PlayerAnimator.SetBool("IsWalking", true);
+                    PlayerAnimator.SetBool("IsSprinting", false);
+                    break;
+                }
+            case PlayerStateHandler.PlayerState.Sprinting:
+                {
+                    PlayerAnimator.SetBool("IsWalking", true);
+                    PlayerAnimator.SetBool("IsSprinting", true);
+                    break;
+                }
+            case PlayerStateHandler.PlayerState.Falling:
+            case PlayerStateHandler.PlayerState.LandingRoll:
+            case PlayerStateHandler.PlayerState.Jumping:
+            case PlayerStateHandler.PlayerState.Rolling:
+            case PlayerStateHandler.PlayerState.Idling:
+                {
+                    PlayerAnimator.SetBool("IsWalking", false);
+                    PlayerAnimator.SetBool("IsSprinting", false);
+                    break;
+                }
 
-
+        }
         PlayerAnimator.SetFloat("VelocityY", PlayerMovement.VerticalVelocity);
-
     }
     void Start()
     {
@@ -48,6 +94,7 @@ public class AnimationHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RollParams();
         AnimationHandling();
     }
 }
