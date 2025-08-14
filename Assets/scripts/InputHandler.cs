@@ -16,6 +16,8 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToRoll;
     [HideInInspector] public bool WantsToWalk;
     [HideInInspector] public bool WantsToSprint;
+    [HideInInspector] public float ClimbInput;
+    
 
     bool CanClimb()
     {
@@ -73,10 +75,18 @@ public class InputHandler : MonoBehaviour
     }
     void OnMove(InputValue value)
     {
+        Vector2 input = value.Get<Vector2>();
+        if(PlayerStateHandling.CurrentState!=PlayerStateHandler.PlayerState.Climbing)
+        {
+            PlayerMovement.Move = input;
+            WantsToWalk = PlayerMovement.MinMovMagnitude();
+            
+        }
+        else
+        {
+            ClimbInput = input.y;
+        }
         
-        PlayerMovement.Move = value.Get<Vector2>();
-
-        WantsToWalk = PlayerMovement.MinMovMagnitude();
     }
     //[SerializeField] private PhysicsHandler PhysicsHandling;
 

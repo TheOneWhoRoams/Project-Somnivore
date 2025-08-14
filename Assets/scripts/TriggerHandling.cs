@@ -6,7 +6,7 @@ public class TriggerHandling : MonoBehaviour
     Climbable CurrentClimbable;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit a trigger");
+        
         var climbable = other.GetComponentInParent<Climbable>();
         if(climbable != null)
         {

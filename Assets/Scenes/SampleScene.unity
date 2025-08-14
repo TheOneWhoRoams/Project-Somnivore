@@ -929,6 +929,7 @@ MonoBehaviour:
   InputHandling: {fileID: 638622976}
   PlayerStateHandling: {fileID: 638622979}
   VerticalVelocity: 0
+  ClimbSpeed: 0
   MoveSpeed: 5
   JumpForce: 200
   SprintSpeedAddition: 3
@@ -1036,13 +1037,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce5cfeae79f1d28458add34783be0675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerHandler: {fileID: 638622981}
   PlayerMovement: {fileID: 638622969}
   PlayerStateHandling: {fileID: 638622979}
   AnimationHandling: {fileID: 638622974}
+  WantsToClimb: 0
   WantsToJump: 0
   WantsToRoll: 0
   WantsToWalk: 0
   WantsToSprint: 0
+  ClimbInput: 0
 --- !u!114 &638622979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,6 +1074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b137a5fd7c8004da36b0a7c3beb094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InClimbZone: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,7 +1226,7 @@ Transform:
   m_GameObject: {fileID: 930926951}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.24, y: -7.71, z: 46.1}
+  m_LocalPosition: {x: -13.24, y: -7.4, z: 45.9}
   m_LocalScale: {x: 5, y: 35, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1569,7 +1574,7 @@ Transform:
   m_GameObject: {fileID: 1258148166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.42103, y: -7.69, z: 46.1}
+  m_LocalPosition: {x: 9.42103, y: -7.69, z: 45.88}
   m_LocalScale: {x: 5, y: 35, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []

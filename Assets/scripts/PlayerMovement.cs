@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [HideInInspector] public float VerticalVelocity;
     Rigidbody rb;
+    public float ClimbSpeed;
     public float MoveSpeed;
     public float JumpForce;
     public float SprintSpeedAddition;
@@ -120,8 +121,20 @@ public class PlayerMovement : MonoBehaviour
         */
         RollSpeed = 1f;
     }
-
-  
+    public void Climb(float VerticalInput)
+    {
+        Vector3 ClimbDir = new Vector3(0, VerticalInput * ClimbSpeed, 0); 
+        rb.linearVelocity = ClimbDir;
+    }
+    public void GravityHandler()
+    {
+        if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing)
+            rb.useGravity = true;
+        
+        else
+            rb.useGravity = false;
+        
+    }
     bool GroundedCheck()
     {
         bool IsGrounded;
@@ -199,8 +212,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void MovementHandler()
     {
-        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll) return;
-        if (MinMovMagnitude() && IsGroundedThisFrame && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll) 
+            return;
+        if(PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Climbing)
+        {
+            Climb(InputHandling.ClimbInput);
+        }
+        else if (MinMovMagnitude() && IsGroundedThisFrame && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
         {
             // Only rotate if we have significant input
             if (MinMovMagnitude())
@@ -240,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
+        GravityHandler();
         RollDirectionHandler();
         RollHandler();
         CameraHandler();

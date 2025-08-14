@@ -47,6 +47,8 @@ public class DebugHandler : MonoBehaviour
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToRoll: " + InputHandling.WantsToRoll);
         y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "ClimbInput: " + InputHandling.ClimbInput);
+        y += LineHeight;
 
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
