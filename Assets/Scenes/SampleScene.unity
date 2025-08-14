@@ -929,7 +929,7 @@ MonoBehaviour:
   InputHandling: {fileID: 638622976}
   PlayerStateHandling: {fileID: 638622979}
   VerticalVelocity: 0
-  ClimbSpeed: 0
+  ClimbSpeed: 10
   MoveSpeed: 5
   JumpForce: 200
   SprintSpeedAddition: 3
