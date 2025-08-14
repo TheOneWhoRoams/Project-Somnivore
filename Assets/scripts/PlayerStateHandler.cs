@@ -5,9 +5,16 @@ public class PlayerStateHandler : MonoBehaviour
 {
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
-    [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll };
+    [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing };
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
 
+    void ClimbState()
+    {
+        if (InputHandling.WantsToClimb)
+        {
+            CurrentState = PlayerState.Climbing;
+        }
+    }
     void SprintState()
     {
         if(InputHandling.WantsToSprint&&InputHandling.WantsToWalk)

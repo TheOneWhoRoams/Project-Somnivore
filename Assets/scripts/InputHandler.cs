@@ -6,17 +6,29 @@ using static PlayerMovement;
 
 public class InputHandler : MonoBehaviour
 {
+    [SerializeField] private TriggerHandling TriggerHandler;
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [SerializeField] private AnimationHandler AnimationHandling;
     Rigidbody rb;
-    
+    [HideInInspector] public bool WantsToClimb;
     [HideInInspector] public bool WantsToJump;
     [HideInInspector] public bool WantsToRoll;
     [HideInInspector] public bool WantsToWalk;
     [HideInInspector] public bool WantsToSprint;
 
-
+    bool CanClimb()
+    {
+        return PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame &&
+               PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping&& TriggerHandler.InClimbZone;
+    }
+    void OnInteract()
+    {
+        if (CanClimb())
+        {
+            WantsToClimb = true;
+        }
+    }
     void OnJump()
     {
         if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame)
