@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TriggerHandling : MonoBehaviour
@@ -6,6 +7,7 @@ public class TriggerHandling : MonoBehaviour
     public TriggerType Trigger = TriggerType.Entry;
     public bool ClimbExit = false;
     bool HasChangedClimbingStates = false;
+    public bool AnimatorWantsToExit = false;
     [HideInInspector] public bool InClimbZone = false;
     Climbable CurrentClimbable;
     //todo: exiting climbing
@@ -26,6 +28,7 @@ public class TriggerHandling : MonoBehaviour
             }
             case TriggerType.Exit:
                 {
+                    AnimatorWantsToExit = true;
                     ClimbExit = true;
                     HasChangedClimbingStates = false;
                     InClimbZone = false;

@@ -3,6 +3,7 @@ using UnityEngine.Playables;
 
 public class AnimationHandler : MonoBehaviour
 {
+    [SerializeField] private TriggerHandling TriggerHandler;
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
@@ -42,6 +43,51 @@ public class AnimationHandler : MonoBehaviour
         else PlayerMovement.RollSpeed = 4f;
         PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
     }
+    void ClimbHandling()
+    {
+        switch (InputHandling.ClimbInput)
+        {
+            case -1:
+                {
+                    PlayClimbDescend();
+                    break;
+                }
+            case 0:
+                {
+                    PlayClimbIdle();
+                    break;
+                }
+            case 1:
+                {
+                    PlayClimbAscend();
+                    break;
+                }
+        }
+
+
+    }
+    void PlayClimbDescend()
+    {
+        PlayerAnimator.SetFloat("ClimbSpeed", -1f);
+        PlayerAnimator.SetBool("IsClimbing", true);
+        PlayerAnimator.SetBool("IsClimbingMoving", true);
+        
+    }
+    void PlayClimbAscend()
+    {
+        PlayerAnimator.SetFloat("ClimbSpeed", 1f);
+        PlayerAnimator.SetBool("IsClimbing", true);
+        PlayerAnimator.SetBool("IsClimbingMoving", true);
+    }
+    void PlayClimbIdle()
+    {
+        PlayerAnimator.SetBool("IsClimbing", true);
+        PlayerAnimator.SetBool("IsClimbingMoving", false);
+    }
+    void ClimbExitHandling()
+    {
+        
+    }
     public void PlayRoll()
     {
         PlayerAnimator.SetTrigger("Roll");
@@ -72,11 +118,12 @@ public class AnimationHandler : MonoBehaviour
                     PlayerAnimator.SetBool("IsSprinting", true);
                     break;
                 }
-            case PlayerStateHandler.PlayerState.Falling:
-            case PlayerStateHandler.PlayerState.LandingRoll:
-            case PlayerStateHandler.PlayerState.Jumping:
-            case PlayerStateHandler.PlayerState.Rolling:
-            case PlayerStateHandler.PlayerState.Idling:
+            case PlayerStateHandler.PlayerState.Climbing: 
+                {
+                    ClimbHandling();
+                    break;
+                }
+            default:
                 {
                     PlayerAnimator.SetBool("IsWalking", false);
                     PlayerAnimator.SetBool("IsSprinting", false);
@@ -84,6 +131,7 @@ public class AnimationHandler : MonoBehaviour
                 }
 
         }
+        
         PlayerAnimator.SetFloat("VelocityY", PlayerMovement.VerticalVelocity);
     }
     void Start()

@@ -1088,7 +1088,7 @@ MonoBehaviour:
   InputHandling: {fileID: 638622976}
   PlayerStateHandling: {fileID: 638622979}
   VerticalVelocity: 0
-  ClimbSpeed: 10
+  ClimbSpeed: 3
   MoveSpeed: 5
   JumpForce: 200
   SprintSpeedAddition: 3
@@ -1164,6 +1164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1425e65506c868646a0abb87c63c82e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TriggerHandler: {fileID: 0}
   PlayerMovement: {fileID: 638622969}
   InputHandling: {fileID: 638622976}
   PlayerStateHandling: {fileID: 638622979}
@@ -1236,6 +1237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Trigger: 0
   ClimbExit: 0
+  AnimatorWantsToExit: 0
   InClimbZone: 0
 --- !u!1 &832575517
 GameObject:

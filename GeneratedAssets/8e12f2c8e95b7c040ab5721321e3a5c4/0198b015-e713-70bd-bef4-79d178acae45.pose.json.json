@@ -1,0 +1,11 @@
+{
+    "asset": "8e12f2c8e95b7c040ab5721321e3a5c4",
+    "fileName": "0198b015-e713-70bd-bef4-79d178acae45.pose.json",
+    "prompt": "transition from climbing a ladder upwards to getting on the ledge on top",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1027102154,
+    "w3CTraceId": "688b480f1216b0a85dc385e5cb4f7771",
+    "isTrimmed": false
+}

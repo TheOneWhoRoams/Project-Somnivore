@@ -23,7 +23,7 @@ public class PlayerStateHandler : MonoBehaviour
     {
         if (TriggerHandler.ClimbExit)
         {
-            CurrentState = PlayerState.Idling;
+            CurrentState = PlayerState.ClimbExit;
             TriggerHandler.ClimbExit = false;
         }
             

@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [HideInInspector] public float VerticalVelocity;
     Rigidbody rb;
+    
     public float ClimbSpeed;
     public float MoveSpeed;
     public float JumpForce;

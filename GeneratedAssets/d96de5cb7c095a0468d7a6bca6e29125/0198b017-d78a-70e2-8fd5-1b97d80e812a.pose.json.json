@@ -1,0 +1,11 @@
+{
+    "asset": "d96de5cb7c095a0468d7a6bca6e29125",
+    "fileName": "0198b017-d78a-70e2-8fd5-1b97d80e812a.pose.json",
+    "prompt": "transition from climbing a ladder downwards to exiting it via walking off",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 211709892,
+    "w3CTraceId": "c4e229595755f8536244775dd88effd6",
+    "isTrimmed": false
+}
