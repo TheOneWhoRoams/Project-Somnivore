@@ -1,0 +1,11 @@
+{
+    "asset": "f1b853b5202f91b429f9885006327d3f",
+    "fileName": "0198ab25-1a20-7dba-b2a8-430f59d8d87f.pose.json",
+    "prompt": "exit ladder climb",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 781699845,
+    "w3CTraceId": "d573a0f25dfd93200b509e95353a4b7b",
+    "isTrimmed": false
+}

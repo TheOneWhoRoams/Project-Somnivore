@@ -1,0 +1,11 @@
+{
+    "asset": "f1b853b5202f91b429f9885006327d3f",
+    "fileName": "0198ab24-bf34-76c8-8a21-e467929cdc35.pose.json",
+    "prompt": "ladder idle",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1660395502,
+    "w3CTraceId": "35168602ca2133a7e344e60663d34444",
+    "isTrimmed": false
+}

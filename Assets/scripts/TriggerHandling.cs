@@ -3,7 +3,8 @@ using UnityEngine;
 public class TriggerHandling : MonoBehaviour
 {
     public enum TriggerType { Entry, Exit};
-    public TriggerType Trigger;
+    public TriggerType Trigger = TriggerType.Entry;
+    public bool ClimbExit = false;
     [HideInInspector] public bool InClimbZone = false;
     Climbable CurrentClimbable;
     //todo: exiting climbing
@@ -24,7 +25,9 @@ public class TriggerHandling : MonoBehaviour
             }
             case TriggerType.Exit:
                 {
-
+                    ClimbExit = true;
+                    InClimbZone = false;
+                    Debug.Log("Has exited the ladder");
                     break;
                 }
             

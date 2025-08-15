@@ -2,16 +2,14 @@ using UnityEngine;
 
 public class Climbable : MonoBehaviour
 {
-    [SerializeField] private TriggerHandling TriggerHandler;
+    
     
     public enum ClimbType { Ladder, Vine, Rope};
     public ClimbType type = ClimbType.Ladder;
-    private void Awake()
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (TriggerHandler != null)
-        {
-            TriggerHandler.Trigger = TriggerHandling.TriggerType.Entry;
-        }
+        TriggerHandling TriggerHandler = other.GetComponent<TriggerHandling>();
 
     }
 }

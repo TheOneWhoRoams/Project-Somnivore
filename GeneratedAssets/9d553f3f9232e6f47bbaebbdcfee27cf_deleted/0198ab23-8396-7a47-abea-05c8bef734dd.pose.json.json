@@ -1,0 +1,11 @@
+{
+    "asset": "f1b853b5202f91b429f9885006327d3f",
+    "fileName": "0198ab23-8396-7a47-abea-05c8bef734dd.pose.json",
+    "prompt": "enter ladder climb",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1125119731,
+    "w3CTraceId": "e29081f26f368703868d5d1135053401",
+    "isTrimmed": false
+}

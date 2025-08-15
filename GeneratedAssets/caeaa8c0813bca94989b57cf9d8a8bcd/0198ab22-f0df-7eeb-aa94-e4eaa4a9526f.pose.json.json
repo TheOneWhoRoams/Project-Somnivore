@@ -1,0 +1,11 @@
+{
+    "asset": "f1b853b5202f91b429f9885006327d3f",
+    "fileName": "0198ab22-f0df-7eeb-aa94-e4eaa4a9526f.pose.json",
+    "prompt": "ladder climb",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1237605640,
+    "w3CTraceId": "7b3d654ff55ae50976bbf5b16d3051c5",
+    "isTrimmed": false
+}

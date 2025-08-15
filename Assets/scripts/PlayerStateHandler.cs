@@ -3,17 +3,43 @@ using UnityEngine;
 
 public class PlayerStateHandler : MonoBehaviour
 {
+    [SerializeField] private TriggerHandling TriggerHandler;
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
-    [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing };
+    [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing, ClimbExit };
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
 
-    void ClimbState()
+    void EnterClimbState()
     {
+        bool HasChangedStates = false;
         if (InputHandling.WantsToClimb)
         {
-            CurrentState = PlayerState.Climbing;
             
+            CurrentState = PlayerState.Climbing;
+            if(!HasChangedStates)
+            switch (TriggerHandler.Trigger)
+            {
+                case TriggerHandling.TriggerType.Entry:
+                    {
+                            TriggerHandler.Trigger = TriggerHandling.TriggerType.Exit;
+                            HasChangedStates = true;
+                            break;
+                    }
+                case TriggerHandling.TriggerType.Exit:
+                    {
+                            TriggerHandler.Trigger = TriggerHandling.TriggerType.Entry;
+                            HasChangedStates = true;
+                            break;
+                    }
+            }
+
+        }
+    }
+    void ExitClimbState()
+    {
+        if (TriggerHandler.ClimbExit)
+        {
+            CurrentState = PlayerState.Idling;
         }
     }
     void SprintState()
@@ -58,7 +84,8 @@ public class PlayerStateHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ClimbState();
+        ExitClimbState();
+        EnterClimbState();
         SprintState();
         WalkState();
         JumpState();
