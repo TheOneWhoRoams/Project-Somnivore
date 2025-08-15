@@ -78,6 +78,7 @@ public class InputHandler : MonoBehaviour
         Vector2 input = value.Get<Vector2>();
         if(PlayerStateHandling.CurrentState!=PlayerStateHandler.PlayerState.Climbing)
         {
+            ClimbInput = 0;
             PlayerMovement.Move = input;
             WantsToWalk = PlayerMovement.MinMovMagnitude();
             

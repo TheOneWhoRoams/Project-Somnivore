@@ -6,41 +6,27 @@ public class PlayerStateHandler : MonoBehaviour
     [SerializeField] private TriggerHandling TriggerHandler;
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
+    
     [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing, ClimbExit };
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
 
     void EnterClimbState()
-    {
-        bool HasChangedStates = false;
+    {  
         if (InputHandling.WantsToClimb)
         {
-            
             CurrentState = PlayerState.Climbing;
-            if(!HasChangedStates)
-            switch (TriggerHandler.Trigger)
-            {
-                case TriggerHandling.TriggerType.Entry:
-                    {
-                            TriggerHandler.Trigger = TriggerHandling.TriggerType.Exit;
-                            HasChangedStates = true;
-                            break;
-                    }
-                case TriggerHandling.TriggerType.Exit:
-                    {
-                            TriggerHandler.Trigger = TriggerHandling.TriggerType.Entry;
-                            HasChangedStates = true;
-                            break;
-                    }
-            }
-
+            InputHandling.WantsToClimb = false;
         }
+              
     }
     void ExitClimbState()
     {
         if (TriggerHandler.ClimbExit)
         {
             CurrentState = PlayerState.Idling;
+            TriggerHandler.ClimbExit = false;
         }
+            
     }
     void SprintState()
     {
