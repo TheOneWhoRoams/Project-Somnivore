@@ -1,0 +1,11 @@
+{
+    "asset": "0fc8bb80a85efb143955578126e16ec8",
+    "fileName": "0198b033-98fd-79b0-9916-67d1a6d7085f.pose.json",
+    "prompt": "transition from standing in front of a ladder that goes upwards to climbing it",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1351979822,
+    "w3CTraceId": "1955e2af8ee7478009071b9afdda5f43",
+    "isTrimmed": false
+}

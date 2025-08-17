@@ -8,6 +8,7 @@ public class AnimationHandler : MonoBehaviour
     [SerializeField] private InputHandler InputHandling;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     Animator PlayerAnimator;
+    
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
     public float RollAnimationSpeed;

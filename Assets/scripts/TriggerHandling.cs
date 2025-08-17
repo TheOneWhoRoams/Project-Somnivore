@@ -8,24 +8,31 @@ public class TriggerHandling : MonoBehaviour
     public bool ClimbExit = false;
     bool HasChangedClimbingStates = false;
     public bool AnimatorWantsToExit = false;
+    public bool CanClearClimbable = false;
     [HideInInspector] public bool InClimbZone = false;
-    Climbable CurrentClimbable;
+    [HideInInspector] public Climbable CurrentClimbable;
+    [HideInInspector] public enum ExitFrom { Top, Bottom }
+    [SerializeField] PlayerMovement PlayerMovHandling;
     //todo: exiting climbing
     private void OnTriggerEnter(Collider other)
     {
-        switch(Trigger)
+        switch (Trigger)
         {
             case TriggerType.Entry:
-            {
-                 var climbable = other.GetComponentInParent<Climbable>();
-                 if (climbable != null)
-                 {
+                {
+                    var climbable = other.GetComponentInParent<Climbable>();
+                    if (climbable != null)
+                    {
                         InClimbZone = true;
                         CurrentClimbable = climbable;
-                        Debug.Log("entered climb zone");
-                 }
+                        Debug.Log("Entered climb zone. CurrentClimbable: " + CurrentClimbable.name);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("No Climbable component found on the object!");
+                    }
                     break;
-            }
+                }
             case TriggerType.Exit:
                 {
                     AnimatorWantsToExit = true;
@@ -33,35 +40,43 @@ public class TriggerHandling : MonoBehaviour
                     HasChangedClimbingStates = false;
                     InClimbZone = false;
                     Debug.Log("Has exited the ladder");
+                    PlayerMovHandling.EndClimb();
                     Trigger = TriggerType.Entry;
                     break;
                 }
-            
         }
-        
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponentInParent<Climbable>() == CurrentClimbable)
         {
-            InClimbZone = false;
-            CurrentClimbable = null;
-            Debug.Log("Exited climb Zone");
-            if (!HasChangedClimbingStates)
-            switch (Trigger)
+            if (InClimbZone && !AnimatorWantsToExit && CanClearClimbable)
             {
-                case TriggerType.Entry:
-                    {
+                // Only clear CurrentClimbable if the player is not climbing
+                InClimbZone = false;
+                CurrentClimbable = null;
+                Debug.Log("Exited climb zone and cleared CurrentClimbable.");
+                CanClearClimbable = false;
+            }
+            else
+            {
+                Debug.Log("Exited climb zone but did not clear CurrentClimbable because the player is climbing.");
+            }
+
+            if (!HasChangedClimbingStates)
+            {
+                switch (Trigger)
+                {
+                    case TriggerType.Entry:
                         Trigger = TriggerType.Exit;
-                        HasChangedClimbingStates =true;
-                        break;
-                    }
-                case TriggerType.Exit:
-                    {
-                        Trigger = TriggerType.Entry;
                         HasChangedClimbingStates = true;
                         break;
-                    }
+                    case TriggerType.Exit:
+                        Trigger = TriggerType.Entry;
+                        HasChangedClimbingStates = true;
+                        
+                        break;
+                }
             }
         }
     }

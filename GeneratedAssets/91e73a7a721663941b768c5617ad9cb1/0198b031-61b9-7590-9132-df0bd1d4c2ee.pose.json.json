@@ -1,0 +1,11 @@
+{
+    "asset": "91e73a7a721663941b768c5617ad9cb1",
+    "fileName": "0198b031-61b9-7590-9132-df0bd1d4c2ee.pose.json",
+    "prompt": "transition from idle to entering a ladder climb from a ledge above",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1091504406,
+    "w3CTraceId": "8f72500a6533f6fb1803de3b3b0166a9",
+    "isTrimmed": false
+}

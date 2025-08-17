@@ -7,13 +7,17 @@ public class PlayerStateHandler : MonoBehaviour
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
     
+
     [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing, ClimbExit };
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
-
+    [HideInInspector] public bool HasSnappedToEntry = true;
+    [HideInInspector] public bool HasSnappedToExit = true;
     void EnterClimbState()
     {  
         if (InputHandling.WantsToClimb)
         {
+            HasSnappedToExit = false;
+            HasSnappedToEntry = false;
             CurrentState = PlayerState.Climbing;
             InputHandling.WantsToClimb = false;
         }
@@ -23,7 +27,8 @@ public class PlayerStateHandler : MonoBehaviour
     {
         if (TriggerHandler.ClimbExit)
         {
-            CurrentState = PlayerState.ClimbExit;
+
+            CurrentState = PlayerState.Idling;
             TriggerHandler.ClimbExit = false;
         }
             
