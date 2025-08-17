@@ -125,13 +125,14 @@ public class PlayerMovement : MonoBehaviour
     }
     public void EndClimb()
     {
-
+        Debug.Log("EndClimb Called");
         
             if (!PlayerStateHandling.HasSnappedToExit)
             {
                 if (TriggerHandler.CurrentClimbable != null)
                 {
                     ClimbSnapToExitPoint();
+                    PlayerStateHandling.HasSnappedToExit = true;
                 }
                 else
                 {
@@ -146,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = ClimbDir;
     }
     
-    public void ClimbSnapToExitPoint()
+    public void ClimbSnapToExitPoint() 
     {
         Debug.Log("ClimbSnapToExitPoint called!");
         if (TriggerHandler == null)
@@ -196,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Debug.Log("CurrentClimbable: " + TriggerHandler.CurrentClimbable.name);
+       // Debug.Log("CurrentClimbable: " + TriggerHandler.CurrentClimbable.name);
 
         if (TriggerHandler.CurrentClimbable.SnapPointEnter == null)
         {

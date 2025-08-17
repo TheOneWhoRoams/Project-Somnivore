@@ -41,7 +41,7 @@ public class TriggerHandling : MonoBehaviour
                     InClimbZone = false;
                     Debug.Log("Has exited the ladder");
                     PlayerMovHandling.EndClimb();
-                    Trigger = TriggerType.Entry;
+                    
                     break;
                 }
         }
@@ -63,21 +63,7 @@ public class TriggerHandling : MonoBehaviour
                 Debug.Log("Exited climb zone but did not clear CurrentClimbable because the player is climbing.");
             }
 
-            if (!HasChangedClimbingStates)
-            {
-                switch (Trigger)
-                {
-                    case TriggerType.Entry:
-                        Trigger = TriggerType.Exit;
-                        HasChangedClimbingStates = true;
-                        break;
-                    case TriggerType.Exit:
-                        Trigger = TriggerType.Entry;
-                        HasChangedClimbingStates = true;
-                        
-                        break;
-                }
-            }
+            
         }
     }
 }

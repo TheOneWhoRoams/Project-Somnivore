@@ -1,0 +1,11 @@
+{
+    "asset": "611f297e97bc55a42b5037dc36f20798",
+    "fileName": "0198b890-f9ee-7470-a5b2-f9548fbbe478.pose.json",
+    "prompt": "scratching your ballsack",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 957859732,
+    "w3CTraceId": "ce35728c617441cf60d6e830d6578adb",
+    "isTrimmed": false
+}

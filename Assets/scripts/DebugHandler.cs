@@ -31,8 +31,6 @@ public class DebugHandler : MonoBehaviour
         y += LineHeight;
 
         //display speed variables
-        GUI.Label(new Rect(10, y, 300, LineHeight), "RollSpeed: " + PlayerMovement.RollSpeed);
-        y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "Current Speed: " + PlayerMovement.CurrSpeed);
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "Current Linear Velocity: " + rb.linearVelocity);
@@ -49,6 +47,9 @@ public class DebugHandler : MonoBehaviour
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "ClimbInput: " + InputHandling.ClimbInput);
         y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "HasSnappedToExit " + PlayerStateHandling.HasSnappedToExit);
+        y += LineHeight;
+
 
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created

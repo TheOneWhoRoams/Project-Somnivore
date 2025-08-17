@@ -20,6 +20,7 @@ public class PlayerStateHandler : MonoBehaviour
             HasSnappedToEntry = false;
             CurrentState = PlayerState.Climbing;
             InputHandling.WantsToClimb = false;
+            TriggerHandler.Trigger = TriggerHandling.TriggerType.Exit;
         }
               
     }
@@ -30,6 +31,7 @@ public class PlayerStateHandler : MonoBehaviour
 
             CurrentState = PlayerState.Idling;
             TriggerHandler.ClimbExit = false;
+            TriggerHandler.Trigger = TriggerHandling.TriggerType.Entry;
         }
             
     }

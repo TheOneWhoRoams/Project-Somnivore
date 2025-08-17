@@ -87,7 +87,13 @@ public class AnimationHandler : MonoBehaviour
     }
     void ClimbExitHandling()
     {
-        
+        if (TriggerHandler.AnimatorWantsToExit)
+        {
+            PlayerAnimator.SetBool("IsClimbing", false);
+            PlayerAnimator.SetBool("IsClimbingMoving", false);
+            TriggerHandler.AnimatorWantsToExit = false;
+            PlayerAnimator.SetTrigger("ClimbExit");
+        }
     }
     public void PlayRoll()
     {
@@ -100,6 +106,7 @@ public class AnimationHandler : MonoBehaviour
     
     void AnimationHandling()
     {
+        
         if (PlayerMovement.IsGroundedThisFrame)
             PlayerAnimator.SetBool("IsGrounded", true);
         else
@@ -128,6 +135,7 @@ public class AnimationHandler : MonoBehaviour
                 {
                     PlayerAnimator.SetBool("IsWalking", false);
                     PlayerAnimator.SetBool("IsSprinting", false);
+                    ClimbExitHandling();
                     break;
                 }
 
