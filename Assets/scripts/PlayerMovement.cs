@@ -123,98 +123,13 @@ public class PlayerMovement : MonoBehaviour
         */
         RollSpeed = 1f;
     }
-    public void EndClimb()
-    {
-        Debug.Log("EndClimb Called");
-        
-            if (!PlayerStateHandling.HasSnappedToExit)
-            {
-                if (TriggerHandler.CurrentClimbable != null)
-                {
-                    ClimbSnapToExitPoint();
-                    PlayerStateHandling.HasSnappedToExit = true;
-                }
-                else
-                {
-                    Debug.LogError("Cannot snap to exit point because CurrentClimbable is null!");
-                }
-            }
-        TriggerHandler.CanClearClimbable = true;
-    }
+    
     public void Climb(float VerticalInput)
     {
         Vector3 ClimbDir = new Vector3(0, VerticalInput * ClimbSpeed, 0); 
         rb.linearVelocity = ClimbDir;
     }
     
-    public void ClimbSnapToExitPoint() 
-    {
-        Debug.Log("ClimbSnapToExitPoint called!");
-        if (TriggerHandler == null)
-        {
-            Debug.LogError("TriggerHandler is null! Make sure it is assigned in the Inspector.");
-            return;
-        }
-
-        if (TriggerHandler.CurrentClimbable == null)
-        {
-            Debug.LogError("CurrentClimbable is null! The player is not in a climb zone or OnTriggerEnter is not working.");
-            return;
-        }
-
-        Debug.Log("CurrentClimbable: " + TriggerHandler.CurrentClimbable.name);
-
-        if (TriggerHandler.CurrentClimbable.SnapPointExit == null)
-        {
-            Debug.LogError("SnapPointExit is null! Make sure it is assigned in the Climbable component.");
-            return;
-        }
-
-        Transform ExitPoint = TriggerHandler.CurrentClimbable.SnapPointExit;
-
-        transform.position = ExitPoint.position;
-        transform.rotation = ExitPoint.rotation;
-        PlayerStateHandling.HasSnappedToExit = true;
-
-        Debug.Log("Player snapped to exit point at position: " + ExitPoint.position);
-    }
-    void ClimbSnapToEntryPointDebug()
-    {
-        
-    }
-    public void ClimbSnapToEntryPoint()
-    {
-
-        if (TriggerHandler == null)
-        {
-            Debug.LogError("TriggerHandler is null! Make sure it is assigned in the Inspector.");
-            return;
-        }
-
-        if (TriggerHandler.CurrentClimbable == null)
-        {
-            Debug.LogError("CurrentClimbable is null! The player is not in a climb zone or OnTriggerEnter is not working.");
-            return;
-        }
-
-       // Debug.Log("CurrentClimbable: " + TriggerHandler.CurrentClimbable.name);
-
-        if (TriggerHandler.CurrentClimbable.SnapPointEnter == null)
-        {
-            Debug.LogError("SnapPointEnter is null! Make sure it is assigned in the Climbable component.");
-            return;
-        }
-        Transform EntryPoint = TriggerHandler.CurrentClimbable.SnapPointEnter;
-
-        if (!PlayerStateHandling.HasSnappedToEntry)
-        {
-            transform.position = EntryPoint.position;
-            transform.rotation = EntryPoint.rotation;
-            PlayerStateHandling.HasSnappedToEntry = true;
-
-            Debug.Log("Player snapped to entry point at position: " + EntryPoint.position);
-        }
-    }
     public void GravityHandler()
     {
         if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing)
@@ -304,18 +219,7 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll) 
             return;
         
-        if(PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Climbing)
-        {
-                // Only snap if we haven't already snapped and the climbable is valid
-                if (!PlayerStateHandling.HasSnappedToEntry && TriggerHandler.CurrentClimbable != null)
-                {
-                    ClimbSnapToEntryPoint();
-                }
-                
-
-                Climb(InputHandling.ClimbInput);
-            
-        }
+        
         else if (MinMovMagnitude() && IsGroundedThisFrame && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
         {
             // Only rotate if we have significant input

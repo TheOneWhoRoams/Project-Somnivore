@@ -44,57 +44,7 @@ public class AnimationHandler : MonoBehaviour
         else PlayerMovement.RollSpeed = 4f;
         PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
     }
-    void ClimbHandling()
-    {
-        switch (InputHandling.ClimbInput)
-        {
-            case -1:
-                {
-                    PlayClimbDescend();
-                    break;
-                }
-            case 0:
-                {
-                    PlayClimbIdle();
-                    break;
-                }
-            case 1:
-                {
-                    PlayClimbAscend();
-                    break;
-                }
-        }
-
-
-    }
-    void PlayClimbDescend()
-    {
-        PlayerAnimator.SetFloat("ClimbSpeed", -1f);
-        PlayerAnimator.SetBool("IsClimbing", true);
-        PlayerAnimator.SetBool("IsClimbingMoving", true);
-        
-    }
-    void PlayClimbAscend()
-    {
-        PlayerAnimator.SetFloat("ClimbSpeed", 1f);
-        PlayerAnimator.SetBool("IsClimbing", true);
-        PlayerAnimator.SetBool("IsClimbingMoving", true);
-    }
-    void PlayClimbIdle()
-    {
-        PlayerAnimator.SetBool("IsClimbing", true);
-        PlayerAnimator.SetBool("IsClimbingMoving", false);
-    }
-    void ClimbExitHandling()
-    {
-        if (TriggerHandler.AnimatorWantsToExit)
-        {
-            PlayerAnimator.SetBool("IsClimbing", false);
-            PlayerAnimator.SetBool("IsClimbingMoving", false);
-            TriggerHandler.AnimatorWantsToExit = false;
-            PlayerAnimator.SetTrigger("ClimbExit");
-        }
-    }
+   
     public void PlayRoll()
     {
         PlayerAnimator.SetTrigger("Roll");
@@ -128,14 +78,14 @@ public class AnimationHandler : MonoBehaviour
                 }
             case PlayerStateHandler.PlayerState.Climbing: 
                 {
-                    ClimbHandling();
+                    
                     break;
                 }
             default:
                 {
                     PlayerAnimator.SetBool("IsWalking", false);
                     PlayerAnimator.SetBool("IsSprinting", false);
-                    ClimbExitHandling();
+                    
                     break;
                 }
 

@@ -12,29 +12,7 @@ public class PlayerStateHandler : MonoBehaviour
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
     [HideInInspector] public bool HasSnappedToEntry = true;
     [HideInInspector] public bool HasSnappedToExit = true;
-    void EnterClimbState()
-    {  
-        if (InputHandling.WantsToClimb)
-        {
-            HasSnappedToExit = false;
-            HasSnappedToEntry = false;
-            CurrentState = PlayerState.Climbing;
-            InputHandling.WantsToClimb = false;
-            TriggerHandler.Trigger = TriggerHandling.TriggerType.Exit;
-        }
-              
-    }
-    void ExitClimbState()
-    {
-        if (TriggerHandler.ClimbExit)
-        {
-
-            CurrentState = PlayerState.Idling;
-            TriggerHandler.ClimbExit = false;
-            TriggerHandler.Trigger = TriggerHandling.TriggerType.Entry;
-        }
-            
-    }
+    
     void SprintState()
     {
         if(InputHandling.WantsToSprint&&InputHandling.WantsToWalk && CurrentState != PlayerState.Climbing)
@@ -77,8 +55,7 @@ public class PlayerStateHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ExitClimbState();
-        EnterClimbState();
+        
         SprintState();
         WalkState();
         JumpState();
