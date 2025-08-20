@@ -22,7 +22,8 @@ public class InputHandler : MonoBehaviour
     bool CanClimb()
     {
         return PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame &&
-               PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping&& TriggerHandler.InClimbZone;
+               PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping&& (TriggerHandler.CurrentClimbable.Type==Climbable.ClimbType.TopEnter||
+               TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.BottomEnter)&&TriggerHandler.CurrentClimbable.IsInEntryZone;
     }
     void OnInteract()
     {

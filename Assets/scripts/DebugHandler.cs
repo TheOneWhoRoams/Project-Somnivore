@@ -6,6 +6,7 @@ public class DebugHandler : MonoBehaviour
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [SerializeField] private InputHandler InputHandling;
+    [SerializeField] private TriggerHandling TriggerHandler;
     Animator PlayerAnimator;
     Rigidbody rb;
     void OnGUI()
@@ -24,8 +25,17 @@ public class DebugHandler : MonoBehaviour
         y += LineHeight;
 
         //display animator floats
-        GUI.Label(new Rect(10, y, 300, LineHeight), "VelocityY: " + PlayerAnimator.GetFloat("VelocityY"));
-        y += LineHeight;
+        if (TriggerHandler.CurrentClimbable != null && TriggerHandler.CurrentClimbable.ShowInDebug)
+        {
+            GUI.Label(new Rect(10, y, 300, LineHeight), "Trigger: " + TriggerHandler.CurrentClimbable);
+            y += LineHeight;
+        }
+        else
+        {
+            GUI.Label(new Rect(10, y, 300, LineHeight), "Trigger: None");
+            y += LineHeight;
+        }
+
         //other
         GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + PlayerStateHandling.CurrentState);
         y += LineHeight;

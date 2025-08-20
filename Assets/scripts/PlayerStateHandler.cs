@@ -6,13 +6,39 @@ public class PlayerStateHandler : MonoBehaviour
     [SerializeField] private TriggerHandling TriggerHandler;
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
-    
+
 
     [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing, ClimbExit };
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
     [HideInInspector] public bool HasSnappedToEntry = true;
     [HideInInspector] public bool HasSnappedToExit = true;
-    
+
+    public void ClimbExit()
+    {
+        if ((TriggerHandler.CurrentClimbingCheck == null && CurrentState == PlayerState.Climbing && PlayerMovement.HasSnappedToEntry)/*||TriggerHandler.CurrentClimbable.WantsToExitClimb*/)
+        {
+            CurrentState = PlayerState.Idling;
+            PlayerMovement.HasSnappedToEntry = false;
+        }
+    }
+    void ClimbState()
+    {
+        ClimbExit();
+
+        if (CurrentState == PlayerState.Climbing && TriggerHandler.CurrentClimbingCheck == null&&PlayerMovement.HasSnappedToEntry)
+        {
+            CurrentState = PlayerState.Idling;
+        }
+        else if (InputHandling.WantsToClimb)
+        {
+            InputHandling.WantsToClimb = false;
+            CurrentState = PlayerState.Climbing;
+        }
+        else
+        {
+            CurrentState = PlayerState.Idling;
+        }
+    }
     void SprintState()
     {
         if(InputHandling.WantsToSprint&&InputHandling.WantsToWalk && CurrentState != PlayerState.Climbing)
@@ -55,7 +81,7 @@ public class PlayerStateHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        ClimbState();
         SprintState();
         WalkState();
         JumpState();

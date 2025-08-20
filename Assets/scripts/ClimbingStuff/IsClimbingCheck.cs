@@ -1,13 +1,26 @@
 using UnityEngine;
-using static Climbable;
 
 public class IsClimbingCheck : MonoBehaviour
 {
+    public bool IsInClimbZone=false;
     private void OnTriggerEnter(Collider other)
     {
         TriggerHandling TriggerHandler = other.GetComponent<TriggerHandling>();
-        AnimationHandler AnimationHandling = other.GetComponent<AnimationHandler>();
+        if (TriggerHandler != null)
+        {
+            TriggerHandler.CurrentClimbingCheck = this;
+        }
+        IsInClimbZone = true;
 
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        TriggerHandling TriggerHandler = other.GetComponent<TriggerHandling>();
+        if (TriggerHandler != null)
+        {
+            TriggerHandler.CurrentClimbingCheck = null;
+        }
+        IsInClimbZone = false;
     }
     void OnDrawGizmos()
     {

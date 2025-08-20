@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [SerializeField] private TriggerHandling TriggerHandler;
     [HideInInspector] public float VerticalVelocity;
+    [HideInInspector] public bool HasSnappedToEntry = false;
     Rigidbody rb;
     
     public float ClimbSpeed;
@@ -123,7 +124,31 @@ public class PlayerMovement : MonoBehaviour
         */
         RollSpeed = 1f;
     }
-    
+    void ClimbSnap()
+    {
+        if (TriggerHandler.CurrentClimbable == null || TriggerHandler.CurrentClimbable.SnapPoint == null)
+            return;
+        else if (!HasSnappedToEntry&&(TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.TopEnter || TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.BottomEnter))
+        {
+            transform.position = TriggerHandler.CurrentClimbable.SnapPoint.position;
+            transform.rotation = TriggerHandler.CurrentClimbable.SnapPoint.rotation;
+            HasSnappedToEntry = true;
+        }
+        else if(TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.TopExit || TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.BottomExit)
+        {
+            transform.position = TriggerHandler.CurrentClimbable.SnapPoint.position;
+            transform.rotation = TriggerHandler.CurrentClimbable.SnapPoint.rotation;
+        }
+        
+    }
+    void ClimbHandler()
+    {
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Climbing)
+        {
+            Climb(InputHandling.ClimbInput);
+
+        }
+    }
     public void Climb(float VerticalInput)
     {
         Vector3 ClimbDir = new Vector3(0, VerticalInput * ClimbSpeed, 0); 

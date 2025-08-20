@@ -6,6 +6,7 @@ public class TriggerHandling : MonoBehaviour
 
     [HideInInspector] public bool InClimbZone = false;
     [HideInInspector] public Climbable CurrentClimbable;
+    [HideInInspector] public IsClimbingCheck CurrentClimbingCheck;
     
     [SerializeField] PlayerMovement PlayerMovHandling;
     

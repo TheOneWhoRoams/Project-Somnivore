@@ -243,7 +243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb09d48f3b518b4e835edc64a3647a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Climbable
-  type: 1
+  IsInEntryZone: 0
+  WantsToExitClimb: 0
+  ShowInDebug: 0
+  Type: 1
   SnapPoint: {fileID: 78168641}
 --- !u!1 &78168640
 GameObject:
@@ -761,7 +764,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb09d48f3b518b4e835edc64a3647a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Climbable
-  type: 3
+  IsInEntryZone: 0
+  WantsToExitClimb: 0
+  ShowInDebug: 0
+  Type: 3
   SnapPoint: {fileID: 991653573}
 --- !u!1 &322153392
 GameObject:
@@ -887,6 +893,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31be9c37ac16d004c8a30dc28e377b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IsClimbingCheck
+  IsInClimbZone: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,6 +1464,7 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 638622979}
   TriggerHandler: {fileID: 638622983}
   VerticalVelocity: 0
+  HasSnappedToEntry: 0
   ClimbSpeed: 5
   MoveSpeed: 5
   JumpForce: 200
@@ -1554,6 +1562,7 @@ MonoBehaviour:
   PlayerMovement: {fileID: 638622969}
   PlayerStateHandling: {fileID: 638622979}
   InputHandling: {fileID: 638622976}
+  TriggerHandler: {fileID: 638622983}
 --- !u!114 &638622976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,6 +1617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InClimbZone: 0
   CurrentClimbable: {fileID: 0}
+  CurrentClimbingCheck: {fileID: 0}
   PlayerMovHandling: {fileID: 638622969}
 --- !u!1 &640884082
 GameObject:
@@ -2472,7 +2482,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb09d48f3b518b4e835edc64a3647a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Climbable
-  type: 0
+  IsInEntryZone: 0
+  WantsToExitClimb: 0
+  ShowInDebug: 0
+  Type: 0
   SnapPoint: {fileID: 640884083}
 --- !u!1 &1181095176
 GameObject:
@@ -2872,7 +2885,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -34.6, y: 30.73, z: -0.48}
-  m_LocalScale: {x: 6, y: 1, z: 5}
+  m_LocalScale: {x: 6, y: 0.5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 405794171}
@@ -2966,7 +2979,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb09d48f3b518b4e835edc64a3647a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Climbable
-  type: 2
+  IsInEntryZone: 0
+  WantsToExitClimb: 0
+  ShowInDebug: 0
+  Type: 2
   SnapPoint: {fileID: 972651869}
 --- !u!1001 &1874612656
 PrefabInstance:

@@ -2,20 +2,34 @@ using UnityEngine;
 
 public class Climbable : MonoBehaviour
 {
-    
-    
-    public enum ClimbType { TopEnter, TopExit, BottomEnter, BottomExit};
-    public ClimbType type;
+
+
+    [HideInInspector] public enum ClimbType { TopEnter, TopExit, BottomEnter, BottomExit};
+    [HideInInspector] public bool IsInEntryZone = false;
+    [HideInInspector] public bool WantsToExitClimb = false;
+    [HideInInspector] public bool ShowInDebug = false;
+    public ClimbType Type;
+    private Climbable CurrentClimbable;
 
     public Transform SnapPoint;
+    // Call this from Climbable.OnTriggerEnter
+    public void SetCurrentClimbable(Climbable climbable)
+    {
+        CurrentClimbable = climbable;
+    }
 
+    // Call this from Climbable.OnTriggerExit
+    public void ClearCurrentClimbable()
+    {
+        CurrentClimbable = null;
+    }
     void OnDrawGizmos()
     {
         // This ensures the gizmo has the same position, rotation, and scale as the trigger
         Gizmos.matrix = transform.localToWorldMatrix;
 
         // Set the color you want the gizmo to be
-        switch (type)
+        switch (Type)
         {
             case ClimbType.TopEnter:
             case ClimbType.BottomEnter:
@@ -35,8 +49,39 @@ public class Climbable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        ShowInDebug = true;
         TriggerHandling TriggerHandler = other.GetComponent<TriggerHandling>();
-        AnimationHandler AnimationHandling = other.GetComponent<AnimationHandler>();
+        if (TriggerHandler != null)
+        {
+            TriggerHandler.CurrentClimbable=this;
+        }
+        switch (Type)
+        {
+            case ClimbType.TopEnter:
+            case ClimbType.BottomEnter:
+                {
+                    IsInEntryZone = true;
+                    WantsToExitClimb = false;
+                    break;
+                }
+            default:
+                {
+                    WantsToExitClimb = true;
+                    IsInEntryZone = false;
+                    break;
+                }
+        }
 
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        ShowInDebug = false;
+        TriggerHandling TriggerHandler = other.GetComponent<TriggerHandling>();
+        if (TriggerHandler != null)
+        {
+            TriggerHandler.CurrentClimbable = null;
+        }
+        IsInEntryZone = false;
+        WantsToExitClimb = false;
     }
 }
