@@ -17,6 +17,8 @@ public class PlayerStateHandler : MonoBehaviour
     {
         if ((TriggerHandler.CurrentClimbingCheck == null && CurrentState == PlayerState.Climbing && PlayerMovement.HasSnappedToEntry)/*||TriggerHandler.CurrentClimbable.WantsToExitClimb*/)
         {
+            HasSnappedToEntry = false;
+            HasSnappedToExit = false;
             CurrentState = PlayerState.Idling;
             PlayerMovement.HasSnappedToEntry = false;
         }
@@ -33,11 +35,11 @@ public class PlayerStateHandler : MonoBehaviour
         {
             InputHandling.WantsToClimb = false;
             CurrentState = PlayerState.Climbing;
-        }
+        }/*
         else
         {
             CurrentState = PlayerState.Idling;
-        }
+        }*/
     }
     void SprintState()
     {

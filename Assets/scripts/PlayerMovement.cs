@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TriggerHandling TriggerHandler;
     [HideInInspector] public float VerticalVelocity;
     [HideInInspector] public bool HasSnappedToEntry = false;
+    [HideInInspector] public bool HasSnappedToExit = false;
     Rigidbody rb;
     
     public float ClimbSpeed;
@@ -22,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float CurrSpeed;
     bool StartRollVelocity = false;
     bool RollDirSet = false;
-
+    private Climbable ClimbingClimbable; // Store the climbable we're currently using
     [HideInInspector] public bool ShowDebug = false;
     [HideInInspector] public Vector2 Move;
     Vector3 MoveForce;
@@ -126,23 +127,54 @@ public class PlayerMovement : MonoBehaviour
     }
     void ClimbSnap()
     {
-        if (TriggerHandler.CurrentClimbable == null || TriggerHandler.CurrentClimbable.SnapPoint == null)
-            return;
-        else if (!HasSnappedToEntry&&(TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.TopEnter || TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.BottomEnter))
+        // Only run when climbing
+        if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing)
         {
-            transform.position = TriggerHandler.CurrentClimbable.SnapPoint.position;
-            transform.rotation = TriggerHandler.CurrentClimbable.SnapPoint.rotation;
+            ClimbingClimbable = null;
+            HasSnappedToEntry = false;
+            HasSnappedToExit = false;
+            return;
+        }
+
+        // Store the climbable when we start climbing (for entry snap)
+        if (ClimbingClimbable == null && TriggerHandler.CurrentClimbable != null)
+        {
+            ClimbingClimbable = TriggerHandler.CurrentClimbable;
+        }
+
+        // Entry snap (use stored climbable)
+        if (!HasSnappedToEntry && ClimbingClimbable != null &&
+            (ClimbingClimbable.Type == Climbable.ClimbType.TopEnter || ClimbingClimbable.Type == Climbable.ClimbType.BottomEnter))
+        {
+            Debug.Log("SUCCESS: Snapping to entry: " + ClimbingClimbable.Type);
+            transform.position = ClimbingClimbable.SnapPoint.position;
+            transform.rotation = ClimbingClimbable.SnapPoint.rotation;
             HasSnappedToEntry = true;
         }
-        else if(TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.TopExit || TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.BottomExit)
+
+        // Debug the current trigger state while climbing
+        if (TriggerHandler.CurrentClimbable != null)
         {
+            Debug.Log("While climbing, current climbable is: " + TriggerHandler.CurrentClimbable.Type);
+        }
+        else
+        {
+            Debug.Log("While climbing, no current climbable");
+        }
+
+        // Exit snap (use CURRENT climbable - this detects new exit triggers while climbing)
+        if (!HasSnappedToExit && TriggerHandler.CurrentClimbable != null &&
+            (TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.TopExit || TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.BottomExit))
+        {
+            Debug.Log("SUCCESS: Snapping to exit: " + TriggerHandler.CurrentClimbable.Type);
             transform.position = TriggerHandler.CurrentClimbable.SnapPoint.position;
             transform.rotation = TriggerHandler.CurrentClimbable.SnapPoint.rotation;
+            HasSnappedToExit = true;
         }
-        
     }
     void ClimbHandler()
     {
+        ClimbSnap();
         if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Climbing)
         {
             Climb(InputHandling.ClimbInput);
@@ -241,7 +273,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void MovementHandler()
     {
-        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll) 
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling 
+            || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll
+            || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Climbing) 
             return;
         
         
@@ -286,9 +320,11 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         GravityHandler();
+        
         RollDirectionHandler();
         RollHandler();
         CameraHandler();
+        ClimbHandler();
         SprintAndWalkSpeedSwitcher();
         JumpHandler();
         MovementHandler();

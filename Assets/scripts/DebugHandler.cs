@@ -24,10 +24,19 @@ public class DebugHandler : MonoBehaviour
         GUI.Label(new Rect(10, y, 300, LineHeight), "IsSprinting: " + PlayerAnimator.GetBool("IsSprinting"));
         y += LineHeight;
 
+
+         GUI.Label(new Rect(10, y, 300, LineHeight), "Trigger: " + TriggerHandler.InClimbZone);
+            y += LineHeight;
+         
+         
+
+
         //display animator floats
         if (TriggerHandler.CurrentClimbable != null && TriggerHandler.CurrentClimbable.ShowInDebug)
         {
             GUI.Label(new Rect(10, y, 300, LineHeight), "Trigger: " + TriggerHandler.CurrentClimbable);
+            y += LineHeight;
+            GUI.Label(new Rect(10, y, 300, LineHeight), "in entry zone?: " + TriggerHandler.CurrentClimbable.IsInEntryZone);
             y += LineHeight;
         }
         else
@@ -47,6 +56,8 @@ public class DebugHandler : MonoBehaviour
         y += LineHeight;
         //display input variables
 
+        GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToClimb: " + InputHandling.WantsToClimb);
+        y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToWalk: " + InputHandling.WantsToWalk);
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToSprint: " + InputHandling.WantsToSprint);

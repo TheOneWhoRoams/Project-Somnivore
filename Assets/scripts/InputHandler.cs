@@ -29,6 +29,7 @@ public class InputHandler : MonoBehaviour
     {
         if (CanClimb())
         {
+            
             WantsToClimb = true;
         }
     }

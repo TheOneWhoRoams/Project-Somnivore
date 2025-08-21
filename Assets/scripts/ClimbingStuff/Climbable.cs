@@ -18,7 +18,7 @@ public class Climbable : MonoBehaviour
         CurrentClimbable = climbable;
     }
 
-    // Call this from Climbable.OnTriggerExit
+    // Call this from Climbable.OnTriggerExi
     public void ClearCurrentClimbable()
     {
         CurrentClimbable = null;
@@ -66,6 +66,7 @@ public class Climbable : MonoBehaviour
                 }
             default:
                 {
+                    
                     WantsToExitClimb = true;
                     IsInEntryZone = false;
                     break;

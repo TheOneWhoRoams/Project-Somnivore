@@ -669,7 +669,7 @@ Transform:
   m_GameObject: {fileID: 302037407}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.6, y: 31.66, z: 0.19}
+  m_LocalPosition: {x: -34.6, y: 35.98, z: -0.27}
   m_LocalScale: {x: 6, y: 0, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1465,6 +1465,7 @@ MonoBehaviour:
   TriggerHandler: {fileID: 638622983}
   VerticalVelocity: 0
   HasSnappedToEntry: 0
+  HasSnappedToExit: 0
   ClimbSpeed: 5
   MoveSpeed: 5
   JumpForce: 200
@@ -1618,6 +1619,7 @@ MonoBehaviour:
   InClimbZone: 0
   CurrentClimbable: {fileID: 0}
   CurrentClimbingCheck: {fileID: 0}
+  PlayerStateHandling: {fileID: 0}
   PlayerMovHandling: {fileID: 638622969}
 --- !u!1 &640884082
 GameObject:
@@ -1647,7 +1649,7 @@ Transform:
   m_GameObject: {fileID: 640884082}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1887.9025, y: 1290.85, z: -2396.2}
+  m_LocalPosition: {x: 1887.9025, y: 1289.3, z: -2396.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1920,7 +1922,7 @@ Transform:
   m_GameObject: {fileID: 972651868}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -34.500366, y: 33.4, z: -1.8417969}
+  m_LocalPosition: {x: -34.500366, y: 38.12, z: -1.8417969}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
