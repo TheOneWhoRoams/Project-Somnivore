@@ -8,13 +8,31 @@ public class PlayerStateHandler : MonoBehaviour
     [SerializeField] private InputHandler InputHandling;
 
 
-    [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing, ClimbExit };
+    [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing, ClimbExit, Combat };
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
     [HideInInspector] public bool HasSnappedToEntry = true;
     [HideInInspector] public bool HasSnappedToExit = true;
 
+     bool CombatCheck()
+    {
+        
+        if (CurrentState == PlayerState.Combat)
+            return true;
+        else
+            return false;
+        
+        
+    }
+    void CombatState()
+    {
+        if (InputHandling.WantsToLightAttack/* or any other combat action */)
+        {
+            CurrentState = PlayerState.Combat;
+        }
+    }
     public void ClimbExit()
     {
+        
         if ((TriggerHandler.CurrentClimbingCheck == null && CurrentState == PlayerState.Climbing && PlayerMovement.HasSnappedToEntry)/*||TriggerHandler.CurrentClimbable.WantsToExitClimb*/)
         {
             HasSnappedToEntry = false;
@@ -25,6 +43,10 @@ public class PlayerStateHandler : MonoBehaviour
     }
     void ClimbState()
     {
+
+        if (CombatCheck())
+            return;
+
         ClimbExit();
 
         if (CurrentState == PlayerState.Climbing && TriggerHandler.CurrentClimbingCheck == null&&PlayerMovement.HasSnappedToEntry)
@@ -43,26 +65,43 @@ public class PlayerStateHandler : MonoBehaviour
     }
     void SprintState()
     {
-        if(InputHandling.WantsToSprint&&InputHandling.WantsToWalk && CurrentState != PlayerState.Climbing)
+
+        if (CombatCheck())
+            return;
+
+        if (InputHandling.WantsToSprint&&InputHandling.WantsToWalk && CurrentState != PlayerState.Climbing)
             CurrentState = PlayerState.Sprinting;
     }
     void WalkState()
     {
-        if(InputHandling.WantsToWalk&&!InputHandling.WantsToSprint && CurrentState != PlayerState.Climbing)
+
+        if (CombatCheck())
+            return;
+
+        if (InputHandling.WantsToWalk&&!InputHandling.WantsToSprint && CurrentState != PlayerState.Climbing)
             CurrentState = PlayerState.Walking;
     }
     void RollState()
     {
-        if(InputHandling.WantsToRoll && CurrentState != PlayerState.Climbing)
+
+        if (CombatCheck())
+            return;
+
+        if (InputHandling.WantsToRoll && CurrentState != PlayerState.Climbing)
             CurrentState = PlayerState.Rolling;
     }
     void JumpState()
     {
+
+        if (CombatCheck())
+            return;
+
         if (PlayerMovement.IsGroundedThisFrame && InputHandling.WantsToJump && CurrentState != PlayerState.Climbing)
             CurrentState = PlayerState.Jumping;    
     }
     bool IdleRequirements()
     {
+
 
         return PlayerMovement.IsGroundedThisFrame && PlayerMovement.Move.sqrMagnitude < 0.1f
                 && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.Jumping 
@@ -70,6 +109,10 @@ public class PlayerStateHandler : MonoBehaviour
     }
     void IdleCheck()
     {
+
+        if (CombatCheck())
+            return;
+
         //is the player idle?
         if (IdleRequirements())
             CurrentState = PlayerState.Idling;
@@ -83,6 +126,7 @@ public class PlayerStateHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CombatState();
         ClimbState();
         SprintState();
         WalkState();

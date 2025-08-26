@@ -16,9 +16,28 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToRoll;
     [HideInInspector] public bool WantsToWalk;
     [HideInInspector] public bool WantsToSprint;
-    [HideInInspector] public float ClimbInput;
+    [HideInInspector] public bool WantsToLightAttack;
     
+    [HideInInspector] public float ClimbInput;
 
+    private bool HasCombatResources()
+    {
+        //placeholder for stamina checks and whatever else i come up with
+        return true;
+    }
+    private bool CanPerformCombatAction()
+    {
+        return PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame &&
+               PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing && HasCombatResources();
+    }
+    void OnAttack()
+    {
+        if (CanPerformCombatAction())
+        {
+            WantsToLightAttack = true;
+            Debug.Log("Check Passed");
+        }
+    }
     bool CanClimb()
     {
         return PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && PlayerMovement.IsGroundedThisFrame &&
