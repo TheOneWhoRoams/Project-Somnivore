@@ -16,7 +16,8 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToRoll;
     [HideInInspector] public bool WantsToWalk;
     [HideInInspector] public bool WantsToSprint;
-    [HideInInspector] public bool WantsToLightAttack;
+    [HideInInspector] public enum PlayerCombatInput { WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack, None }
+    public PlayerCombatInput CombatInput=PlayerCombatInput.None;
     
     [HideInInspector] public float ClimbInput;
 
@@ -34,7 +35,7 @@ public class InputHandler : MonoBehaviour
     {
         if (CanPerformCombatAction())
         {
-            WantsToLightAttack = true;
+            CombatInput = PlayerCombatInput.WantsToLightAttack;
             Debug.Log("Check Passed");
         }
     }

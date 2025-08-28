@@ -1590,7 +1590,7 @@ MonoBehaviour:
   WantsToRoll: 0
   WantsToWalk: 0
   WantsToSprint: 0
-  WantsToLightAttack: 0
+  CombatInput: 4
   ClimbInput: 0
 --- !u!114 &638622979
 MonoBehaviour:
@@ -1610,6 +1610,7 @@ MonoBehaviour:
   CurrentState: 0
   HasSnappedToEntry: 1
   HasSnappedToExit: 1
+  CanExitCombat: 0
 --- !u!114 &638622983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,6 +1641,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatStateHandler
   PlayerStateHandling: {fileID: 638622979}
+  InputHandling: {fileID: 638622976}
+  AnimationHandling: {fileID: 638622974}
 --- !u!114 &638622986
 MonoBehaviour:
   m_ObjectHideFlags: 0

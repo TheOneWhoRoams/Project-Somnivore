@@ -44,7 +44,18 @@ public class AnimationHandler : MonoBehaviour
         else PlayerMovement.RollSpeed = 4f;
         PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
     }
-   
+   public void AnimatorEnterCombat()
+    {
+        PlayerAnimator.SetTrigger("EnterCombat");
+    }
+    public void AnimatorExitCombat()
+    {
+        PlayerAnimator.SetTrigger("ExitCombat");
+    }
+    public void PlayLightAttack()
+    {
+        PlayerAnimator.SetTrigger("LightAttack");
+    }
     public void PlayRoll()
     {
         PlayerAnimator.SetTrigger("Roll");

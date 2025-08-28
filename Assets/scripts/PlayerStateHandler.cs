@@ -12,6 +12,7 @@ public class PlayerStateHandler : MonoBehaviour
     [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
     [HideInInspector] public bool HasSnappedToEntry = true;
     [HideInInspector] public bool HasSnappedToExit = true;
+    [HideInInspector] public bool CanExitCombat = false;
 
      bool CombatCheck()
     {
@@ -25,9 +26,15 @@ public class PlayerStateHandler : MonoBehaviour
     }
     void CombatState()
     {
-        if (InputHandling.WantsToLightAttack/* or any other combat action */)
+        if (InputHandling.CombatInput!=InputHandler.PlayerCombatInput.None)
         {
             CurrentState = PlayerState.Combat;
+            
+        }
+        else if(CanExitCombat)
+        {
+            CanExitCombat = false;
+            CurrentState = PlayerState.Idling;
         }
     }
     public void ClimbExit()
