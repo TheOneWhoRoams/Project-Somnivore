@@ -1,0 +1,11 @@
+{
+    "asset": "4d20a6baecf2a054281860a83f1fcab8",
+    "fileName": "0198eec2-58e1-77fb-86eb-b2df30fb3fd8.pose.json",
+    "prompt": "shield block using left hand, right hand rests ",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1526435874,
+    "w3CTraceId": "20806b736a0a431c8a31698c6127fdc9",
+    "isTrimmed": false
+}

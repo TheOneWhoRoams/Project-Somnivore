@@ -1,0 +1,11 @@
+{
+    "asset": "ef66a2db1884193458b27eb717311ebe",
+    "fileName": "0198eec0-d2e0-7331-bb0c-281f3cbc118d.pose.json",
+    "prompt": "Heavy sword attack using right hand, shield in the offhand, vertical slash",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1429649163,
+    "w3CTraceId": "4ddd891c0e15e40e5cdaf775c533f274",
+    "isTrimmed": false
+}

@@ -1,0 +1,11 @@
+{
+    "asset": "4d20a6baecf2a054281860a83f1fcab8",
+    "fileName": "0198eec4-07ae-776d-83bf-ec5cb2fc5768.pose.json",
+    "prompt": "shield block dark souls",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 619298405,
+    "w3CTraceId": "bd608d1074489f2c97b12d29eeba326c",
+    "isTrimmed": false
+}

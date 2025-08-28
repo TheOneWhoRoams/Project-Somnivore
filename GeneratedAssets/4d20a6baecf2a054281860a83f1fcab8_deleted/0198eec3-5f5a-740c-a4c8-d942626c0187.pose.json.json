@@ -1,0 +1,11 @@
+{
+    "asset": "4d20a6baecf2a054281860a83f1fcab8",
+    "fileName": "0198eec3-5f5a-740c-a4c8-d942626c0187.pose.json",
+    "prompt": "holding shield up in place with left hand",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1556725351,
+    "w3CTraceId": "87dcee12889ac12f27f814fbc79bc13b",
+    "isTrimmed": false
+}

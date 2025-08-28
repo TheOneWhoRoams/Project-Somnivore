@@ -1,0 +1,11 @@
+{
+    "asset": "d35f9f21b1344d24db348afc37ef358f",
+    "fileName": "0198eebe-fa09-746e-88cd-d757927cc970.pose.json",
+    "prompt": "right hand swings a sword horizontally, there's a shield in the offhand",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 791393702,
+    "w3CTraceId": "13576ed2e43762735b02d7377658de42",
+    "isTrimmed": false
+}
