@@ -1,144 +1,121 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStateHandler : MonoBehaviour
 {
-    [SerializeField] private TriggerHandling TriggerHandler;
+    // --- REFERENCES ---
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
+    [SerializeField] private TriggerHandling TriggerHandler; // Added for climb logic
 
+    // --- STATE MANAGEMENT ---
+    public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, Combat, Climbing, LandingRoll };
+    public PlayerState CurrentState = PlayerState.Idling;
 
-    [HideInInspector] public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, LandingRoll, Climbing, ClimbExit, Combat };
-    [HideInInspector] public PlayerState CurrentState = PlayerState.Idling;
-    [HideInInspector] public bool HasSnappedToEntry = true;
-    [HideInInspector] public bool HasSnappedToExit = true;
+    // --- FLAGS ---
     [HideInInspector] public bool CanExitCombat = false;
+    [HideInInspector] public bool HasSnappedToEntry = false;
 
-     bool CombatCheck()
-    {
-        
-        if (CurrentState == PlayerState.Combat)
-            return true;
-        else
-            return false;
-        
-        
-    }
-    void CombatState()
-    {
-        if (InputHandling.CombatInput!=InputHandler.PlayerCombatInput.None)
-        {
-            CurrentState = PlayerState.Combat;
-            
-        }
-        else if(CanExitCombat)
-        {
-            CanExitCombat = false;
-            CurrentState = PlayerState.Idling;
-        }
-    }
-    public void ClimbExit()
-    {
-        
-        if ((TriggerHandler.CurrentClimbingCheck == null && CurrentState == PlayerState.Climbing && PlayerMovement.HasSnappedToEntry)/*||TriggerHandler.CurrentClimbable.WantsToExitClimb*/)
-        {
-            HasSnappedToEntry = false;
-            HasSnappedToExit = false;
-            CurrentState = PlayerState.Idling;
-            PlayerMovement.HasSnappedToEntry = false;
-        }
-    }
-    void ClimbState()
-    {
-
-        if (CombatCheck())
-            return;
-
-        ClimbExit();
-
-        if (CurrentState == PlayerState.Climbing && TriggerHandler.CurrentClimbingCheck == null&&PlayerMovement.HasSnappedToEntry)
-        {
-            CurrentState = PlayerState.Idling;
-        }
-        else if (InputHandling.WantsToClimb)
-        {
-            InputHandling.WantsToClimb = false;
-            CurrentState = PlayerState.Climbing;
-        }/*
-        else
-        {
-            CurrentState = PlayerState.Idling;
-        }*/
-    }
-    void SprintState()
-    {
-
-        if (CombatCheck())
-            return;
-
-        if (InputHandling.WantsToSprint&&InputHandling.WantsToWalk && CurrentState != PlayerState.Climbing)
-            CurrentState = PlayerState.Sprinting;
-    }
-    void WalkState()
-    {
-
-        if (CombatCheck())
-            return;
-
-        if (InputHandling.WantsToWalk&&!InputHandling.WantsToSprint && CurrentState != PlayerState.Climbing)
-            CurrentState = PlayerState.Walking;
-    }
-    void RollState()
-    {
-
-        if (CombatCheck())
-            return;
-
-        if (InputHandling.WantsToRoll && CurrentState != PlayerState.Climbing)
-            CurrentState = PlayerState.Rolling;
-    }
-    void JumpState()
-    {
-
-        if (CombatCheck())
-            return;
-
-        if (PlayerMovement.IsGroundedThisFrame && InputHandling.WantsToJump && CurrentState != PlayerState.Climbing)
-            CurrentState = PlayerState.Jumping;    
-    }
-    bool IdleRequirements()
-    {
-
-
-        return PlayerMovement.IsGroundedThisFrame && PlayerMovement.Move.sqrMagnitude < 0.1f
-                && CurrentState != PlayerState.Rolling && CurrentState != PlayerState.Jumping 
-                && CurrentState != PlayerState.LandingRoll && CurrentState!=PlayerState.Climbing;
-    }
-    void IdleCheck()
-    {
-
-        if (CombatCheck())
-            return;
-
-        //is the player idle?
-        if (IdleRequirements())
-            CurrentState = PlayerState.Idling;
-
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        CombatState();
-        ClimbState();
-        SprintState();
-        WalkState();
-        JumpState();
-        RollState();
-        IdleCheck();
+        switch (CurrentState)
+        {
+            case PlayerState.Idling:
+                HandleIdleState();
+                break;
+            case PlayerState.Walking:
+                HandleWalkingState();
+                break;
+            case PlayerState.Sprinting:
+                HandleSprintingState();
+                break;
+            case PlayerState.Climbing:
+                HandleClimbingState();
+                break;
+            case PlayerState.Combat:
+                HandleCombatState();
+                break;
+            case PlayerState.LandingRoll:
+                HandleLandingRollState();
+                break;
+                // Other states like Jumping, Rolling would be handled here
+        }
+    }
+
+    // --- STATE HANDLERS ---
+
+    private void HandleIdleState()
+    {
+        // Check for transitions OUT of Idling
+        if (CheckForClimbTransition()) return;
+        if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
+        if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
+        if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
+        if (InputHandling.WantsToSprint && InputHandling.WantsToWalk) { TransitionTo(PlayerState.Sprinting); return; }
+        if (InputHandling.WantsToWalk) { TransitionTo(PlayerState.Walking); return; }
+    }
+
+    private void HandleWalkingState()
+    {
+        // Check for transitions OUT of Walking
+        if (CheckForClimbTransition()) return; // BUG FIX: Added climb check to Walking
+        if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
+        if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
+        if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
+        if (InputHandling.WantsToSprint) { TransitionTo(PlayerState.Sprinting); return; }
+        if (!InputHandling.WantsToWalk) { TransitionTo(PlayerState.Idling); return; }
+    }
+
+    private void HandleSprintingState()
+    {
+        if (!InputHandling.WantsToSprint || !InputHandling.WantsToWalk) { TransitionTo(PlayerState.Walking); return; }
+        if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
+    }
+
+    private void HandleClimbingState()
+    {
+        // Exit condition is gated by the snap check
+        if (HasSnappedToEntry && TriggerHandler.CurrentClimbingCheck == null)
+        {
+            TransitionTo(PlayerState.Idling);
+            
+        }
+    }
+
+    private void HandleCombatState()
+    {
+        if (CanExitCombat)
+        {
+            CanExitCombat = false; // Consume the flag
+            TransitionTo(PlayerState.Idling);
+        }
+    }
+
+    private void HandleLandingRollState()
+    {
+        // This state is exited by an animation event that calls EndRoll() in PlayerMovement.
+        // EndRoll() then sets the state back to Idling.
+        // Therefore, no transition logic is needed here.
+    }
+
+    // --- TRANSITION LOGIC ---
+
+    private bool CheckForClimbTransition()
+    {
+        if (InputHandling.WantsToClimb)
+        {
+            Debug.Log("HandleState sees WantsToClimb=true. Transitioning to Climbing.");
+            InputHandling.ZeroOutClimbInput();
+            InputHandling.WantsToClimb = false; // Consume the flag
+            HasSnappedToEntry = false;          // Reset for the new climb
+            TransitionTo(PlayerState.Climbing);
+            return true;
+        }
+        return false;
+    }
+
+    private void TransitionTo(PlayerState newState)
+    {
+        Debug.Log($"Transitioning from {CurrentState} to {newState}");
+        CurrentState = newState;
     }
 }

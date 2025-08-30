@@ -7,11 +7,15 @@ public class CombatStateHandler : MonoBehaviour
     [SerializeField] PlayerStateHandler PlayerStateHandling;
     [SerializeField] InputHandler InputHandling;
     [SerializeField] AnimationHandler AnimationHandling;
-    [HideInInspector] public enum CombatState {LightAttackStart, LightAttackWindup, LightAttackActive, 
-        LightAttackRecovery, HeavyAttackStart, HeavyAttackWindup, HeavyAttackActive, HeavyAttackRecovery, 
-        GuardBreak, PlayerCritical, BlockStart, BlockActive, BlockRecovery, ParryStart,ParryWindup,ParryActive,ParryRecovery, Stagger, EnemyCritical, Backstab, None }
-    CombatState CurrentCombatState=CombatState.None;
-    
+    [HideInInspector]
+    public enum CombatState
+    {
+        LightAttackStart, LightAttackWindup, LightAttackActive,
+        LightAttackRecovery, HeavyAttackStart, HeavyAttackWindup, HeavyAttackActive, HeavyAttackRecovery,
+        GuardBreak, PlayerCritical, BlockStart, BlockActive, BlockRecovery, ParryStart, ParryWindup, ParryActive, ParryRecovery, Stagger, EnemyCritical, Backstab, None
+    }
+    public CombatState CurrentCombatState = CombatState.None;
+
 
     void AnimLightWindup()
     {
@@ -27,8 +31,9 @@ public class CombatStateHandler : MonoBehaviour
     }
     void AnimExitCombat()
     {
+        Debug.Log($"<color=red>FRAME {Time.frameCount}: AnimExitCombat CALLED.</color> Setting CurrentCombatState to None.");
         PlayerStateHandling.CanExitCombat = true;
-        InputHandling.CombatInput=InputHandler.PlayerCombatInput.None;
+        InputHandling.CombatInput = InputHandler.PlayerCombatInput.None;
         CurrentCombatState = CombatState.None;
         AnimationHandling.AnimatorExitCombat();
     }
@@ -38,69 +43,60 @@ public class CombatStateHandler : MonoBehaviour
         if (CurrentCombatState != CombatState.LightAttackStart)
             return;
 
-        else
-        {
-            AnimationHandling.AnimatorEnterCombat();
-            AnimationHandling.PlayLightAttack();
-        }
+        AnimationHandling.AnimatorEnterCombat();
+        AnimationHandling.PlayLightAttack();
 
-        
+        CurrentCombatState = CombatState.LightAttackWindup;
     }
     void InputToStateTranslation()
     {
+        if (CurrentCombatState != CombatState.None) return;
+
+        // If we get here, it means CurrentCombatState IS None.
+        // Let's see if there's any lingering input that's incorrectly resetting our state.
+        if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None)
+        {
+            Debug.LogError($"<color=orange>FRAME {Time.frameCount}: InputToStateTranslation WARNING!</color> CurrentCombatState was None, but found lingering input '{InputHandling.CombatInput}'. The state is about to be changed.");
+        }
+
         switch (InputHandling.CombatInput)
         {
             case PlayerCombatInput.WantsToLightAttack:
-                
                 CurrentCombatState = CombatState.LightAttackStart;
+                InputHandling.CombatInput = InputHandler.PlayerCombatInput.None;
                 break;
 
             case PlayerCombatInput.WantsToHeavyAttack:
-                
                 CurrentCombatState = CombatState.HeavyAttackStart;
+                InputHandling.CombatInput = InputHandler.PlayerCombatInput.None;
                 break;
 
             case PlayerCombatInput.WantsToBlockAttack:
-                
                 CurrentCombatState = CombatState.BlockStart;
+                InputHandling.CombatInput = InputHandler.PlayerCombatInput.None;
                 break;
 
             case PlayerCombatInput.WantsToParryAttack:
-                
                 CurrentCombatState = CombatState.ParryStart;
+                InputHandling.CombatInput = InputHandler.PlayerCombatInput.None;
                 break;
-
-            case PlayerCombatInput.None:
-                
-                break;
-
-            default:
-                
-                break;
-
-        }
-        if (InputHandling.CombatInput != PlayerCombatInput.None)
-        {
-            InputHandling.CombatInput = PlayerCombatInput.None;
         }
     }
     void CombatHandler()
     {
         if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Combat)
+        {
+            CurrentCombatState = CombatState.None;
             return;
+        }
+
         InputToStateTranslation();
         LightAttackHandler();
-
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
         CombatHandler();
     }
 }
+

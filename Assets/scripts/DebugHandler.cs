@@ -7,6 +7,7 @@ public class DebugHandler : MonoBehaviour
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [SerializeField] private InputHandler InputHandling;
     [SerializeField] private TriggerHandling TriggerHandler;
+    [SerializeField] private CombatStateHandler CombatStateHandling;
     Animator PlayerAnimator;
     Rigidbody rb;
     void OnGUI()
@@ -48,9 +49,11 @@ public class DebugHandler : MonoBehaviour
         //other
         GUI.Label(new Rect(10, y, 300, LineHeight), "Player State: " + PlayerStateHandling.CurrentState);
         y += LineHeight;
+        GUI.Label(new Rect(10, y, 300, LineHeight), "Combat State: " + CombatStateHandling.CurrentCombatState);
+        y += LineHeight;
 
         //display speed variables
-        GUI.Label(new Rect(10, y, 300, LineHeight), "Current Speed: " + PlayerMovement.CurrSpeed);
+       /* GUI.Label(new Rect(10, y, 300, LineHeight), "Current Speed: " + PlayerMovement.CurrSpeed);
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "Current Linear Velocity: " + rb.linearVelocity);
         y += LineHeight;
@@ -67,9 +70,8 @@ public class DebugHandler : MonoBehaviour
         GUI.Label(new Rect(10, y, 300, LineHeight), "WantsToRoll: " + InputHandling.WantsToRoll);
         y += LineHeight;
         GUI.Label(new Rect(10, y, 300, LineHeight), "ClimbInput: " + InputHandling.ClimbInput);
-        y += LineHeight;
-        GUI.Label(new Rect(10, y, 300, LineHeight), "HasSnappedToExit " + PlayerStateHandling.HasSnappedToExit);
-        y += LineHeight;
+        y += LineHeight;*/
+      
 
 
     }

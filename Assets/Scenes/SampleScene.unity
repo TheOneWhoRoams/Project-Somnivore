@@ -1569,6 +1569,7 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 638622979}
   InputHandling: {fileID: 638622976}
   TriggerHandler: {fileID: 638622983}
+  CombatStateHandling: {fileID: 638622984}
 --- !u!114 &638622976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1582,9 +1583,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TriggerHandler: {fileID: 638622983}
-  PlayerMovement: {fileID: 638622969}
   PlayerStateHandling: {fileID: 638622979}
   AnimationHandling: {fileID: 638622974}
+  PlayerMovement: {fileID: 638622969}
   WantsToClimb: 0
   WantsToJump: 0
   WantsToRoll: 0
@@ -1604,13 +1605,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b96301bd01ab34a90b95070fe6c2f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerHandler: {fileID: 638622983}
   PlayerMovement: {fileID: 638622969}
   InputHandling: {fileID: 638622976}
+  TriggerHandler: {fileID: 638622983}
   CurrentState: 0
-  HasSnappedToEntry: 1
-  HasSnappedToExit: 1
   CanExitCombat: 0
+  HasSnappedToEntry: 1
 --- !u!114 &638622983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1643,6 +1643,7 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 638622979}
   InputHandling: {fileID: 638622976}
   AnimationHandling: {fileID: 638622974}
+  CurrentCombatState: 20
 --- !u!114 &638622986
 MonoBehaviour:
   m_ObjectHideFlags: 0

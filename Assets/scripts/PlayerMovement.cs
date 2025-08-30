@@ -142,14 +142,14 @@ public class PlayerMovement : MonoBehaviour
             ClimbingClimbable = TriggerHandler.CurrentClimbable;
         }
 
-        // Entry snap (use stored climbable)
-        if (!HasSnappedToEntry && ClimbingClimbable != null &&
+        // Entry snap
+        if (!PlayerStateHandling.HasSnappedToEntry && ClimbingClimbable != null &&
             (ClimbingClimbable.Type == Climbable.ClimbType.TopEnter || ClimbingClimbable.Type == Climbable.ClimbType.BottomEnter))
         {
             Debug.Log("SUCCESS: Snapping to entry: " + ClimbingClimbable.Type);
             transform.position = ClimbingClimbable.SnapPoint.position;
             transform.rotation = ClimbingClimbable.SnapPoint.rotation;
-            HasSnappedToEntry = true;
+            PlayerStateHandling.HasSnappedToEntry = true; // THIS IS THE CRITICAL LINE
         }
 
         // Debug the current trigger state while climbing
