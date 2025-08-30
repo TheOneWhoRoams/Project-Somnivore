@@ -7,6 +7,7 @@ public class CombatStateHandler : MonoBehaviour
     [SerializeField] PlayerStateHandler PlayerStateHandling;
     [SerializeField] InputHandler InputHandling;
     [SerializeField] AnimationHandler AnimationHandling;
+    [SerializeField] ResourceHandler ResourceHandling;
     [HideInInspector]
     public enum CombatState
     {
@@ -47,6 +48,8 @@ public class CombatStateHandler : MonoBehaviour
         AnimationHandling.PlayLightAttack();
 
         CurrentCombatState = CombatState.LightAttackWindup;
+        ResourceHandling.OnStaminaDrainingAction();
+
     }
     void InputToStateTranslation()
     {

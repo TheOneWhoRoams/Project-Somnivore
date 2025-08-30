@@ -1570,6 +1570,7 @@ MonoBehaviour:
   InputHandling: {fileID: 638622976}
   TriggerHandler: {fileID: 638622983}
   CombatStateHandling: {fileID: 638622984}
+  ResourceHandling: {fileID: 638622987}
 --- !u!114 &638622976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1643,6 +1644,7 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 638622979}
   InputHandling: {fileID: 638622976}
   AnimationHandling: {fileID: 638622974}
+  ResourceHandling: {fileID: 638622987}
   CurrentCombatState: 20
 --- !u!114 &638622986
 MonoBehaviour:
@@ -1660,6 +1662,22 @@ MonoBehaviour:
   OffHandPrefab: {fileID: 7343984453073544682, guid: d3bc6f1c45296c141bc2787fd0e832fe, type: 3}
   HandSocketR: {fileID: 1919299704}
   HandSocketL: {fileID: 71399838}
+--- !u!114 &638622987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638622964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98723c4fdc678f04c862e312f6f016cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResourceHandler
+  PlayerStateHandling: {fileID: 638622979}
+  CombatStateHandling: {fileID: 638622984}
+  SetStamina: 100
+  Stamina: 100
 --- !u!1 &640884082
 GameObject:
   m_ObjectHideFlags: 0
@@ -3165,6 +3183,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 990903540611260484, guid: 8e1471e805192fd4e902f7cc7eec8378, type: 3}
       insertIndex: -1
       addedObject: {fileID: 638622986}
+    - targetCorrespondingSourceObject: {fileID: 990903540611260484, guid: 8e1471e805192fd4e902f7cc7eec8378, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 638622987}
   m_SourcePrefab: {fileID: 100100000, guid: 8e1471e805192fd4e902f7cc7eec8378, type: 3}
 --- !u!4 &1919299704 stripped
 Transform:

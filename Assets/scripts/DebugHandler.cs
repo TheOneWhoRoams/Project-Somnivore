@@ -8,6 +8,7 @@ public class DebugHandler : MonoBehaviour
     [SerializeField] private InputHandler InputHandling;
     [SerializeField] private TriggerHandling TriggerHandler;
     [SerializeField] private CombatStateHandler CombatStateHandling;
+    [SerializeField] private ResourceHandler ResourceHandling;
     Animator PlayerAnimator;
     Rigidbody rb;
     void OnGUI()
@@ -27,6 +28,8 @@ public class DebugHandler : MonoBehaviour
 
 
          GUI.Label(new Rect(10, y, 300, LineHeight), "Trigger: " + TriggerHandler.InClimbZone);
+            y += LineHeight;
+         GUI.Label(new Rect(10, y, 300, LineHeight), "Stamina: " + ResourceHandling.Stamina);
             y += LineHeight;
          
          
