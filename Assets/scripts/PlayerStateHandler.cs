@@ -6,6 +6,7 @@ public class PlayerStateHandler : MonoBehaviour
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
     [SerializeField] private TriggerHandling TriggerHandler; // Added for climb logic
+    [SerializeField] private ResourceHandler ResourceHandling;
 
     // --- STATE MANAGEMENT ---
     public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, Combat, Climbing, LandingRoll };
@@ -14,27 +15,40 @@ public class PlayerStateHandler : MonoBehaviour
     // --- FLAGS ---
     [HideInInspector] public bool CanExitCombat = false;
     [HideInInspector] public bool HasSnappedToEntry = false;
+    [HideInInspector] public bool CanRegenStamina = true;
+    [HideInInspector] public bool StaminaDrainActive = false;
 
     void Update()
     {
         switch (CurrentState)
         {
             case PlayerState.Idling:
+                StaminaDrainActive = false;
+                CanRegenStamina = true;
                 HandleIdleState();
                 break;
             case PlayerState.Walking:
+                StaminaDrainActive = false;
+                CanRegenStamina = true;
                 HandleWalkingState();
                 break;
             case PlayerState.Sprinting:
+                StaminaDrainActive = true;
+                CanRegenStamina = false;
                 HandleSprintingState();
                 break;
             case PlayerState.Climbing:
+                StaminaDrainActive = false;
+                CanRegenStamina = true;
                 HandleClimbingState();
                 break;
             case PlayerState.Combat:
+                CanRegenStamina = false;
                 HandleCombatState();
                 break;
             case PlayerState.LandingRoll:
+                StaminaDrainActive = false;
+                CanRegenStamina = true;
                 HandleLandingRollState();
                 break;
                 // Other states like Jumping, Rolling would be handled here
@@ -50,7 +64,7 @@ public class PlayerStateHandler : MonoBehaviour
         if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
         if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
         if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
-        if (InputHandling.WantsToSprint && InputHandling.WantsToWalk) { TransitionTo(PlayerState.Sprinting); return; }
+        if (InputHandling.WantsToSprint && InputHandling.WantsToWalk && ResourceHandling.CanSpendStamina(ResourceHandling.Stamina)) { TransitionTo(PlayerState.Sprinting); return; }
         if (InputHandling.WantsToWalk) { TransitionTo(PlayerState.Walking); return; }
     }
 
@@ -61,13 +75,13 @@ public class PlayerStateHandler : MonoBehaviour
         if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
         if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
         if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
-        if (InputHandling.WantsToSprint) { TransitionTo(PlayerState.Sprinting); return; }
+        if (InputHandling.WantsToSprint && ResourceHandling.CanSpendStamina(ResourceHandling.Stamina)) { TransitionTo(PlayerState.Sprinting); return; }
         if (!InputHandling.WantsToWalk) { TransitionTo(PlayerState.Idling); return; }
     }
 
     private void HandleSprintingState()
     {
-        if (!InputHandling.WantsToSprint || !InputHandling.WantsToWalk) { TransitionTo(PlayerState.Walking); return; }
+        if (!InputHandling.WantsToSprint || !InputHandling.WantsToWalk || !ResourceHandling.CanSpendStamina(ResourceHandling.Stamina)) { TransitionTo(PlayerState.Walking); return; }
         if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
     }
 

@@ -1587,6 +1587,7 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 638622979}
   AnimationHandling: {fileID: 638622974}
   PlayerMovement: {fileID: 638622969}
+  ResourceHandling: {fileID: 638622987}
   WantsToClimb: 0
   WantsToJump: 0
   WantsToRoll: 0
@@ -1609,9 +1610,12 @@ MonoBehaviour:
   PlayerMovement: {fileID: 638622969}
   InputHandling: {fileID: 638622976}
   TriggerHandler: {fileID: 638622983}
+  ResourceHandling: {fileID: 638622987}
   CurrentState: 0
   CanExitCombat: 0
   HasSnappedToEntry: 1
+  CanRegenStamina: 1
+  StaminaDrainActive: 0
 --- !u!114 &638622983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1677,7 +1681,13 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 638622979}
   CombatStateHandling: {fileID: 638622984}
   SetStamina: 100
+  SetStaminaRegenAmount: 10
+  SetStaminaRegenDelay: 1
+  SetSprintStaminaDrainAmountOnTick: 5
   Stamina: 100
+  StaminaRegenDelay: 0
+  StaminaRegenAmount: 0
+  SprintStaminaDrainAmountOnTick: 0
 --- !u!1 &640884082
 GameObject:
   m_ObjectHideFlags: 0

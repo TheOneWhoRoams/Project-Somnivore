@@ -7,7 +7,8 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private TriggerHandling TriggerHandler;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
     [SerializeField] private AnimationHandler AnimationHandling;
-    [SerializeField] private PlayerMovement PlayerMovement; // Added for grounded check
+    [SerializeField] private PlayerMovement PlayerMovement; 
+    [SerializeField] private ResourceHandler ResourceHandling; 
 
     // --- INPUT FLAGS ---
     [HideInInspector] public bool WantsToClimb;
@@ -23,6 +24,7 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public float ClimbInput;
 
     // --- INPUT SYSTEM EVENTS ---
+    
    public void ZeroOutClimbInput()
     {
         ClimbInput = 0;
@@ -91,7 +93,7 @@ public class InputHandler : MonoBehaviour
 
     void OnJump()
     {
-        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame) return;
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame ) return;
         WantsToJump = true;
         AnimationHandling.PlayJump();
     }
@@ -105,7 +107,8 @@ public class InputHandler : MonoBehaviour
 
     void OnSprint(InputValue value)
     {
-        WantsToSprint = value.isPressed;
+        
+            WantsToSprint = value.isPressed;
     }
 
     // CORRECTED: Added the missing OnDebugger method
@@ -134,7 +137,7 @@ public class InputHandler : MonoBehaviour
 
     private bool CanPerformCombatAction()
     {
-        return PlayerMovement.IsGroundedThisFrame &&
+        return PlayerMovement.IsGroundedThisFrame && ResourceHandling.CanSpendStamina(ResourceHandling.Stamina) &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing;

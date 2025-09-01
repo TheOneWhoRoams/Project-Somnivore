@@ -1,15 +1,75 @@
 using UnityEngine;
-
+using System.Collections;
 public class ResourceHandler : MonoBehaviour
 {
     [SerializeField] PlayerStateHandler PlayerStateHandling;
     [SerializeField] CombatStateHandler CombatStateHandling;
     [SerializeField] float SetStamina;
+    [SerializeField] float SetStaminaRegenAmount;
+    [SerializeField] float SetStaminaRegenDelay;
+    [SerializeField] float SetSprintStaminaDrainAmountOnTick;
     [HideInInspector] public float Stamina;
+    [HideInInspector] public float StaminaRegenDelay;
+    [HideInInspector] public float StaminaRegenAmount;
+    [HideInInspector] public float SprintStaminaDrainAmountOnTick;
     enum ActionType { Single, Continuous};
     ActionType Action = ActionType.Single;
     float StaminaDrainAmount = 30;
+
     
+    private Coroutine RegenerationCoroutine;
+   public bool CanSpendStamina(float CurrentStamina)
+    {
+        Debug.Log("CanSpendStamina Passed");
+        return CurrentStamina > 0;
+    }
+   
+    public void ManageStaminaDrain(bool DrainingActionActive, float StaminaDrainEachTick)
+    {
+        if  (DrainingActionActive && CanSpendStamina(Stamina))
+        {
+            Debug.Log("Draining Stamina");
+            Stamina = Stamina - (StaminaDrainEachTick * Time.deltaTime);
+        }
+    }
+    private IEnumerator RegenStaminaAfterDelay()
+    {
+        Debug.Log("Regen coroutine started. Waiting for delay...");
+        yield return new WaitForSeconds(StaminaRegenDelay);
+        Debug.Log("Delay finished. Now regenerating stamina.");
+
+       
+        while (Stamina < SetStamina)
+        {
+            Stamina += StaminaRegenAmount * Time.deltaTime;
+            yield return null;
+        }
+        Stamina = SetStamina;
+        Debug.Log("Stamina is full. Coroutine is now finished.");
+        RegenerationCoroutine = null;
+    }
+    void ManageStaminaRegeneration()
+    {
+        
+        if (PlayerStateHandling.CanRegenStamina)
+        {
+            
+            if (RegenerationCoroutine == null)
+            {
+                
+                RegenerationCoroutine = StartCoroutine(RegenStaminaAfterDelay());
+            }
+        }
+        else
+        {
+            if (RegenerationCoroutine != null)
+            {
+                StopCoroutine(RegenerationCoroutine);
+                RegenerationCoroutine = null;
+            }
+        }
+    }
+
     void SetStaminaDrainAmount()
     {
         switch (CombatStateHandling.CurrentCombatState)
@@ -60,12 +120,16 @@ public class ResourceHandler : MonoBehaviour
     }
     void Start()
     {
-        Stamina = SetStamina;   
+        Stamina = SetStamina;
+        StaminaRegenAmount = SetStaminaRegenAmount;
+        StaminaRegenDelay = SetStaminaRegenDelay; 
+        SprintStaminaDrainAmountOnTick = SetSprintStaminaDrainAmountOnTick; 
     }
 
-    
+
     void Update()
     {
-        
+        ManageStaminaDrain(PlayerStateHandling.StaminaDrainActive, SprintStaminaDrainAmountOnTick);
+        ManageStaminaRegeneration();
     }
 }
