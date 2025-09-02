@@ -1,0 +1,11 @@
+{
+    "asset": "4e56fbb3344fdc44a8ba7e433e46f0cd",
+    "fileName": "01990999-a413-7c0e-90c9-f8ca169877e3.pose.json",
+    "prompt": "two-handed sword swing",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1663124338,
+    "w3CTraceId": "6634ccf1c5ab30b965fc592e5e897996",
+    "isTrimmed": false
+}
