@@ -1910,7 +1910,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       propertyPath: m_Name
-      value: HumanDummy_F Red
+      value: Enemy_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1925,6 +1929,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1401990214}
+    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1401990217}
   m_SourcePrefab: {fileID: 100100000, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
 --- !u!1 &930926951
 GameObject:
@@ -2961,6 +2968,22 @@ MonoBehaviour:
   AreBothHandsOccupied: 1
   HandSocketR: {fileID: 465409182}
   HandSocketL: {fileID: 0}
+--- !u!114 &1401990217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401990209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4838a3985668ff64ea4f231a232cb184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiResourceHandler
+  Health: 100
+  Poise: 50
+  BleedMeter: 25
+  PoisonMeter: 50
 --- !u!1 &1774869681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,7 +3274,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 990903540611260484, guid: 8e1471e805192fd4e902f7cc7eec8378, type: 3}
       propertyPath: m_Name
-      value: HumanDummy_F White
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 990903540611260484, guid: 8e1471e805192fd4e902f7cc7eec8378, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2720278258352800379, guid: 8e1471e805192fd4e902f7cc7eec8378, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
