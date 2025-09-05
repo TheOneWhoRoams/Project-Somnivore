@@ -1655,6 +1655,7 @@ MonoBehaviour:
   AnimationHandling: {fileID: 638622974}
   ResourceHandling: {fileID: 638622987}
   CurrentCombatState: 20
+  AttackActive: 0
 --- !u!114 &638622986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,8 +1668,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45df41638954de74c87bf4619231918a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttachWeapon
-  MainHandPrefab: {fileID: 8164120991138390204, guid: f21bf55b7b4a4a8408b37d3defbc2a55, type: 3}
+  MainHandPrefab: {fileID: 8164120991138390204, guid: 60e879b251185fc49ad4da504cf010e5, type: 3}
   OffHandPrefab: {fileID: 7343984453073544682, guid: d3bc6f1c45296c141bc2787fd0e832fe, type: 3}
+  combatStateHandler: {fileID: 638622984}
   AreBothHandsOccupied: 0
   HandSocketR: {fileID: 1919299704}
   HandSocketL: {fileID: 71399838}
@@ -3025,6 +3027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttachWeapon
   MainHandPrefab: {fileID: 8164120991138390204, guid: f21bf55b7b4a4a8408b37d3defbc2a55, type: 3}
   OffHandPrefab: {fileID: 0}
+  combatStateHandler: {fileID: 0}
   AreBothHandsOccupied: 1
   HandSocketR: {fileID: 465409182}
   HandSocketL: {fileID: 0}

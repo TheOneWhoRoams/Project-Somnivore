@@ -16,6 +16,7 @@ public class CombatStateHandler : MonoBehaviour
         GuardBreak, PlayerCritical, BlockStart, BlockActive, BlockRecovery, ParryStart, ParryWindup, ParryActive, ParryRecovery, Stagger, EnemyCritical, Backstab, None
     }
     public CombatState CurrentCombatState = CombatState.None;
+    [HideInInspector]public bool AttackActive = false;
 
 
     void AnimLightWindup()
@@ -25,10 +26,12 @@ public class CombatStateHandler : MonoBehaviour
     void AnimLightActive()
     {
         CurrentCombatState = CombatState.LightAttackActive;
+        AttackActive = true;
     }
     void AnimLightRecovery()
     {
         CurrentCombatState = CombatState.LightAttackRecovery;
+        AttackActive = false;
     }
     void AnimExitCombat()
     {

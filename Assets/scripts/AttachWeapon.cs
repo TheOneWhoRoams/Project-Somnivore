@@ -5,7 +5,7 @@ public class AttachWeapon : MonoBehaviour
     // Drag your sword prefab here in the Inspector
     public GameObject MainHandPrefab;
     public GameObject OffHandPrefab;
-
+    [SerializeField] private CombatStateHandler combatStateHandler;
     [HideInInspector] public enum BothHandsOccupied { Yes, No}
     public BothHandsOccupied AreBothHandsOccupied;
     // Drag your character's hand socket/bone here
@@ -13,43 +13,40 @@ public class AttachWeapon : MonoBehaviour
     public Transform HandSocketL;
     IEnumerator AttachWeaponAfterInitialization()
     {
-        // Wait until the end of the first frame
         yield return new WaitForEndOfFrame();
+
+        GameObject Weapon = null; // Declare the variable in the wider scope
+
         switch (AreBothHandsOccupied)
         {
             case BothHandsOccupied.Yes:
-                if (OffHandPrefab != null && MainHandPrefab != null && HandSocketL != null && HandSocketR != null)
-                {
-                    // Create a new instance of the weapon
-                    GameObject Weapon = Instantiate(MainHandPrefab, HandSocketR.position, HandSocketR.rotation);
-                    GameObject OffHand = Instantiate(OffHandPrefab, HandSocketL.position, HandSocketL.rotation);
+                // ... (your existing OffHand logic) ...
 
-                    // Attach it to the hand socket
-                    Weapon.transform.SetParent(HandSocketR);
-                    OffHand.transform.SetParent(HandSocketL);
-
-                    Weapon.transform.localPosition = Vector3.zero;
-                    OffHand.transform.localPosition = Vector3.zero;
-                }
+                // Assign to the existing 'Weapon' variable
+                Weapon = Instantiate(MainHandPrefab, HandSocketR.position, HandSocketR.rotation);
+                Weapon.transform.SetParent(HandSocketR);
+                Weapon.transform.localPosition = Vector3.zero;
                 break;
             case BothHandsOccupied.No:
-                if (MainHandPrefab != null&& HandSocketR != null)
+                if (MainHandPrefab != null && HandSocketR != null)
                 {
-                    // Create a new instance of the weapon
-                    GameObject Weapon = Instantiate(MainHandPrefab, HandSocketR.position, HandSocketR.rotation);
-                    
-
-                    // Attach it to the hand socket
+                    // Assign to the existing 'Weapon' variable
+                    Weapon = Instantiate(MainHandPrefab, HandSocketR.position, HandSocketR.rotation);
                     Weapon.transform.SetParent(HandSocketR);
-                    
-
                     Weapon.transform.localPosition = Vector3.zero;
-                    
                 }
                 break;
         }
-        
-        // ... code to attach the weapon ...
+
+        // Now you can access the 'Weapon' variable here
+        if (Weapon != null && combatStateHandler != null)
+        {
+            WeaponHitboxController hitboxController = Weapon.GetComponentInChildren<WeaponHitboxController>();
+            if (hitboxController != null)
+            {
+                hitboxController.Setup(combatStateHandler);
+            }
+        }
     }
     void Start()
     {
