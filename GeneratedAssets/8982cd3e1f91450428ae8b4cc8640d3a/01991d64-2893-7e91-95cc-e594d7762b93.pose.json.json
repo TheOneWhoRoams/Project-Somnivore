@@ -1,0 +1,11 @@
+{
+    "asset": "8982cd3e1f91450428ae8b4cc8640d3a",
+    "fileName": "01991d64-2893-7e91-95cc-e594d7762b93.pose.json",
+    "prompt": "right hand fast sword swing horizontal\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 708647845,
+    "w3CTraceId": "c47441b256fa1207feb01e81489ae714",
+    "isTrimmed": false
+}

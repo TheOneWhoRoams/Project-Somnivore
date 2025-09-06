@@ -16,12 +16,16 @@ public class AttachWeapon : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         GameObject Weapon = null; // Declare the variable in the wider scope
+        GameObject OffHand = null;
 
         switch (AreBothHandsOccupied)
         {
             case BothHandsOccupied.Yes:
                 // ... (your existing OffHand logic) ...
 
+                OffHand = Instantiate(OffHandPrefab, HandSocketL.position, HandSocketL.rotation);
+                OffHand.transform.SetParent(HandSocketL);
+                OffHand.transform.localPosition = Vector3.zero;
                 // Assign to the existing 'Weapon' variable
                 Weapon = Instantiate(MainHandPrefab, HandSocketR.position, HandSocketR.rotation);
                 Weapon.transform.SetParent(HandSocketR);
