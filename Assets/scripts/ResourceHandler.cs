@@ -5,10 +5,14 @@ public class ResourceHandler : MonoBehaviour
     [SerializeField] PlayerStateHandler PlayerStateHandling;
     [SerializeField] CombatStateHandler CombatStateHandling;
     [SerializeField] float SetStamina;
+    [SerializeField] float SetHealth;
+    [SerializeField] float SetPoise;
     [SerializeField] float SetStaminaRegenAmount;
     [SerializeField] float SetStaminaRegenDelay;
     [SerializeField] float SetSprintStaminaDrainAmountOnTick;
     [HideInInspector] public float Stamina;
+    [HideInInspector] public float Health;
+    [HideInInspector] public float Poise;
     [HideInInspector] public float StaminaRegenDelay;
     [HideInInspector] public float StaminaRegenAmount;
     [HideInInspector] public float SprintStaminaDrainAmountOnTick;
@@ -18,6 +22,11 @@ public class ResourceHandler : MonoBehaviour
 
     
     private Coroutine RegenerationCoroutine;
+
+    public void TakeDamage(WeaponData WeaponData)
+    {
+        Health -= WeaponData.WeaponDamage;
+    }
    public bool CanSpendStamina(float CurrentStamina)
     {
         Debug.Log("CanSpendStamina Passed");
@@ -120,6 +129,8 @@ public class ResourceHandler : MonoBehaviour
     }
     void Start()
     {
+        Health = SetHealth;
+        Poise = SetPoise;
         Stamina = SetStamina;
         StaminaRegenAmount = SetStaminaRegenAmount;
         StaminaRegenDelay = SetStaminaRegenDelay; 

@@ -13,6 +13,9 @@ public class AiResourceHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void TakeDamage(WeaponData AttackingWeapon)
     {
+        if (AttackingWeapon.Owner != WeaponData.WeaponOwner.Player)
+            return;
+
         Debug.Log("Damage Taken");
         Health -= AttackingWeapon.WeaponDamage;
         Poise -= AttackingWeapon.WeaponPoiseDamage;

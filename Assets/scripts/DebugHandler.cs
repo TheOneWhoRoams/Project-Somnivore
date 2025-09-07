@@ -31,6 +31,8 @@ public class DebugHandler : MonoBehaviour
             y += LineHeight;
          GUI.Label(new Rect(10, y, 300, LineHeight), "Stamina: " + ResourceHandling.Stamina);
             y += LineHeight;
+         GUI.Label(new Rect(10, y, 300, LineHeight), "Health: " + ResourceHandling.Health);
+            y += LineHeight;
          
          
 

@@ -11,11 +11,12 @@ public class TriggerHandling : MonoBehaviour
     [HideInInspector] public Climbable CurrentClimbable;
     [HideInInspector] public IsClimbingCheck CurrentClimbingCheck;
     [HideInInspector] public PlayerStateHandler PlayerStateHandling;
+    [HideInInspector] public ResourceHandler ResourceHandling;
     
     [SerializeField] PlayerMovement PlayerMovHandling;
-    
 
-    // In TriggerHandling.cs
+
+    
     public Climbable GetBestClimbable()
     {
         // Simple logic: if we have multiple climbables, pick based on what we're doing
@@ -38,10 +39,13 @@ public class TriggerHandling : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        
+
     }
     private void OnTriggerExit(Collider other)
     {
-       
+
     }
 }
+
+
+
