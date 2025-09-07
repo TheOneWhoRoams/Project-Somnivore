@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3925818737308147073}
   - component: {fileID: 4568392017993802630}
   - component: {fileID: 8028954671221961078}
+  - component: {fileID: 5454835158280459227}
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
@@ -124,7 +125,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e9e1bbbf3d95d428610ebe6aca6dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponHitboxHandler
-  CombatStateHandling: {fileID: 0}
+--- !u!114 &5454835158280459227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861269437398059962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e338d333fd830e44fbb7c9a1d8abeb1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  WeaponDamage: 30
+  WeaponPoiseDamage: 15
+  WeaponBleedBuildup: 3
+  WeaponPoisonBuildup: 5
 --- !u!1 &8603594622728528722
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,32 +333,8 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7788415119632314555, guid: a531f6e46a360194a8d0055532923c36, type: 3}
       insertIndex: -1
       addedObject: {fileID: 264222419595720186}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7448341242989472257, guid: a531f6e46a360194a8d0055532923c36, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2737225121199335440}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a531f6e46a360194a8d0055532923c36, type: 3}
---- !u!1 &8164120991138390204 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7448341242989472257, guid: a531f6e46a360194a8d0055532923c36, type: 3}
-  m_PrefabInstance: {fileID: 1590080923986709181}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2737225121199335440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8164120991138390204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e338d333fd830e44fbb7c9a1d8abeb1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  WeaponDamage: 30
-  WeaponPoiseDamage: 5
-  WeaponBleedBuildup: 0
-  WeaponPoisonBuildup: 0
 --- !u!4 &8793023622331333126 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7788415119632314555, guid: a531f6e46a360194a8d0055532923c36, type: 3}

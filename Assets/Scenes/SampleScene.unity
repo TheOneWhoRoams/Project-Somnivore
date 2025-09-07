@@ -1966,6 +1966,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      propertyPath: SetPoise
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      propertyPath: SetHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      propertyPath: SetBleedMeter
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      propertyPath: SetPoisonMeter
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 6735002785900871212, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1994,6 +2010,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1401990217}
+    - targetCorrespondingSourceObject: {fileID: 659450156003677659, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1687528556}
   m_SourcePrefab: {fileID: 100100000, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
 --- !u!1 &930926951
 GameObject:
@@ -3043,10 +3062,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4838a3985668ff64ea4f231a232cb184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AiResourceHandler
+  SetHealth: 100
   Health: 100
+  SetPoise: 30
   Poise: 50
   BleedMeter: 25
   PoisonMeter: 50
+  SetBleedMeter: 5
+  SetPoisonMeter: 10
+--- !u!1 &1687528550 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 659450156003677659, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+  m_PrefabInstance: {fileID: 889468934}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1687528556
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687528550}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1774869681
 GameObject:
   m_ObjectHideFlags: 0

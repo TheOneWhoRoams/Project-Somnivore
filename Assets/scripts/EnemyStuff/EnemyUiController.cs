@@ -22,10 +22,10 @@ public class EnemyUIController : MonoBehaviour
     void Start()
     {
         // Get the max values at the start
-        MaxHealth = resourceHandler.Health;
-        MaxPoise = resourceHandler.Poise;
-        BleedThreshold = resourceHandler.BleedMeter;
-        PoisonThreshold = resourceHandler.PoisonMeter;
+        MaxHealth = resourceHandler.SetHealth;
+        MaxPoise = resourceHandler.SetPoise;
+        BleedThreshold = resourceHandler.SetBleedMeter;
+        PoisonThreshold = resourceHandler.SetPoisonMeter;
     }
 
     void Update()

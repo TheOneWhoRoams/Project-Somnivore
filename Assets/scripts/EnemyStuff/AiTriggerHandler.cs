@@ -10,6 +10,7 @@ public class AiTriggerHandler : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log(this.gameObject.name + " was hit by " + other.gameObject.name);
         // Try to get a WeaponData component from the object that just hit us.
         WeaponData AttackingWeapon = other.GetComponent<WeaponData>();
 
