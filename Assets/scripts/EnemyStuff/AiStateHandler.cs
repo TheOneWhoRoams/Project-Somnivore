@@ -13,6 +13,7 @@ public class AiStateHandler : MonoBehaviour
     //placeholder vars
     bool InEngageZone;
     bool GotParried;
+    public bool AttackFinished = true;
     void StateTransition(bool IsCurrentActionInterruptible)
     {
         //if (IsCurrentActionInterruptible)
@@ -120,6 +121,7 @@ public class AiStateHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Current Ai State: "+CurrentAiState);
         DetermineStateTransition();
         StateSwitch();
     }

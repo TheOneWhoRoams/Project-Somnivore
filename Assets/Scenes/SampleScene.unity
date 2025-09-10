@@ -2020,6 +2020,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1401990217}
+    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1401990223}
+    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1401990222}
+    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1401990221}
     - targetCorrespondingSourceObject: {fileID: 659450156003677659, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1687528556}
@@ -3080,6 +3089,48 @@ MonoBehaviour:
   PoisonMeter: 50
   SetBleedMeter: 5
   SetPoisonMeter: 10
+--- !u!114 &1401990221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401990209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd5de121c2f16e04c984ac6760c41817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiCombatSubStateHandler
+  AiStateHandling: {fileID: 1401990223}
+  CurrentCombatState: 3
+--- !u!114 &1401990222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401990209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535ce89e67b915c4fbdae64a1d41bf27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiReferenceManager
+  combatStateHandler: {fileID: 1401990221}
+  AttachWeaponScript: {fileID: 0}
+--- !u!114 &1401990223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401990209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eaffde3e1b624479158d0c45e997d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiStateHandler
+  CurrentAiState: 0
+  AttackFinished: 1
 --- !u!1 &1687528550 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 659450156003677659, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
