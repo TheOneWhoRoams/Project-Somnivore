@@ -1347,11 +1347,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!4 &465409182 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4578829299711522838, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
-  m_PrefabInstance: {fileID: 889468934}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &638622964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 990903540611260484, guid: 8e1471e805192fd4e902f7cc7eec8378, type: 3}
@@ -2016,16 +2011,10 @@ PrefabInstance:
       addedObject: {fileID: 1401990210}
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1401990214}
-    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1401990217}
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1401990223}
-    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1401990222}
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1401990221}
@@ -3051,24 +3040,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!114 &1401990214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1401990209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45df41638954de74c87bf4619231918a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AttachWeapon
-  MainHandPrefab: {fileID: 8164120991138390204, guid: f21bf55b7b4a4a8408b37d3defbc2a55, type: 3}
-  OffHandPrefab: {fileID: 0}
-  combatStateHandler: {fileID: 0}
-  AreBothHandsOccupied: 1
-  HandSocketR: {fileID: 465409182}
-  HandSocketL: {fileID: 0}
 --- !u!114 &1401990217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3103,20 +3074,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AiCombatSubStateHandler
   AiStateHandling: {fileID: 1401990223}
   CurrentCombatState: 3
---- !u!114 &1401990222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1401990209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 535ce89e67b915c4fbdae64a1d41bf27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AiReferenceManager
-  combatStateHandler: {fileID: 1401990221}
-  AttachWeaponScript: {fileID: 0}
 --- !u!114 &1401990223
 MonoBehaviour:
   m_ObjectHideFlags: 0

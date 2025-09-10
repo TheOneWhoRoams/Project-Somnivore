@@ -8,6 +8,7 @@ public class AiWeaponHitboxController : MonoBehaviour
 
     void Awake()
     {
+        CombatStateHandler=GetComponentInParent<AiCombatSubStateHandler>();
         HitboxCollider = GetComponent<BoxCollider>();
         HitboxCollider.enabled = false;
     }
@@ -31,10 +32,7 @@ public class AiWeaponHitboxController : MonoBehaviour
         }
     }
     // This public method allows another script to give us the reference.
-    public void Setup(AiCombatSubStateHandler handler)
-    {
-        this.CombatStateHandler = handler;
-    }
+ 
 
     void Update()
     {
