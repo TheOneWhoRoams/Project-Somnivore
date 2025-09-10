@@ -1,0 +1,11 @@
+{
+    "asset": "ac7ed3cb577f3e3499c38e355c41039f",
+    "fileName": "01993483-166d-7830-9399-696435e4e9c0.pose.json",
+    "prompt": "Stagger",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 188730191,
+    "w3CTraceId": "b90ad289589635651e9de561fc09e45b",
+    "isTrimmed": false
+}

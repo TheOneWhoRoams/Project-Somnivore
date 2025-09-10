@@ -1,0 +1,11 @@
+{
+    "asset": "ac7ed3cb577f3e3499c38e355c41039f",
+    "fileName": "01993483-d5b5-7613-b9c2-8d8faa7c009d.pose.json",
+    "prompt": " brief stationary Stagger after getting hit with a mace like in dark souls\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1748303316,
+    "w3CTraceId": "27f5ce24e7d5c9c1f33550b0f4171652",
+    "isTrimmed": false
+}

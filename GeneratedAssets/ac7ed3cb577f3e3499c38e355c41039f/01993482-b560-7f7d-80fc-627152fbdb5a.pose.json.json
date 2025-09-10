@@ -1,0 +1,11 @@
+{
+    "asset": "ac7ed3cb577f3e3499c38e355c41039f",
+    "fileName": "01993482-b560-7f7d-80fc-627152fbdb5a.pose.json",
+    "prompt": "Broken Poise with regular weapon swings\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 112550922,
+    "w3CTraceId": "a5b6bab11f109f19be285edc5d0df4aa",
+    "isTrimmed": false
+}

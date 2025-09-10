@@ -1,0 +1,11 @@
+{
+    "asset": "c9f80150a47f49948a523d6efb302dea",
+    "fileName": "01993485-08ac-7bb9-a90b-e4ca515f916e.pose.json",
+    "prompt": "Got Parried animation like in dark souls\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 27008028,
+    "w3CTraceId": "cc2af496c48286c785c1317096449915",
+    "isTrimmed": false
+}

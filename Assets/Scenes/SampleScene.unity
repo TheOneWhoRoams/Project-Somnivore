@@ -3087,6 +3087,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AiStateHandler
   CurrentAiState: 0
+  InCloseRange: 0
+  InEngageRange: 0
+  InAttackRange: 0
+  GotParried: 0
   AttackFinished: 1
 --- !u!1 &1687528550 stripped
 GameObject:

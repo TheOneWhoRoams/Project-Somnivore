@@ -11,8 +11,10 @@ public class AiStateHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     //placeholder vars
-    bool InEngageZone;
-    bool GotParried;
+    public bool InCloseRange;
+    public bool InEngageRange;
+    public bool InAttackRange;
+    public bool GotParried;
     public bool AttackFinished = true;
     void StateTransition(bool IsCurrentActionInterruptible)
     {
