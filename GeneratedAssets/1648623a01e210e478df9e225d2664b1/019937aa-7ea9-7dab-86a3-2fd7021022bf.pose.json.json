@@ -1,0 +1,11 @@
+{
+    "asset": "1648623a01e210e478df9e225d2664b1",
+    "fileName": "019937aa-7ea9-7dab-86a3-2fd7021022bf.pose.json",
+    "prompt": "Hard Stagger Dark Souls After Getting Parried Hands Up",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 692227299,
+    "w3CTraceId": "1d459f3dc1f2189be90741381f15fca7",
+    "isTrimmed": false
+}

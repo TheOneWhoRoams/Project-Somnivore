@@ -1,0 +1,11 @@
+{
+    "asset": "bc0c9149952b883429d2305f247cc26d",
+    "fileName": "019937a9-92b2-7eba-a3cc-0d45db7696aa.pose.json",
+    "prompt": "Post Hit Stagger\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 401844070,
+    "w3CTraceId": "299abee60b370d8d11b770cb5956304e",
+    "isTrimmed": false
+}

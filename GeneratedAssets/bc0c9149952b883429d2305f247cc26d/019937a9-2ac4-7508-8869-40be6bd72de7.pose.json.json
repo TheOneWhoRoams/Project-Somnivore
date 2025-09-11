@@ -1,0 +1,11 @@
+{
+    "asset": "bc0c9149952b883429d2305f247cc26d",
+    "fileName": "019937a9-2ac4-7508-8869-40be6bd72de7.pose.json",
+    "prompt": "Fortnite Default Dance",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 2062086460,
+    "w3CTraceId": "0fa00e059e685ff1bcc4d9ac195ed257",
+    "isTrimmed": false
+}

@@ -1,0 +1,11 @@
+{
+    "asset": "cdb529972c9b6bd499e95453d1cb0c1f",
+    "fileName": "019937ad-b987-724c-a6ec-fbc042240c0f.pose.json",
+    "prompt": "Charge attack sword pointing forward\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1746746709,
+    "w3CTraceId": "67bc2b864b5fed3d0dc715773bd28cfe",
+    "isTrimmed": false
+}

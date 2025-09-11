@@ -1,0 +1,11 @@
+{
+    "asset": "cdb529972c9b6bd499e95453d1cb0c1f",
+    "fileName": "019937ae-1016-7854-bf59-cc7e1774715f.pose.json",
+    "prompt": "Running attack sword pointing forward\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 291787293,
+    "w3CTraceId": "bc4905adac1c631f66feaf1e74916f71",
+    "isTrimmed": false
+}

@@ -1,0 +1,11 @@
+{
+    "asset": "bc0c9149952b883429d2305f247cc26d",
+    "fileName": "019937a9-ca2f-75b9-a988-cb6daed9862f.pose.json",
+    "prompt": "Post Hit Stagger Stationary Dark Souls\n\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1076657358,
+    "w3CTraceId": "09b0173eed9cd520a6305b7eabb1a6a9",
+    "isTrimmed": false
+}
