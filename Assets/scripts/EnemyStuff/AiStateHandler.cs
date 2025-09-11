@@ -15,14 +15,24 @@ public class AiStateHandler : MonoBehaviour
     public bool InEngageRange;
     public bool InAttackRange;
     public bool GotParried;
+    public bool IsBusy = false;
     public bool AttackFinished = true;
-    void StateTransition(bool IsCurrentActionInterruptible)
+
+
+    public void AnimSetBusy()
     {
-        //if (IsCurrentActionInterruptible)
-        //Coroutine waiting for animation end (via animation event?)
+        IsBusy = true;
+    }
+    public void AnimSetNotBusy()
+    {
+        IsBusy = false;
+    }
+    void StateTransition()
+    {
+        
             
 
-        
+        if(!IsBusy)
         switch (CurrentStateSwitch)
         {
             case AiStateSwitch.WantsToDie:
@@ -77,12 +87,12 @@ public class AiStateHandler : MonoBehaviour
             return;
         else
         {
-            //if(!InEngageZone)
-            //StatesOtherThanSpecifiedFalse(WantsToIdle)
-            //else if(InEngageZone&&!InAttackRange)
-            //StatesOtherThanSpecifiedFalse(WantsToChase)
-            //else if(InEngageZone&&InAttackRange)
-            //StatesOtherThanSpecifiedFalse(WantsToAttack)
+            if (!InEngageRange)
+                CurrentStateSwitch = AiStateSwitch.WantsToIdle;
+            else if (InEngageRange && !InAttackRange)
+                CurrentStateSwitch = AiStateSwitch.WantsToChase;
+            else if(InEngageRange && InAttackRange)
+                CurrentStateSwitch = AiStateSwitch.WantsToAttack;
         }
 
 
@@ -95,19 +105,19 @@ public class AiStateHandler : MonoBehaviour
         switch (CurrentAiState)
         {
             case AiState.Idling:
-                StateTransition(true);
+                StateTransition();
                 break;
             case AiState.Chasing:
-                StateTransition(true);
+                StateTransition();
                 break;
             case AiState.SoftStaggerHit:
-                StateTransition(false);
+                StateTransition();
                 break;
             case AiState.HardStaggerHit:
-                StateTransition(false);
+                StateTransition();
                 break;
             case AiState.Attacking:
-                StateTransition(true);
+                StateTransition();
                 break;
             case AiState.Death:
                 //insert death logic here
