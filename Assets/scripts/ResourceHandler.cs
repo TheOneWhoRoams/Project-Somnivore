@@ -4,8 +4,8 @@ public class ResourceHandler : MonoBehaviour
 {
     [SerializeField] PlayerStateHandler PlayerStateHandling;
     [SerializeField] CombatStateHandler CombatStateHandling;
-    [SerializeField] float SetStamina;
-    [SerializeField] float SetHealth;
+    [SerializeField] public float SetStamina;
+    [SerializeField] public float SetHealth;
     [SerializeField] float SetPoise;
     [SerializeField] float SetStaminaRegenAmount;
     [SerializeField] float SetStaminaRegenDelay;
