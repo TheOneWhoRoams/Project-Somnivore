@@ -15,6 +15,12 @@ A third-person soulslike action RPG built in Unity.
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
+## Status
+
+The goal of this repository is to develop a polished **vertical slice** for portfolio purposes. Development on this main branch will be considered complete once that goal is reached.
+
+Any potential future development towards a full game will be continued in a separate fork.
+
 ## Contact
 
 Discord - iwilleatyourliver
