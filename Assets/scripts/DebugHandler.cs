@@ -80,14 +80,14 @@ public class DebugHandler : MonoBehaviour
 
 
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         PlayerAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         

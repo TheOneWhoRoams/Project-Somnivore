@@ -12,7 +12,7 @@ public class AnimationHandler : MonoBehaviour
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
     public float RollAnimationSpeed;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void RollParams()
     {
         if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
@@ -109,7 +109,7 @@ public class AnimationHandler : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         RollParams();

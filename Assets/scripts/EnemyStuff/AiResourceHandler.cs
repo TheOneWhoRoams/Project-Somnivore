@@ -10,7 +10,7 @@ public class AiResourceHandler : MonoBehaviour
     [HideInInspector] public float PoisonMeter;
     public float SetBleedMeter;
     public float SetPoisonMeter;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   
     public void TakeDamage(WeaponData AttackingWeapon)
     {
         if (AttackingWeapon.Owner != WeaponData.WeaponOwner.Player)
@@ -28,7 +28,6 @@ public class AiResourceHandler : MonoBehaviour
         PoisonMeter = SetPoisonMeter; 
     }
 
-    // Update is called once per frame
     void Update()
     {
         

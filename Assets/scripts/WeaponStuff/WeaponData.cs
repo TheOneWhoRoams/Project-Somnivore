@@ -13,7 +13,7 @@ public class WeaponData : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         

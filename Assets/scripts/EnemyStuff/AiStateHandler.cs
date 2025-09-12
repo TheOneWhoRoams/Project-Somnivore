@@ -8,7 +8,7 @@ public class AiStateHandler : MonoBehaviour
     AiStateSwitch CurrentStateSwitch = AiStateSwitch.WantsToIdle;
     float Health = 1;
     float Poise = 1;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
 
     //placeholder vars
     public bool InCloseRange;
@@ -130,7 +130,7 @@ public class AiStateHandler : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         Debug.Log("Current Ai State: "+CurrentAiState);

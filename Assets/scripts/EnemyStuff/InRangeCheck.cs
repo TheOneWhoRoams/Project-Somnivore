@@ -32,7 +32,7 @@ public class InCloseRangeCheck : MonoBehaviour
             
         
     }
-    // Update is called once per frame
+    
     void Update()
     {
         switch (Check)

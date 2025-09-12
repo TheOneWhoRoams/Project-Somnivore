@@ -58,8 +58,7 @@ public class CombatStateHandler : MonoBehaviour
     {
         if (CurrentCombatState != CombatState.None) return;
 
-        // If we get here, it means CurrentCombatState IS None.
-        // Let's see if there's any lingering input that's incorrectly resetting our state.
+       
         if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None)
         {
             Debug.LogError($"<color=orange>FRAME {Time.frameCount}: InputToStateTranslation WARNING!</color> CurrentCombatState was None, but found lingering input '{InputHandling.CombatInput}'. The state is about to be changed.");
