@@ -3615,6 +3615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35d8e3aa2823564d88ad6e1de596784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  StateHandler: {fileID: 1401990223}
+  CombatSubHandler: {fileID: 1401990221}
 --- !u!195 &1401990228
 NavMeshAgent:
   m_ObjectHideFlags: 0
