@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class AiMovementHandler : MonoBehaviour
+public class AiNavMeshHandler : MonoBehaviour
 {
     private NavMeshAgent Agent;
     public float RotationSpeed = 5f;

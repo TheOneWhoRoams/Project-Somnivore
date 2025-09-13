@@ -2371,6 +2371,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1401990228}
+    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1401990230}
+    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1401990229}
     - targetCorrespondingSourceObject: {fileID: 659450156003677659, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1687528556}
@@ -3630,6 +3636,46 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1401990229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401990209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680413ca6d6d6014ab631252fd1e5098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiMovementController
+  StateHandler: {fileID: 1401990223}
+  NavMeshHandler: {fileID: 1401990230}
+  CombatHandler: {fileID: 1401990221}
+  ResourceHandler: {fileID: 1401990231}
+--- !u!114 &1401990230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401990209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f095e3c69d0f3842aa22526a231b834, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiNavMeshHandler
+  RotationSpeed: 5
+--- !u!114 &1401990231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
+  m_PrefabInstance: {fileID: 889468934}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401990209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4838a3985668ff64ea4f231a232cb184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AiResourceHandler
 --- !u!1 &1547372498
 GameObject:
   m_ObjectHideFlags: 0
