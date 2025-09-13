@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InCloseRangeCheck : MonoBehaviour
 {
-    public enum CheckType { CloseRange, AttackRange, EngageRange};
+    public enum CheckType { CloseRange, AttackRange, EngageRange, DisengageRange};
     public CheckType Check;
     bool InTrigger;
     
@@ -47,7 +47,11 @@ public class InCloseRangeCheck : MonoBehaviour
                 break;
             case CheckType.EngageRange:
                 AiStateHandler.InEngageRange = InTrigger;
-                
+          
+                break;
+            case CheckType.DisengageRange:
+                AiStateHandler.InDisengageRange = InTrigger;
+          
                 break;
         }
         

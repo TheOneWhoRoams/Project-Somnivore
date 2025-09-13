@@ -3596,6 +3596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AiStateHandler
   CurrentAiState: 0
+  InDisengageRange: 0
   InCloseRange: 0
   InEngageRange: 0
   InAttackRange: 0

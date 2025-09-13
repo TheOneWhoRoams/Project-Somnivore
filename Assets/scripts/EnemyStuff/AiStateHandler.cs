@@ -8,9 +8,10 @@ public class AiStateHandler : MonoBehaviour
     AiStateSwitch CurrentStateSwitch = AiStateSwitch.WantsToIdle;
     float Health = 1;
     float Poise = 1;
-    
+
 
     //placeholder vars
+    public bool InDisengageRange;
     public bool InCloseRange;
     public bool InEngageRange;
     public bool InAttackRange;
@@ -87,7 +88,7 @@ public class AiStateHandler : MonoBehaviour
             return;
         else
         {
-            if (!InEngageRange)
+            if (!InEngageRange&&!InDisengageRange)
                 CurrentStateSwitch = AiStateSwitch.WantsToIdle;
             else if (InEngageRange && !InAttackRange)
                 CurrentStateSwitch = AiStateSwitch.WantsToChase;
