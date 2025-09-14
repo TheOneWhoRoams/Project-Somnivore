@@ -34,7 +34,7 @@ public class AiAnimationHandler : MonoBehaviour
                 break;
             case AiStateHandler.AiState.Death:
                 ResetAllAnimatorParameters();
-                PlayHardStagger();
+                PlayDeath();
                 break;
         }
     }

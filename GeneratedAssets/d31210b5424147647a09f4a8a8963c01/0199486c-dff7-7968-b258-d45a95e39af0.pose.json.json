@@ -1,0 +1,11 @@
+{
+    "asset": "d31210b5424147647a09f4a8a8963c01",
+    "fileName": "0199486c-dff7-7968-b258-d45a95e39af0.pose.json",
+    "prompt": "Dying animation falling on face\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1630301589,
+    "w3CTraceId": "0979210edc1d6fe9bf07b7bd7001ac8f",
+    "isTrimmed": false
+}

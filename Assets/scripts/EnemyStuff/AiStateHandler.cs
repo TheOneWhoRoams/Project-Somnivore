@@ -65,6 +65,7 @@ public class AiStateHandler : MonoBehaviour
     {
         if (Health<=0)
         {
+            Debug.Log("Ai is suicidal");
             CurrentStateSwitch=AiStateSwitch.WantsToDie;
             return true;
         }
