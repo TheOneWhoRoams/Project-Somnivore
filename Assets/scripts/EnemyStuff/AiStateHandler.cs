@@ -2,22 +2,23 @@ using UnityEngine;
 
 public class AiStateHandler : MonoBehaviour
 {
+    [SerializeField] private AiResourceHandler Resources;
     public enum AiState { Idling, Chasing, Attacking, SoftStaggerHit, HardStaggerHit, Death }
     public AiState CurrentAiState = AiState.Idling;
     public enum AiStateSwitch { WantsToDie, WantsToHardStagger, WantsToSoftStagger, WantsToAttack, WantsToIdle, WantsToChase}
     AiStateSwitch CurrentStateSwitch = AiStateSwitch.WantsToIdle;
-    float Health = 1;
-    float Poise = 1;
+    
+    
 
 
     //placeholder vars
-    public bool InDisengageRange;
-    public bool InCloseRange;
-    public bool InEngageRange;
-    public bool InAttackRange;
-    public bool GotParried;
-    public bool IsBusy = false;
-    public bool AttackFinished = true;
+    [HideInInspector] public bool InDisengageRange;
+    [HideInInspector] public bool InCloseRange;
+    [HideInInspector] public bool InEngageRange;
+    [HideInInspector] public bool InAttackRange;
+    [HideInInspector] public bool GotParried;
+    [HideInInspector] public bool IsBusy = false;
+    [HideInInspector] public bool AttackFinished = true;
 
 
     public void AnimSetBusy()
@@ -63,7 +64,7 @@ public class AiStateHandler : MonoBehaviour
     }
     bool DisruptiveStateHandler()
     {
-        if (Health<=0)
+        if (Resources.Health<=0)
         {
             Debug.Log("Ai is suicidal");
             CurrentStateSwitch=AiStateSwitch.WantsToDie;
@@ -75,7 +76,7 @@ public class AiStateHandler : MonoBehaviour
             CurrentStateSwitch = AiStateSwitch.WantsToHardStagger;
             return true;
         }
-        else if (Poise<=0)
+        else if (Resources.Poise<=0)
         {
             CurrentStateSwitch = AiStateSwitch.WantsToSoftStagger;
             return true;

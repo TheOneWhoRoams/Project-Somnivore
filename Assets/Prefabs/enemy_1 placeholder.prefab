@@ -134,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       propertyPath: SetPoise
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       propertyPath: SetHealth
@@ -142,11 +142,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       propertyPath: SetBleedMeter
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6659676033124220130, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       propertyPath: SetPoisonMeter
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6735002785900871212, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -182,9 +182,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6441432052390871455}
-    - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6326463959975677641}
     - targetCorrespondingSourceObject: {fileID: 6565767563735424481, guid: b77e57dba65c59d46a66bc357052a08c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2860546412799922334}
@@ -297,26 +294,6 @@ CapsuleCollider:
   m_Height: 1.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
---- !u!114 &6326463959975677641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6927607620634691337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4838a3985668ff64ea4f231a232cb184, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AiResourceHandler
-  SetHealth: 100
-  Health: 100
-  SetPoise: 30
-  Poise: 50
-  BleedMeter: 25
-  PoisonMeter: 50
-  SetBleedMeter: 5
-  SetPoisonMeter: 10
 --- !u!114 &2860546412799922334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6eaffde3e1b624479158d0c45e997d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AiStateHandler
+  Resources: {fileID: 7446254155813758474}
   CurrentAiState: 0
   InDisengageRange: 0
   InCloseRange: 0

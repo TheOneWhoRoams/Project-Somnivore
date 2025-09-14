@@ -103,7 +103,12 @@ public class AiAnimationHandler : MonoBehaviour
     }
     public void PlayDeath()
     {
-        AiAnimator.SetTrigger("Death");
+        if (FlagConsumed==false)
+        {
+            AiAnimator.SetTrigger("Death");
+            FlagConsumedTrue();
+        }
+        
     }
     public void PlaySoftStagger()
     {
