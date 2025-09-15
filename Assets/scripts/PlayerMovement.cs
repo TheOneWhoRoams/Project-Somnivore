@@ -32,8 +32,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 PreLandDirection;
     Animator PlayerAnimator;
     private Camera MainCamera;
-    
-    
+    [HideInInspector]public bool MovementAllowed = true;
+
+
     public bool IsGroundedThisFrame;
 
 
@@ -275,7 +276,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling 
             || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.LandingRoll
-            || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Climbing) 
+            || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Climbing||!MovementAllowed) 
             return;
         
         

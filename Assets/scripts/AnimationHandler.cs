@@ -12,9 +12,18 @@ public class AnimationHandler : MonoBehaviour
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
     public float RollAnimationSpeed;
+    
 
     bool FlagConsumed = false;
 
+    public void AnimatorDisableMovement()
+    {
+        PlayerMovement.MovementAllowed = false;
+    }
+    public void AnimatorEnableMovement()
+    {
+        PlayerMovement.MovementAllowed = true;
+    }
     public void AnimatorSetFlagNotConsumed()
     {
         FlagConsumed = false;
