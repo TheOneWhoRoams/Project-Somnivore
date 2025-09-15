@@ -18,10 +18,7 @@ public class TriggerHandling : MonoBehaviour
     [SerializeField] PlayerMovement PlayerMovHandling;
 
 
-    private void Update()
-    {
-        Debug.Log("In bonfire range? "+InBonfireRange);
-    }
+   
     public Climbable GetBestClimbable()
     {
         

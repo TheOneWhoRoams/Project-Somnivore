@@ -1,0 +1,11 @@
+{
+    "asset": "2c59feb35076ba442895cc9996b41eb9",
+    "fileName": "01994ca9-cc22-7eb8-a884-94d975298068.pose.json",
+    "prompt": "Sit Down on the ground butt's height is 0\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 714967171,
+    "w3CTraceId": "5a170e73add3cae5bb9ff8858b0cf247",
+    "isTrimmed": false
+}

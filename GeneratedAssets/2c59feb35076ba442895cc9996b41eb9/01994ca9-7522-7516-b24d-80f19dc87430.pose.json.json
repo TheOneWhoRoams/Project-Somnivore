@@ -1,0 +1,11 @@
+{
+    "asset": "2c59feb35076ba442895cc9996b41eb9",
+    "fileName": "01994ca9-7522-7516-b24d-80f19dc87430.pose.json",
+    "prompt": "Sit Down on the ground\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 1633167604,
+    "w3CTraceId": "c7abf7972fbcd29426090712d4309d07",
+    "isTrimmed": false
+}

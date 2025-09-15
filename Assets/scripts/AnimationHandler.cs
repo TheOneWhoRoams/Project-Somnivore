@@ -12,7 +12,13 @@ public class AnimationHandler : MonoBehaviour
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
     public float RollAnimationSpeed;
-    
+
+    bool FlagConsumed = false;
+
+    public void AnimatorSetFlagNotConsumed()
+    {
+        FlagConsumed = false;
+    }
     void RollParams()
     {
         if (PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.LandingRoll)
@@ -44,6 +50,7 @@ public class AnimationHandler : MonoBehaviour
         else PlayerMovement.RollSpeed = 4f;
         PlayerAnimator.SetFloat("RollAnimationSpeed", RollAnimationSpeed);
     }
+    
    public void AnimatorEnterCombat()
     {
         PlayerAnimator.SetTrigger("EnterCombat");
@@ -52,12 +59,22 @@ public class AnimationHandler : MonoBehaviour
     {
         PlayerAnimator.SetTrigger("ExitCombat");
     }
+    public void PlayRest()
+    {
+        if (!FlagConsumed)
+        {
+            
+            PlayerAnimator.SetTrigger("Rest");
+            FlagConsumed = true;
+        }
+    }
     public void PlayLightAttack()
     {
         PlayerAnimator.SetTrigger("LightAttack");
     }
     public void PlayRoll()
     {
+        if(!FlagConsumed)
         PlayerAnimator.SetTrigger("Roll");
     }
     public void PlayJump()
@@ -79,6 +96,21 @@ public class AnimationHandler : MonoBehaviour
                 {
                     PlayerAnimator.SetBool("IsWalking", true);
                     PlayerAnimator.SetBool("IsSprinting", false);
+                    break;
+                }
+            case PlayerStateHandler.PlayerState.Rest:
+                {
+                    if (InputHandling.WantsToExitBonfire)
+                    {
+                        PlayerAnimator.SetTrigger("ExitRest");                       
+                    }
+                    else
+                    {
+                        PlayRest();
+                    }
+                    PlayerAnimator.SetBool("IsWalking", false);
+                    PlayerAnimator.SetBool("IsSprinting", false);
+                    
                     break;
                 }
             case PlayerStateHandler.PlayerState.Sprinting:

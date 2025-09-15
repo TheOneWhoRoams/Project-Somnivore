@@ -1,0 +1,11 @@
+{
+    "asset": "2c59feb35076ba442895cc9996b41eb9",
+    "fileName": "01994caa-17c3-717f-8a99-d5ebd32d8bc2.pose.json",
+    "prompt": "Sit Down on the ground like dark souls bonfire\n",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 750617408,
+    "w3CTraceId": "5ade1e14e5ad0afbdfb069f8bb904ec8",
+    "isTrimmed": false
+}

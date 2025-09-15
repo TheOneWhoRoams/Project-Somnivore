@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStateHandler : MonoBehaviour
@@ -9,7 +10,7 @@ public class PlayerStateHandler : MonoBehaviour
     [SerializeField] private ResourceHandler ResourceHandling;
 
     
-    public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, Combat, Climbing, LandingRoll };
+    public enum PlayerState { Idling, Walking, Sprinting, Jumping, Rolling, Falling, Combat, Climbing, LandingRoll, Rest };
     public PlayerState CurrentState = PlayerState.Idling;
 
     
@@ -51,16 +52,38 @@ public class PlayerStateHandler : MonoBehaviour
                 CanRegenStamina = true;
                 HandleLandingRollState();
                 break;
+            case PlayerState.Rest:
+                CanRegenStamina = true;
+                StaminaDrainActive = false;
+                HandleRestState();
+                break;
                 
         }
     }
 
    
-
+    private void HandleRestState()
+    {
+        if (!InputHandling.WantsToExitBonfire)
+        {
+            Debug.Log("Bazinga 1");
+            return;
+        }
+        else
+        {
+            Debug.Log("Bazinga 2");
+            InputHandling.WantsToExitBonfire = false;
+            InputHandling.WantsToUseBonfire = false;
+            Debug.Log("Bazinga 3");
+            TransitionTo(PlayerState.Idling);
+            Debug.Log("Bazinga 4");
+            Debug.Log("Bazinga: " + CurrentState);        
+        }
+    }
     private void HandleIdleState()
     {
-        
-        if (CheckForClimbTransition()) return;
+        if (InputHandling.WantsToUseBonfire) {TransitionTo(PlayerState.Rest); return; }
+            if (CheckForClimbTransition()) return;
         if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
         if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
         if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
@@ -70,7 +93,7 @@ public class PlayerStateHandler : MonoBehaviour
 
     private void HandleWalkingState()
     {
-        
+        if (InputHandling.WantsToUseBonfire){ TransitionTo(PlayerState.Rest); return; }
         if (CheckForClimbTransition()) return; 
         if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
         if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
@@ -81,6 +104,7 @@ public class PlayerStateHandler : MonoBehaviour
 
     private void HandleSprintingState()
     {
+        if (InputHandling.WantsToUseBonfire) {TransitionTo(PlayerState.Rest); return; }
         if (!InputHandling.WantsToSprint || !InputHandling.WantsToWalk || !ResourceHandling.CanSpendStamina(ResourceHandling.Stamina)) { TransitionTo(PlayerState.Walking); return; }
         if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
     }

@@ -17,6 +17,7 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToWalk;
     [HideInInspector] public bool WantsToSprint;
     [HideInInspector] public bool WantsToUseBonfire;
+    [HideInInspector] public bool WantsToExitBonfire;
     // CORRECTED: Restored missing combat inputs
     public enum PlayerCombatInput { None, WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack }
     public PlayerCombatInput CombatInput = PlayerCombatInput.None;
@@ -46,7 +47,11 @@ public class InputHandler : MonoBehaviour
 
     void OnInteract()
     {
-        if (CanRestAtBonfire())
+        if (WantsToUseBonfire)
+        {
+            WantsToExitBonfire = true;
+        }
+        else if (CanRestAtBonfire())
         {
             Debug.Log("Eeepy");
             WantsToUseBonfire = true;
@@ -124,7 +129,8 @@ public class InputHandler : MonoBehaviour
     {
         return TriggerHandler.InBonfireRange && PlayerMovement.IsGroundedThisFrame && 
             PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && 
-            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Combat;
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Combat &&
+            !WantsToUseBonfire; 
     }
     private bool CanClimb()
     {

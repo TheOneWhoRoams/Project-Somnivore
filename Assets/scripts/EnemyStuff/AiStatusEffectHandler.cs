@@ -5,7 +5,7 @@ public class AiStatusEffectHandler : MonoBehaviour
    [SerializeField] private GameObject DyingGameObject;
     void AnimCallDeath()
     {
-        Debug.Log("Change Da world, My final message, goodbye");
+        Debug.Log("Change Da world, My final message. goodbye");
         Destroy(DyingGameObject);
     }
     void Awake()
