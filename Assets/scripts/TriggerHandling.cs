@@ -12,11 +12,16 @@ public class TriggerHandling : MonoBehaviour
     [HideInInspector] public IsClimbingCheck CurrentClimbingCheck;
     [HideInInspector] public PlayerStateHandler PlayerStateHandling;
     [HideInInspector] public ResourceHandler ResourceHandling;
+    [HideInInspector] public bool InBonfireRange;
+    
     
     [SerializeField] PlayerMovement PlayerMovHandling;
 
 
-    
+    private void Update()
+    {
+        Debug.Log("In bonfire range? "+InBonfireRange);
+    }
     public Climbable GetBestClimbable()
     {
         

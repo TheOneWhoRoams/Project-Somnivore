@@ -16,6 +16,7 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToRoll;
     [HideInInspector] public bool WantsToWalk;
     [HideInInspector] public bool WantsToSprint;
+    [HideInInspector] public bool WantsToUseBonfire;
     // CORRECTED: Restored missing combat inputs
     public enum PlayerCombatInput { None, WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack }
     public PlayerCombatInput CombatInput = PlayerCombatInput.None;
@@ -45,16 +46,16 @@ public class InputHandler : MonoBehaviour
 
     void OnInteract()
     {
-        Debug.Log("--- OnInteract event FIRED ---");
-        if (CanClimb())
+        if (CanRestAtBonfire())
         {
-            Debug.Log("CanClimb() returned TRUE. Setting WantsToClimb = true.");
+            Debug.Log("Eeepy");
+            WantsToUseBonfire = true;
+        }
+        else if (CanClimb())
+        {
+            
             WantsToClimb = true;
-        }
-        else
-        {
-            Debug.LogError("CanClimb() returned FALSE. Check conditions in log.");
-        }
+        }    
     }
 
     // Names like OnLightAttack, OnHeavyAttack, OnBlock, OnParry should match your Player Input Action Map
@@ -119,14 +120,16 @@ public class InputHandler : MonoBehaviour
 
 
     // --- CONDITION CHECKS ---
-
+    private bool CanRestAtBonfire()
+    {
+        return TriggerHandler.InBonfireRange && PlayerMovement.IsGroundedThisFrame && 
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && 
+            PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Combat;
+    }
     private bool CanClimb()
     {
         // Log each individual condition to find the exact point of failure.
-        Debug.Log($"[CanClimb Check] CurrentClimbable: {(TriggerHandler.CurrentClimbable != null ? TriggerHandler.CurrentClimbable.name : "NULL")}");
-        Debug.Log($"[CanClimb Check] CurrentState: {PlayerStateHandling.CurrentState}");
-        Debug.Log($"[CanClimb Check] Is Entry Type: {(TriggerHandler.CurrentClimbable != null && (TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.TopEnter || TriggerHandler.CurrentClimbable.Type == Climbable.ClimbType.BottomEnter))}");
-        Debug.Log($"[CanClimb Check] IsInEntryZone: {(TriggerHandler.CurrentClimbable != null ? TriggerHandler.CurrentClimbable.IsInEntryZone.ToString() : "N/A")}");
+        
 
         return TriggerHandler.CurrentClimbable != null &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling &&
