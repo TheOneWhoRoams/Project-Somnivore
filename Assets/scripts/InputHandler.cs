@@ -99,14 +99,14 @@ public class InputHandler : MonoBehaviour
 
     void OnJump()
     {
-        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame ) return;
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rest) return;
         WantsToJump = true;
         AnimationHandling.PlayJump();
     }
 
     void OnRoll()
     {
-        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame) return;
+        if (PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rolling || !PlayerMovement.IsGroundedThisFrame || PlayerStateHandling.CurrentState == PlayerStateHandler.PlayerState.Rest) return;
         WantsToRoll = true;
         AnimationHandling.PlayRoll();
     }
