@@ -10,10 +10,15 @@ public class AiSpawner : MonoBehaviour
 
     void Start()
     {
+        
         SpawnAllEnemies();
     }
+    private void OnDestroy()
+    {
+        
+    }
 
-    void SpawnAllEnemies()
+    public void SpawnAllEnemies()
     {
         // Loop through every spawn point you've added to the list
         foreach (Transform SpawnPoint in SpawnPoints)
@@ -29,4 +34,5 @@ public class AiSpawner : MonoBehaviour
             }
         }
     }
+    
 }
