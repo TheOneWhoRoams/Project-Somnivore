@@ -23,6 +23,28 @@ public class ResourceHandler : MonoBehaviour
     
     private Coroutine RegenerationCoroutine;
 
+
+
+
+    
+    private void OnEnable()
+    {
+        
+        EventManager.OnPlayerRested += ReplenishResources;
+    }
+
+    private void OnDisable()
+    {
+        
+        EventManager.OnPlayerRested -= ReplenishResources;
+    }
+
+    void ReplenishResources()
+    {
+        Health = SetHealth;
+        Poise = SetPoise;
+        Stamina = SetStamina;
+    }
     public void TakeDamage(WeaponData WeaponData)
     {
         Health -= WeaponData.WeaponDamage;
