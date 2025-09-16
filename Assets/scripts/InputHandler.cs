@@ -55,6 +55,7 @@ public class InputHandler : MonoBehaviour
         {
             Debug.Log("Eeepy");
             WantsToUseBonfire = true;
+            EventManager.RaisePlayerRestedEvent();
         }
         else if (CanClimb())
         {

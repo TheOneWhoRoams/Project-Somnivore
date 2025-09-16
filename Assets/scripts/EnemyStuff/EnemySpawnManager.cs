@@ -5,7 +5,7 @@ public class EnemySpawnManager : MonoBehaviour
 {
     public static EnemySpawnManager Instance { get; private set; }
 
-    private List<AiSpawner> allSpawners = new List<AiSpawner>();
+    [SerializeField]private List<AiSpawner> allSpawners = new List<AiSpawner>();
 
     private void Awake()
     {
@@ -16,6 +16,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("Enemy Spawn Manager is listening for the event");
         EventManager.OnPlayerRested += HandleRespawn;
     }
 
@@ -28,7 +29,7 @@ public class EnemySpawnManager : MonoBehaviour
     private void HandleRespawn()
     {
         Debug.Log("Spawn Manager heard the rest event. Respawning all enemies.");
-
+        Debug.Log("Number of registered spawners: " + allSpawners.Count);
         // 1. Find and destroy all existing enemies
         GameObject[] existingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in existingEnemies)
