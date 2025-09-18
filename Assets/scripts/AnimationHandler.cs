@@ -12,10 +12,27 @@ public class AnimationHandler : MonoBehaviour
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
     public float RollAnimationSpeed;
+    bool DeathPlayed= false;
 
 
     bool FlagConsumed = false;
-
+    private void OnEnable()
+    {
+        EventManager.OnPlayerDeathInitiate += PlayDeath;
+    }
+    public void PlayDeath()
+    {
+        if (!DeathPlayed)
+        {
+            PlayerAnimator.SetTrigger("Death");
+            DeathPlayed = true;
+        }
+        
+    }
+    public void AnimFlagDeathFinished()
+    {
+        EventManager.RaisePlayerDeathFinish(this.gameObject);
+    }
     public void AnimatorStateHardReset()
     {
         PlayerStateHandling.CurrentState=PlayerStateHandler.PlayerState.Idling;

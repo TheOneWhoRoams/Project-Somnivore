@@ -162,6 +162,9 @@ public class ResourceHandler : MonoBehaviour
 
     void Update()
     {
+        if (Health <= 0)
+            EventManager.RaisePlayerDeathInitiate();
+
         ManageStaminaDrain(PlayerStateHandling.StaminaDrainActive, SprintStaminaDrainAmountOnTick);
         ManageStaminaRegeneration();
     }
