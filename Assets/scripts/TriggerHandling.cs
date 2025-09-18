@@ -13,6 +13,7 @@ public class TriggerHandling : MonoBehaviour
     [HideInInspector] public PlayerStateHandler PlayerStateHandling;
     [HideInInspector] public ResourceHandler ResourceHandling;
     [HideInInspector] public bool InBonfireRange;
+    [HideInInspector] public Transform NewSpawnPoint;
     
     
     [SerializeField] PlayerMovement PlayerMovHandling;

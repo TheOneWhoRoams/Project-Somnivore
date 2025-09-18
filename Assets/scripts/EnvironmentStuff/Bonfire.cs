@@ -4,6 +4,7 @@ public class Bonfire : MonoBehaviour
 {
 
     private TriggerHandling TriggerHandler;
+    public Transform BonfireSpawnPoint;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +23,7 @@ public class Bonfire : MonoBehaviour
 
         if (TriggerHandler != null)
         {
+            TriggerHandler.NewSpawnPoint = BonfireSpawnPoint.transform;
             TriggerHandler.InBonfireRange = true;
         }
 
@@ -32,6 +34,7 @@ public class Bonfire : MonoBehaviour
 
         if (triggerHandler != null)
         {
+            TriggerHandler.NewSpawnPoint = null;
             triggerHandler.InBonfireRange = false;
         }
     }
