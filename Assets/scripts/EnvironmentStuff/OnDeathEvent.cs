@@ -3,7 +3,7 @@ using UnityEngine;
 public class OnDeathEvent : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private Transform CurrentPlayerSpawnPoint;
+    [SerializeField] private Transform CurrentPlayerSpawnPoint;
     public GameObject PlayerPrefab;
     private void OnEnable()
     {
@@ -22,7 +22,7 @@ public class OnDeathEvent : MonoBehaviour
     }
     void SpawnPlayer()
     {
-        Instantiate(PlayerPrefab, CurrentPlayerSpawnPoint);
+        Instantiate(PlayerPrefab, CurrentPlayerSpawnPoint.position, CurrentPlayerSpawnPoint.rotation);
     }
     void OnDeath(GameObject Player)
     {
