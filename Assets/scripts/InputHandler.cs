@@ -56,6 +56,7 @@ public class InputHandler : MonoBehaviour
             Debug.Log("Eeepy");
             WantsToUseBonfire = true;
             EventManager.RaisePlayerRestedEvent();
+            EventManager.RaisePlayerRestSpawnPointSet(TriggerHandler.NewSpawnPoint);
         }
         else if (CanClimb())
         {

@@ -897,6 +897,7 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 0}
   ResourceHandling: {fileID: 0}
   InBonfireRange: 0
+  NewSpawnPoint: {fileID: 0}
   PlayerMovHandling: {fileID: 7106871217118600888}
 --- !u!114 &5043623108872603185
 MonoBehaviour:
@@ -949,9 +950,9 @@ MonoBehaviour:
   PlayerStateHandling: {fileID: 927750180392224093}
   CombatStateHandling: {fileID: 5043623108872603185}
   SetStamina: 100
-  SetHealth: 100
+  SetHealth: 20
   SetPoise: 25
-  SetStaminaRegenAmount: 10
+  SetStaminaRegenAmount: 30
   SetStaminaRegenDelay: 1
   SetSprintStaminaDrainAmountOnTick: 5
   Stamina: 100

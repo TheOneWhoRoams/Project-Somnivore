@@ -6,16 +6,51 @@ public class AiMovementController : MonoBehaviour
     [SerializeField] private AiNavMeshHandler NavMeshHandler;
     [SerializeField] private AiCombatSubStateHandler CombatHandler;
     [SerializeField] private AiResourceHandler ResourceHandler;
+    private bool IsSearchingForPlayer = false;
+    private int FrameCounter = 0;
 
     private Transform PlayerTransform;
 
-    void Awake()
+    private void OnEnable()
     {
-        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        FindPlayer();
+    }
+
+    void FindPlayer()
+    {
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            PlayerTransform = playerObj.transform;
+            IsSearchingForPlayer = false; 
+            Debug.Log("AI has found the player.", this.gameObject);
+        }
+        else
+        {
+            IsSearchingForPlayer = true; 
+        }
     }
 
     void Tick()
     {
+        if (!IsSearchingForPlayer && PlayerTransform == null)
+        {
+            Debug.Log("Player reference was lost. Re-initializing search.", this.gameObject);
+            IsSearchingForPlayer = true;
+        }
+        if (IsSearchingForPlayer)
+        {
+            
+            FrameCounter++;
+            if (FrameCounter >= 5)
+            {
+                FrameCounter = 0;
+                Debug.Log("AI is searching for player...", this.gameObject);
+                FindPlayer(); 
+            }
+            return; 
+        }
+
         switch (StateHandler.CurrentAiState)
         {
             case AiStateHandler.AiState.Chasing:

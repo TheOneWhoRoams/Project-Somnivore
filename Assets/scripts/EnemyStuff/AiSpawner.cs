@@ -13,6 +13,9 @@ public class AiSpawner : MonoBehaviour
         
         SpawnAllEnemies();
     }
+   
+        
+    
     private void OnDestroy()
     {
         

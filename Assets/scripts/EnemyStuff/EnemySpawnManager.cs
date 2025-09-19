@@ -17,7 +17,7 @@ public class EnemySpawnManager : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("Enemy Spawn Manager is listening for the event");
-        EventManager.OnPlayerRested += HandleRespawn;
+        EventManager.OnPlayerRested += HandleRespawn;    
     }
 
     private void OnDisable()

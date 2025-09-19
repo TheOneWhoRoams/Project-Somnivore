@@ -28,6 +28,7 @@ public class OnDeathEvent : MonoBehaviour
     {
         Destroy(Player);
         SpawnPlayer();
+        EventManager.RaisePlayerRestedEvent();
     }
     void Start()
     {
