@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OnDeathEvent : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     [SerializeField] private Transform CurrentPlayerSpawnPoint;
     public GameObject PlayerPrefab;
     private void OnEnable()
@@ -35,7 +35,7 @@ public class OnDeathEvent : MonoBehaviour
         SpawnPlayer();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
