@@ -21,13 +21,37 @@ public class InputHandler : MonoBehaviour
     // CORRECTED: Restored missing combat inputs
     public enum PlayerCombatInput { None, WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack }
     public PlayerCombatInput CombatInput = PlayerCombatInput.None;
+    bool InputBlocked = false;
 
     // --- INPUT VALUES ---
     [HideInInspector] public float ClimbInput;
 
     // --- INPUT SYSTEM EVENTS ---
-    
-   public void ZeroOutClimbInput()
+
+    public void AnimatorToggleBlockInput()
+    {
+        InputBlocked = !InputBlocked;
+    }
+    bool CanTakeInput()
+    {
+        return !InputBlocked;
+    }
+    bool CanBlock()
+    {
+        return PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Falling && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rest &&
+                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && CombatInput == PlayerCombatInput.None
+                && CanTakeInput();
+    }
+    void OnBlock(InputValue Value)
+    {
+        if (Value.isPressed)
+        {
+            if (CanBlock()) 
+            CombatInput = PlayerCombatInput.WantsToBlockAttack;
+        }
+        
+    }
+    public void ZeroOutClimbInput()
     {
         ClimbInput = 0;
     }
@@ -65,7 +89,7 @@ public class InputHandler : MonoBehaviour
         }    
     }
 
-    // Names like OnLightAttack, OnHeavyAttack, OnBlock, OnParry should match your Player Input Action Map
+   
     void OnLightAttack()
     {
         if (CanPerformCombatAction())
@@ -119,14 +143,14 @@ public class InputHandler : MonoBehaviour
             WantsToSprint = value.isPressed;
     }
 
-    // CORRECTED: Added the missing OnDebugger method
+    
     void OnDebugger()
     {
         PlayerMovement.ShowDebug = !PlayerMovement.ShowDebug;
     }
 
 
-    // --- CONDITION CHECKS ---
+    
     private bool CanRestAtBonfire()
     {
         return TriggerHandler.InBonfireRange && PlayerMovement.IsGroundedThisFrame && 
@@ -136,7 +160,7 @@ public class InputHandler : MonoBehaviour
     }
     private bool CanClimb()
     {
-        // Log each individual condition to find the exact point of failure.
+        
         
 
         return TriggerHandler.CurrentClimbable != null &&
@@ -151,7 +175,7 @@ public class InputHandler : MonoBehaviour
         return PlayerMovement.IsGroundedThisFrame && ResourceHandling.CanSpendStamina(ResourceHandling.Stamina) &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping &&
-               PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing;
+               PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing && CanTakeInput();
     }
 }
 

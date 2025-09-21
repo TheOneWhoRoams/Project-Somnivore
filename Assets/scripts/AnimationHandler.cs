@@ -171,7 +171,10 @@ public class AnimationHandler : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
     }
 
-    
+    void PlayBlockStart()
+    {
+        PlayerAnimator.SetTrigger("")
+    }
     void Update()
     {
         RollParams();
