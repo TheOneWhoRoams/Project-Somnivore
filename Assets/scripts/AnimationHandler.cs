@@ -7,13 +7,15 @@ public class AnimationHandler : MonoBehaviour
     [SerializeField] private PlayerMovement PlayerMovement;
     [SerializeField] private InputHandler InputHandling;
     [SerializeField] private PlayerStateHandler PlayerStateHandling;
+    [SerializeField] private CombatStateHandler CombatStateHandling;
     Animator PlayerAnimator;
 
     public enum RollType { Light, Medium, Heavy, Over };
     public RollType CurrentRollType;
     public float RollAnimationSpeed;
     bool DeathPlayed= false;
-
+    bool BlocKStarted = false;
+    bool BlockEnded = false;
 
     bool FlagConsumed = false;
     private void OnEnable()
@@ -171,12 +173,43 @@ public class AnimationHandler : MonoBehaviour
         PlayerAnimator = GetComponent<Animator>();
     }
 
-    void PlayBlockStart()
+    void BlockAnimHandling()
     {
-        PlayerAnimator.SetTrigger("")
+        
+        switch (CombatStateHandling.CurrentCombatState)
+        {
+            case CombatStateHandler.CombatState.BlockStart:
+                if (!BlocKStarted)
+                {
+                    PlayBlockStart();
+                    BlocKStarted=true;
+                }
+                break;
+            case CombatStateHandler.CombatState.BlockActive:
+                BlocKStarted = false;
+                BlockEnded = false;
+                break;
+            case CombatStateHandler.CombatState.BlockRecovery:
+                if (!BlockEnded)
+                {
+                    PlayBlockEnd();
+                    BlockEnded = true;
+                }
+                break;
+        }
+
+    }
+    public void PlayBlockStart()
+    {
+        PlayerAnimator.SetTrigger("BlockStart");
+    }
+    public void PlayBlockEnd()
+    {
+        PlayerAnimator.SetTrigger("BlockEnd");
     }
     void Update()
     {
+        BlockAnimHandling();
         RollParams();
         AnimationHandling();
     }

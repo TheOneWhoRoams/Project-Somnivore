@@ -1,0 +1,11 @@
+{
+    "asset": "7c1986d6fc380884c902697c050f289a",
+    "fileName": "01996d38-456f-7fa0-9c8c-b69f79a8f7c8.pose.json",
+    "prompt": "Shield Block Animation dark souls hold shield in front",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 672351887,
+    "w3CTraceId": "c525cb095baa4d4e4606a30c36ee5998",
+    "isTrimmed": false
+}

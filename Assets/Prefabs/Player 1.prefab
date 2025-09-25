@@ -789,6 +789,7 @@ MonoBehaviour:
   PlayerMovement: {fileID: 7106871217118600888}
   InputHandling: {fileID: 4967258539035696146}
   PlayerStateHandling: {fileID: 927750180392224093}
+  CombatStateHandling: {fileID: 5043623108872603185}
   CurrentRollType: 0
   RollAnimationSpeed: 0
 --- !u!136 &3143802910180883269
@@ -917,6 +918,7 @@ MonoBehaviour:
   ResourceHandling: {fileID: 3454333151418590834}
   CurrentCombatState: 20
   AttackActive: 0
+  BlockActive: 0
 --- !u!114 &3674891883607012218
 MonoBehaviour:
   m_ObjectHideFlags: 0

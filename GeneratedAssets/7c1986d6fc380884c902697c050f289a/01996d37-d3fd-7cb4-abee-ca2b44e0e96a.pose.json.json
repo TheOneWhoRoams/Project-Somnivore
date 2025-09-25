@@ -1,0 +1,11 @@
+{
+    "asset": "7c1986d6fc380884c902697c050f289a",
+    "fileName": "01996d37-d3fd-7cb4-abee-ca2b44e0e96a.pose.json",
+    "prompt": "Shield Block Animation dark souls",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 2135095783,
+    "w3CTraceId": "df9517481ea9d61d8b74ca1238cbf36a",
+    "isTrimmed": false
+}

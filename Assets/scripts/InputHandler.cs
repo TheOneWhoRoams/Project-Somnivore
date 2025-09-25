@@ -18,8 +18,11 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToSprint;
     [HideInInspector] public bool WantsToUseBonfire;
     [HideInInspector] public bool WantsToExitBonfire;
+    private bool BlockHeldDown = false;
+    private InputAction BlockAction;
+    private PlayerInput playerInput;
     // CORRECTED: Restored missing combat inputs
-    public enum PlayerCombatInput { None, WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack }
+    public enum PlayerCombatInput { None, WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack, WantsToReleaseBlock }
     public PlayerCombatInput CombatInput = PlayerCombatInput.None;
     bool InputBlocked = false;
 
@@ -27,7 +30,11 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public float ClimbInput;
 
     // --- INPUT SYSTEM EVENTS ---
-
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        BlockAction = playerInput.actions["Block"];
+    }
     public void AnimatorToggleBlockInput()
     {
         InputBlocked = !InputBlocked;
@@ -41,6 +48,14 @@ public class InputHandler : MonoBehaviour
         return PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Falling && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rest &&
                 PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping && PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling && CombatInput == PlayerCombatInput.None
                 && CanTakeInput();
+    }
+
+    void DoesPlayerStillBlock()
+    {
+        bool blockPressed = BlockAction.IsPressed();
+
+        if (!blockPressed && CombatInput == PlayerCombatInput.WantsToBlockAttack)
+            CombatInput = PlayerCombatInput.WantsToReleaseBlock;
     }
     void OnBlock(InputValue Value)
     {

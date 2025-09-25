@@ -17,8 +17,22 @@ public class CombatStateHandler : MonoBehaviour
     }
     public CombatState CurrentCombatState = CombatState.None;
     [HideInInspector]public bool AttackActive = false;
+    [HideInInspector]public bool BlockActive = false;
 
-
+    void AnimBlockWindup()
+    {
+        CurrentCombatState = CombatState.BlockStart;
+    }
+    void AnimBlockActive()
+    {
+        CurrentCombatState = CombatState.BlockActive;
+        BlockActive = true;
+    }
+    void AnimBlockRecovery()
+    {
+        CurrentCombatState = CombatState.BlockRecovery;
+        BlockActive= false;
+    }
     void AnimLightWindup()
     {
         CurrentCombatState = CombatState.LightAttackWindup;
@@ -54,6 +68,7 @@ public class CombatStateHandler : MonoBehaviour
         ResourceHandling.OnStaminaDrainingAction();
 
     }
+    
     void InputToStateTranslation()
     {
         if (CurrentCombatState != CombatState.None) return;
@@ -77,6 +92,8 @@ public class CombatStateHandler : MonoBehaviour
                 break;
 
             case PlayerCombatInput.WantsToBlockAttack:
+                if (CurrentCombatState == CombatState.BlockActive)
+                    return;
                 CurrentCombatState = CombatState.BlockStart;
                 InputHandling.CombatInput = InputHandler.PlayerCombatInput.None;
                 break;
@@ -94,13 +111,14 @@ public class CombatStateHandler : MonoBehaviour
             CurrentCombatState = CombatState.None;
             return;
         }
-
+       
         InputToStateTranslation();
         LightAttackHandler();
     }
 
     void Update()
     {
+      
         CombatHandler();
     }
 }
