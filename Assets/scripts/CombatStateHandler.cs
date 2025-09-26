@@ -22,17 +22,18 @@ public class CombatStateHandler : MonoBehaviour
 
     public void AnimBlockWindup()
     {
-        Debug.Log("end me");
+        Debug.Log("Block check windup");
         CurrentCombatState = CombatState.BlockStart;
     }
     public void AnimBlockActive2()
     {   
-        Debug.Log("six seven");
+        Debug.Log("Block Check Active");
         CurrentCombatState = CombatState.BlockActive;
         BlockActive = true;
     }
     public void AnimBlockRecovery()
     {
+        Debug.Log("Block check Recovery");
         CurrentCombatState = CombatState.BlockRecovery;
         BlockActive= false;
     }

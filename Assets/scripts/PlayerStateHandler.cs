@@ -84,7 +84,7 @@ public class PlayerStateHandler : MonoBehaviour
     {
         if (InputHandling.WantsToUseBonfire) {TransitionTo(PlayerState.Rest); return; }
             if (CheckForClimbTransition()) return;
-        if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
+        if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None || InputHandling.BlockInitiated) { TransitionTo(PlayerState.Combat); return; }
         if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
         if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
         if (InputHandling.WantsToSprint && InputHandling.WantsToWalk && ResourceHandling.CanSpendStamina(ResourceHandling.Stamina)) { TransitionTo(PlayerState.Sprinting); return; }
@@ -94,8 +94,8 @@ public class PlayerStateHandler : MonoBehaviour
     private void HandleWalkingState()
     {
         if (InputHandling.WantsToUseBonfire){ TransitionTo(PlayerState.Rest); return; }
-        if (CheckForClimbTransition()) return; 
-        if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None) { TransitionTo(PlayerState.Combat); return; }
+        if (CheckForClimbTransition()) return;
+        if (InputHandling.CombatInput != InputHandler.PlayerCombatInput.None || InputHandling.BlockInitiated) { TransitionTo(PlayerState.Combat); return; }
         if (InputHandling.WantsToJump) { TransitionTo(PlayerState.Jumping); return; }
         if (InputHandling.WantsToRoll) { TransitionTo(PlayerState.Rolling); return; }
         if (InputHandling.WantsToSprint && ResourceHandling.CanSpendStamina(ResourceHandling.Stamina)) { TransitionTo(PlayerState.Sprinting); return; }

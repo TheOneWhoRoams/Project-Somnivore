@@ -19,6 +19,7 @@ public class InputHandler : MonoBehaviour
     [HideInInspector] public bool WantsToSprint;
     [HideInInspector] public bool WantsToUseBonfire;
     [HideInInspector] public bool WantsToExitBonfire;
+    [HideInInspector] public bool BlockInitiated=false;
     private bool BlockHeldDown = false;
     private InputAction BlockAction;
     private PlayerInput playerInput;
@@ -66,6 +67,7 @@ public class InputHandler : MonoBehaviour
             if (!DoesPlayerStillBlock())
             {
                 CombatInput = PlayerCombatInput.WantsToReleaseBlock;
+                BlockInitiated = false;
                 Debug.Log("Check 2");
             }
 
@@ -76,6 +78,7 @@ public class InputHandler : MonoBehaviour
     
     void OnBlock()
     {
+        BlockInitiated = true;
             if (CanBlock()) 
             CombatInput = PlayerCombatInput.WantsToBlockAttack;
       
@@ -202,6 +205,7 @@ public class InputHandler : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log("player combat input: " + CombatInput);
         BlockStop();
     }
 }
