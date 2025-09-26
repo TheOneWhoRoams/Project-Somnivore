@@ -176,24 +176,22 @@ public class AnimationHandler : MonoBehaviour
     void BlockAnimHandling()
     {
         
-        switch (CombatStateHandling.CurrentCombatState)
+        switch (InputHandling.CombatInput)
         {
-            case CombatStateHandler.CombatState.BlockStart:
-                if (!BlocKStarted)
+            case InputHandler.PlayerCombatInput.WantsToBlockAttack:
+               if (!BlocKStarted)
                 {
-                    PlayBlockStart();
-                    BlocKStarted=true;
+                   PlayBlockStart();
+                   BlocKStarted=true;
+                   BlockEnded = false;
                 }
                 break;
-            case CombatStateHandler.CombatState.BlockActive:
-                BlocKStarted = false;
-                BlockEnded = false;
-                break;
-            case CombatStateHandler.CombatState.BlockRecovery:
+            case InputHandler.PlayerCombatInput.WantsToReleaseBlock:
                 if (!BlockEnded)
                 {
-                    PlayBlockEnd();
-                    BlockEnded = true;
+                   PlayBlockEnd();
+                   BlockEnded = true;
+                   BlocKStarted = false;
                 }
                 break;
         }
@@ -201,6 +199,7 @@ public class AnimationHandler : MonoBehaviour
     }
     public void PlayBlockStart()
     {
+        
         PlayerAnimator.SetTrigger("BlockStart");
     }
     public void PlayBlockEnd()

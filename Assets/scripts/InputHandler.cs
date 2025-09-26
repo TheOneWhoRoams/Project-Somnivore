@@ -9,6 +9,7 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private AnimationHandler AnimationHandling;
     [SerializeField] private PlayerMovement PlayerMovement; 
     [SerializeField] private ResourceHandler ResourceHandling; 
+    [SerializeField] private CombatStateHandler CombatHandling; 
 
     // --- INPUT FLAGS ---
     [HideInInspector] public bool WantsToClimb;
@@ -50,21 +51,34 @@ public class InputHandler : MonoBehaviour
                 && CanTakeInput();
     }
 
-    void DoesPlayerStillBlock()
+    public bool DoesPlayerStillBlock()
     {
         bool blockPressed = BlockAction.IsPressed();
 
-        if (!blockPressed && CombatInput == PlayerCombatInput.WantsToBlockAttack)
-            CombatInput = PlayerCombatInput.WantsToReleaseBlock;
+        return blockPressed;
     }
-    void OnBlock(InputValue Value)
+    void BlockStop()
     {
-        if (Value.isPressed)
+        Debug.Log("Check 0");
+        if (CombatHandling.CurrentCombatState == CombatStateHandler.CombatState.BlockActive)
         {
+            Debug.Log("check 1");
+            if (!DoesPlayerStillBlock())
+            {
+                CombatInput = PlayerCombatInput.WantsToReleaseBlock;
+                Debug.Log("Check 2");
+            }
+
+
+        }
+
+    }
+    
+    void OnBlock()
+    {
             if (CanBlock()) 
             CombatInput = PlayerCombatInput.WantsToBlockAttack;
-        }
-        
+      
     }
     public void ZeroOutClimbInput()
     {
@@ -121,13 +135,7 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    void OnBlock()
-    {
-        if (CanPerformCombatAction())
-        {
-            CombatInput = PlayerCombatInput.WantsToBlockAttack;
-        }
-    }
+    
 
     void OnParry()
     {
@@ -191,6 +199,10 @@ public class InputHandler : MonoBehaviour
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Rolling &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Jumping &&
                PlayerStateHandling.CurrentState != PlayerStateHandler.PlayerState.Climbing && CanTakeInput();
+    }
+    private void Update()
+    {
+        BlockStop();
     }
 }
 

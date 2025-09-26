@@ -85,7 +85,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ShieldBlock
-  m_Speed: 1
+  m_Speed: 0.7
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4944494852339994460}
@@ -395,13 +395,13 @@ AnimatorStateMachine:
     m_Position: {x: 1186.1285, y: 67.38406, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8811169702501033225}
-    m_Position: {x: 1860, y: -40, z: 0}
+    m_Position: {x: 1880, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8873646307412784802}
-    m_Position: {x: 1990, y: 70, z: 0}
+    m_Position: {x: 1990, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4137770575426896243}
-    m_Position: {x: 1090, y: 390, z: 0}
+    m_Position: {x: 1760, y: 210, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: -4916080562276903801}
@@ -1534,9 +1534,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.016088225
   m_TransitionOffset: 0
-  m_ExitTime: 0.25
+  m_ExitTime: 0.09685272
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

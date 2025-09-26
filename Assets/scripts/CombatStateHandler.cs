@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using static InputHandler;
 
 public class CombatStateHandler : MonoBehaviour
@@ -19,16 +20,18 @@ public class CombatStateHandler : MonoBehaviour
     [HideInInspector]public bool AttackActive = false;
     [HideInInspector]public bool BlockActive = false;
 
-    void AnimBlockWindup()
+    public void AnimBlockWindup()
     {
+        Debug.Log("end me");
         CurrentCombatState = CombatState.BlockStart;
     }
-    void AnimBlockActive()
-    {
+    public void AnimBlockActive2()
+    {   
+        Debug.Log("six seven");
         CurrentCombatState = CombatState.BlockActive;
         BlockActive = true;
     }
-    void AnimBlockRecovery()
+    public void AnimBlockRecovery()
     {
         CurrentCombatState = CombatState.BlockRecovery;
         BlockActive= false;
@@ -112,6 +115,7 @@ public class CombatStateHandler : MonoBehaviour
             return;
         }
        
+        
         InputToStateTranslation();
         LightAttackHandler();
     }
