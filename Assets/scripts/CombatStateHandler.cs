@@ -20,21 +20,31 @@ public class CombatStateHandler : MonoBehaviour
     public CombatState CurrentCombatState = CombatState.None;
     [HideInInspector]public bool AttackActive = false;
     [HideInInspector]public bool BlockActive = false;
+    bool ForceGuardBreakState = false;
 
-
+    void animClearGuardBreakFlag()
+    {
+        ForceGuardBreakState = false;
+    }
     public void AnimBlockWindup()
     {
+        if (ForceGuardBreakState)
+            return;
         Debug.Log("Block check windup");
         CurrentCombatState = CombatState.BlockStart;
     }
     public void AnimBlockActive2()
-    {   
+    {
+        if (ForceGuardBreakState)
+            return;
         Debug.Log("Block Check Active");
         CurrentCombatState = CombatState.BlockActive;
         BlockActive = true;
     }
     public void AnimBlockRecovery()
     {
+        if (ForceGuardBreakState)
+            return;
         Debug.Log("Block check Recovery");
         CurrentCombatState = CombatState.BlockRecovery;
         BlockActive= false;
@@ -43,18 +53,25 @@ public class CombatStateHandler : MonoBehaviour
     {
         CurrentCombatState = CombatState.GuardBreak;
         BlockActive = false;
+        ForceGuardBreakState = true;
     }
     void AnimLightWindup()
     {
+        if (ForceGuardBreakState)
+            return;
         CurrentCombatState = CombatState.LightAttackWindup;
     }
     void AnimLightActive()
     {
+        if (ForceGuardBreakState)
+            return;
         CurrentCombatState = CombatState.LightAttackActive;
         AttackActive = true;
     }
     void AnimLightRecovery()
     {
+        if (ForceGuardBreakState)
+            return;
         CurrentCombatState = CombatState.LightAttackRecovery;
         AttackActive = false;
     }
