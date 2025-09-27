@@ -20,7 +20,14 @@ public class AnimationHandler : MonoBehaviour
     bool FlagConsumed = false;
     private void OnEnable()
     {
+        EventManager.OnPlayerGuardBroken += PlayGuardBreak;
         EventManager.OnPlayerDeathInitiate += PlayDeath;
+    }
+    private void OnDisable()
+    {
+
+        EventManager.OnPlayerGuardBroken -= PlayGuardBreak;
+        EventManager.OnPlayerDeathInitiate -= PlayDeath;
     }
     public void PlayDeath()
     {
@@ -114,6 +121,10 @@ public class AnimationHandler : MonoBehaviour
         PlayerAnimator.SetTrigger("Jump");
     }
     
+    public void PlayGuardBreak()
+    {
+        PlayerAnimator.SetTrigger("GuardBreak");
+    }
     void AnimationHandling()
     {
         

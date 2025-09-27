@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static InputHandler;
@@ -37,6 +38,11 @@ public class CombatStateHandler : MonoBehaviour
         Debug.Log("Block check Recovery");
         CurrentCombatState = CombatState.BlockRecovery;
         BlockActive= false;
+    }
+    public void AnimGuardBreak()
+    {
+        CurrentCombatState = CombatState.GuardBreak;
+        BlockActive = false;
     }
     void AnimLightWindup()
     {
