@@ -5,6 +5,7 @@ public class EventManager : MonoBehaviour
 {
     // Declare the static event
     public static event Action OnPlayerRested;
+    public static event Action OnPlayerGuardBroken;
     public static event Action OnPlayerDeathInitiate;
     public static event Action<GameObject> OnPlayerDeathFinish;
     public static event Action<Transform> OnPlayerRestSetSpawnPoint;
@@ -26,5 +27,9 @@ public class EventManager : MonoBehaviour
     public static void RaisePlayerRestSpawnPointSet(Transform NewSpawnPoint)
     {
         OnPlayerRestSetSpawnPoint?.Invoke(NewSpawnPoint);
+    }
+    public static void RaisePlayerGuardBreak()
+    {
+        OnPlayerGuardBroken?.Invoke();
     }
 }

@@ -24,14 +24,32 @@ public class InputHandler : MonoBehaviour
     private InputAction BlockAction;
     private PlayerInput playerInput;
     // CORRECTED: Restored missing combat inputs
-    public enum PlayerCombatInput { None, WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack, WantsToReleaseBlock }
+    public enum PlayerCombatInput { None, WantsToLightAttack, WantsToHeavyAttack, WantsToBlockAttack, WantsToParryAttack, WantsToReleaseBlock, GuardBroken }
     public PlayerCombatInput CombatInput = PlayerCombatInput.None;
     bool InputBlocked = false;
 
-    // --- INPUT VALUES ---
+    
     [HideInInspector] public float ClimbInput;
 
-    // --- INPUT SYSTEM EVENTS ---
+
+
+
+    private void OnEnable()
+    {
+
+        EventManager.OnPlayerGuardBroken += OnGuardBroken;
+    }
+
+    private void OnDisable()
+    {
+
+        EventManager.OnPlayerGuardBroken -= OnGuardBroken;
+    }
+
+    private void OnGuardBroken()
+    {
+        CombatInput = PlayerCombatInput.GuardBroken;
+    }
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();

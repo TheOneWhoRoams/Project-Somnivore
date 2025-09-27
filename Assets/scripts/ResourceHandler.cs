@@ -55,16 +55,15 @@ public class ResourceHandler : MonoBehaviour
         {
             Stamina -= WeaponData.WeaponDamage;
             if(Stamina <= 0)
-            {
-                //GuardBreak event
-            }
+                EventManager.RaisePlayerGuardBreak();
+            
                 
         }
         
     }
    public bool CanSpendStamina(float CurrentStamina)
     {
-        Debug.Log("CanSpendStamina Passed");
+        
         return CurrentStamina > 0;
     }
    
@@ -72,15 +71,15 @@ public class ResourceHandler : MonoBehaviour
     {
         if  (DrainingActionActive && CanSpendStamina(Stamina))
         {
-            Debug.Log("Draining Stamina");
+            
             Stamina = Stamina - (StaminaDrainEachTick * Time.deltaTime);
         }
     }
     private IEnumerator RegenStaminaAfterDelay()
     {
-        Debug.Log("Regen coroutine started. Waiting for delay...");
+        
         yield return new WaitForSeconds(StaminaRegenDelay);
-        Debug.Log("Delay finished. Now regenerating stamina.");
+        
 
        
         while (Stamina < SetStamina)
@@ -89,7 +88,7 @@ public class ResourceHandler : MonoBehaviour
             yield return null;
         }
         Stamina = SetStamina;
-        Debug.Log("Stamina is full. Coroutine is now finished.");
+        
         RegenerationCoroutine = null;
     }
     void ManageStaminaRegeneration()

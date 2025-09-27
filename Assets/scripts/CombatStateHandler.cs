@@ -20,6 +20,7 @@ public class CombatStateHandler : MonoBehaviour
     [HideInInspector]public bool AttackActive = false;
     [HideInInspector]public bool BlockActive = false;
 
+
     public void AnimBlockWindup()
     {
         Debug.Log("Block check windup");

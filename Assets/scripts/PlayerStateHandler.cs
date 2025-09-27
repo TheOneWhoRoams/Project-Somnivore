@@ -19,6 +19,18 @@ public class PlayerStateHandler : MonoBehaviour
     [HideInInspector] public bool CanRegenStamina = true;
     [HideInInspector] public bool StaminaDrainActive = false;
 
+
+    private void OnEnable()
+    {
+
+        EventManager.OnPlayerGuardBroken += CombatGuardrail;
+    }
+
+    private void OnDisable()
+    {
+
+        EventManager.OnPlayerGuardBroken -= CombatGuardrail;
+    }
     void Update()
     {
         switch (CurrentState)
@@ -61,6 +73,11 @@ public class PlayerStateHandler : MonoBehaviour
         }
     }
 
+    private void CombatGuardrail()
+    {
+        //make sure no weird state desync happens
+        TransitionTo(PlayerState.Combat);
+    }
    
     private void HandleRestState()
     {
