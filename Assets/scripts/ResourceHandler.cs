@@ -47,7 +47,20 @@ public class ResourceHandler : MonoBehaviour
     }
     public void TakeDamage(WeaponData WeaponData)
     {
-        Health -= WeaponData.WeaponDamage;
+        if (!CombatStateHandling.BlockActive)
+        {
+            Health -= WeaponData.WeaponDamage;
+        }
+        else
+        {
+            Stamina -= WeaponData.WeaponDamage;
+            if(Stamina <= 0)
+            {
+                //GuardBreak event
+            }
+                
+        }
+        
     }
    public bool CanSpendStamina(float CurrentStamina)
     {
