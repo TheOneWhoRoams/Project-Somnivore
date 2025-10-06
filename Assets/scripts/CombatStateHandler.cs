@@ -10,17 +10,17 @@ public class CombatStateHandler : MonoBehaviour
     [SerializeField] InputHandler InputHandling;
     [SerializeField] AnimationHandler AnimationHandling;
     [SerializeField] ResourceHandler ResourceHandling;
-    [HideInInspector]
+    
     public enum CombatState
     {
         LightAttackStart, LightAttackWindup, LightAttackActive,
         LightAttackRecovery, HeavyAttackStart, HeavyAttackWindup, HeavyAttackActive, HeavyAttackRecovery,
         GuardBreak, PlayerCritical, BlockStart, BlockActive, BlockRecovery, ParryStart, ParryWindup, ParryActive, ParryRecovery, Stagger, EnemyCritical, Backstab, None
     }
-    public CombatState CurrentCombatState = CombatState.None;
+    [HideInInspector] public CombatState CurrentCombatState = CombatState.None;
     [HideInInspector]public bool AttackActive = false;
     [HideInInspector]public bool BlockActive = false;
-    bool ForceGuardBreakState = false;
+    private bool ForceGuardBreakState = false;
 
     void animClearGuardBreakFlag()
     {
