@@ -840,6 +840,7 @@ MonoBehaviour:
   WantsToSprint: 0
   WantsToUseBonfire: 0
   WantsToExitBonfire: 0
+  BlockInitiated: 0
   CombatInput: 4
   ClimbInput: 0
 --- !u!114 &8502188488278981387

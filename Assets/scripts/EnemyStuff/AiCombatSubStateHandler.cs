@@ -33,6 +33,7 @@ public class AiCombatSubStateHandler : MonoBehaviour
     {
         CurrentCombatState = CombatState.None;
         AiStateHandling.AttackFinished = true;
+        Debug.Log("Gock");
     }
     void Start()
     {
